@@ -3,9 +3,11 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 // Add vue router
 import VueRouter from 'vue-router'
-import routes from './routes.js'
+import routes from './routes'
 // Add vuex
-import store from './vuex/store'
+import store from './vuex/index'
+
+
 
 Vue.config.productionTip = false
 
@@ -14,7 +16,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
 
 new Vue({
