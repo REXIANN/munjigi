@@ -8,15 +8,15 @@
 
 <script>
 // @ is an alias to /src
-import { mapMutations } from 'vuex'
+import { mapMutations } from "vuex";
+
 export default {
-  name: 'Home',
+  name: "Home",
   methods: {
     ...mapMutations(['ADD_COUNT'])
   },
   data() {
-    return {
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
