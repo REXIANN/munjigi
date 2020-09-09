@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     This is Home.vue
-    <p>{{ this.$store.state.test }}</p>
-    <button @click="ADD">change</button>
+    <p>{{ this.$store.state.count }}</p>
+    <button @click="ADD_COUNT">change</button>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import { mapMutations } from 'vuex'
 export default {
   name: 'Home',
   methods: {
-    ...mapMutations(['ADD'])
+    ...mapMutations(['ADD_COUNT'])
   },
   data() {
     return {
