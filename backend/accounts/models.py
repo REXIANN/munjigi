@@ -33,11 +33,8 @@ class UserManager(BaseUserManager):    # 이메일을 ID로 쓰기 위해 변경
 class User(AbstractBaseUser,PermissionsMixin):    
     
     objects = UserManager()
-    
-    email = models.EmailField(        
-        max_length=255,        
-        unique=True,    
-    )    
+    username = None
+    email = models.EmailField(verbose_name='email', unique=True)
     nickname = models.CharField(
         max_length=20,
         null=False,
@@ -52,3 +49,12 @@ class User(AbstractBaseUser,PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)     
     USERNAME_FIELD = 'email'    # 유저 아이디를 이메일로 변경
     REQUIRED_FIELDS = ['nickname']  # 필수 입력 값 설정
+
+    def get_full_name(self):
+        return self.email
+    
+    def get_short_name(self):
+        return self.email
+
+    def __str__(self):
+        return self.email
