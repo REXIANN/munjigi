@@ -8,4 +8,8 @@ export default {
     //   .catch()
     //   .finaly();
   },
+  signup({ state, commit }, signupData) {
+    console.log(signupData);
+    console.log(state, commit);
+  },
 };
