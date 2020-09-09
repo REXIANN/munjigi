@@ -13,7 +13,7 @@ import { mapMutations } from "vuex";
 export default {
   name: "Home",
   methods: {
-    ...mapMutations(["ADD_COUNT"]),
+    ...mapMutations(['ADD_COUNT'])
   },
   data() {
     return {};
