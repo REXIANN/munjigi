@@ -1,7 +1,8 @@
-from django.ruls import path, include
-from .api import RegisterAPI
-from knox import views as knox_views
- 
+from django.urls import path
+from .views import RegistrationAPI, LoginAPI, UserAPI
+
 urlpatterns = [
-    path('auth/register', RegisterAPI.as_view())
+    path('auth/register/', RegistrationAPI.as_view()),
+    path('auth/login/', LoginAPI.as_view()),
+    path('auth/user/', UserAPI.as_view()),
 ]
