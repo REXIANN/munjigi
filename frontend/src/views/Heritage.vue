@@ -1,15 +1,27 @@
 <template>
   <div>
-      this is Heritage.vue
+    this is Heritage.vue
+    <HeritageSearchBar />
+    <HeritageCarousel />
+    <HeritageCards />
   </div>
 </template>
 
 <script>
-export default {
+import HeritageSearchBar from "@/components/heritage/HeritageSearchBar";
+import HeritageCarousel from "@/components/heritage/HeritageCarousel";
+import HeritageCards from "@/components/heritage/HeritageCards";
 
-}
+export default {
+  name: "Heritage",
+
+  components: {
+    HeritageSearchBar,
+    HeritageCarousel,
+    HeritageCards,
+  },
+};
 </script>
 
 <style>
-
 </style>

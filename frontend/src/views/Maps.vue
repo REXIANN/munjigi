@@ -1,16 +1,20 @@
 <template>
   <div>
       This is Maps.vue
-      <KakaoMaps />
+      <MapsKakao />
+      <MapsInfoList />
   </div>
 </template>
 
 <script>
-import KakaoMaps from '@/components/KakaoMaps'
+import MapsKakao from '@/components/maps/MapsKakao'
+import MapsInfoList from '@/components/maps/MapsInfoList'
+
 export default {
   name: 'Maps',
   components: {
-    KakaoMaps
+    MapsKakao,
+    MapsInfoList
   },
   data() {
     return {
