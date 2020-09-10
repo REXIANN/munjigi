@@ -1,6 +1,7 @@
 <template>
   <div>
     This is CommunityReviewDetail.vue
+    <!-- exapnsion panels for review list -->
   </div>
 </template>
 
