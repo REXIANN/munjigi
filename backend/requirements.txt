@@ -4,6 +4,7 @@ chardet==3.0.4
 cryptography==3.1
 defusedxml==0.6.0
 Django==2.2.7
+django-cors-headers==3.5.0
 django-rest-knox==4.1.0
 djangorestframework==3.11.1
 idna==2.10
