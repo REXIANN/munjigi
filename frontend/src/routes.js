@@ -1,12 +1,17 @@
-import Home from "@/views/Home.vue";
-import Login from "@/views/Login";
-import Community from "@/views/Community";
-import Heritage from "@/views/Heritage";
-import Maps from "@/views/Maps";
-import Signup from "@/views/Signup";
-import Mypage from "@/views/Mypage";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-export default [
+import Home from "@/views/Home.vue"
+import Login from "@/views/Login"
+import Community from "@/views/Community"
+import Heritage from "@/views/Heritage"
+import Maps from "@/views/Maps"
+import Signup from "@/views/Signup"
+import Mypage from "@/views/Mypage"
+
+Vue.use(VueRouter)
+
+const routes =  [
   {
     path: "/",
     name: "Home",
@@ -46,4 +51,12 @@ export default [
     name: "Mypage",
     component: Mypage,
   },
-];
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes,
+})
+
+export default router

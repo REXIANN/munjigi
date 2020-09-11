@@ -1,8 +1,8 @@
 export default {
   URL: 'http://localhost:8000',
   ROUTES: {
-    signup: '/rest-auth/signup/',
-    login: '/rest-auth/login/',
-    logout: '/rest-auth/logout/',
+    signup: '/accounts/auth/register/',
+    login: '/accounts/auth/login/',
+    logout: '/accounts/auth/logout/',
   }
 }

@@ -1,15 +1,17 @@
 import axios from "axios";
-import cookies from 'vue-cookies'
+// import cookies from 'vue-cookies'
 
 // import router from '@/routes'
 import SERVER from '@/api/drf'
 
 export default {
-  login({ }, loginData) {
-    axios.post(SERVER, loginData)
+  login({ state }, loginData) {
+    // SET_TOKEN 해줘야 함
+    axios.post(SERVER.URL + SERVER.ROUTES.login, loginData)
       .then((res) => {
         console.log(res)
-        sessionStorage.setItem("loginUID", res.data.object)
+        console.log(state)
+        // sessionStorage.setItem("loginUID", res.data.object)
       })
       .catch((err) => console.log(err.message))
 
@@ -33,9 +35,13 @@ export default {
 
 
   },
-  signup({ state, commit }, signupData) {
-    axios.post(SERVER, signupData)
-      .then((res) => console.log(res))
+  signup({ state }, signupData) {
+    // 나중에 dispatch로 로그인도 해야 함
+    axios.post(SERVER.URL + SERVER.ROUTES.signup, signupData)
+      .then((res) => {
+        console.log(res)
+        console.log(state)
+      })
       .catch((err) => console.log(err.message))
   },
 

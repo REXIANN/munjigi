@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>로그인</h1>이메일 :
-    <input type="text" v-model="loginData.username" placeholder="이메일을 입력해주세요." autofocus />
+    <input type="text" v-model="loginData.email" placeholder="이메일을 입력해주세요." autofocus />
     비밀번호 :
     <input type="password" v-model="loginData.password" />
     <div>
@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       loginData: {
-        username: "",
+        email: "",
         password: "",
       },
     };
