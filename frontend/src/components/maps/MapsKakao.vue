@@ -10,7 +10,7 @@
 
 <script >
 export default {
-  name: "KakaoMaps",
+  name: "MapsKakao",
   mounted() {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript()
   },
