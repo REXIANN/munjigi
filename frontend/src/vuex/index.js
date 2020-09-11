@@ -7,6 +7,7 @@ import mutations from "./mutations";
 // Promise imported for various browsers
 import "es6-promise/auto";
 
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
