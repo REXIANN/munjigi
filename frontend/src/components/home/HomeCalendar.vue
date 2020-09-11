@@ -294,7 +294,7 @@ export default {
       }
 
       this.events = events;
-      console.log(events);
+      // console.log(events);
     },
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
