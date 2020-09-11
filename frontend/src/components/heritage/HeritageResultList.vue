@@ -1,12 +1,19 @@
 <template>
   <div>
-    This is HeritageResultList.vue
+    <div>
+      This is HeritageResultList.vue
+    </div>
+
+    <div>
+      
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HeritageResultList"
+  name: "HeritageResultList",
+  
 }
 </script>
 

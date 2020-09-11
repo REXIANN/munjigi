@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "CommunityReviewItem"
+  name: "CommunityReviewItem",
 }
 </script>
 
