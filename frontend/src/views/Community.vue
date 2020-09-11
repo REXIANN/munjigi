@@ -1,12 +1,19 @@
 <template>
   <div>
       This is community.vue
+      <CommunityReviewList />
   </div>
 </template>
 
 <script>
-export default {
+import CommunityReviewList from '@/components/community/CommunityReviewList'
 
+export default {
+  name: "Community",
+  components: {
+    CommunityReviewList,
+  }
+  
 }
 </script>
 
