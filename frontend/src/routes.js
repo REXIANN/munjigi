@@ -4,6 +4,7 @@ import Community from "@/views/Community";
 import Heritage from "@/views/Heritage";
 import Maps from "@/views/Maps";
 import Signup from "@/views/Signup";
+import Mypage from "@/views/Mypage";
 
 export default [
   {
@@ -39,5 +40,10 @@ export default [
     path: "/signup",
     name: "Signup",
     component: Signup,
+  },
+  {
+    path: "/mypage",
+    name: "Mypage",
+    component: Mypage,
   },
 ];
