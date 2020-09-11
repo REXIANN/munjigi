@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <v-app id="app">
     <div id="nav">
       <router-link :to="{ name: 'Home' }">Home</router-link>|
       <router-link :to="{ name: 'Heritage' }">문화재</router-link>|
@@ -9,7 +9,7 @@
       <router-link :to="{ name: 'Mypage' }">마이페이지</router-link>
     </div>
     <router-view />
-  </div>
+  </v-app>
 </template>
 
 <style lang="scss">
