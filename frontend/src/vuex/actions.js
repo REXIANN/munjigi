@@ -12,4 +12,12 @@ export default {
     console.log(signupData);
     console.log(state, commit);
   },
+  checkEmail({ state, commit }, email) {
+    console.log(email);
+    console.log(state, commit);
+  },
+  checkPassword({ state, commit }, password) {
+    console.log(password);
+    console.log(state, commit);
+  },
 };
