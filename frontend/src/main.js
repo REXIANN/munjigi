@@ -7,10 +7,12 @@ import routes from './routes'
 // Add vuex
 import store from './vuex/index'
 
-
+// Add vue-cookies
+import VueCookies from 'vue-cookies'
 
 Vue.config.productionTip = false
 
+Vue.use(VueCookies)
 Vue.use(VueRouter)
 
 const router = new VueRouter({
