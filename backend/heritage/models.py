@@ -6,7 +6,7 @@ class Heritage(models.Model):
     k_name = models.CharField(max_length=50)
     h_name = models.CharField(max_length=50)
     content = models.TextField()
-    imageURL = models.URLField()
+    imageurl = models.URLField()
     longitude = models.FloatField()
     latitude = models.FloatField()
     era = models.CharField(max_length=100, null=True)
@@ -14,6 +14,13 @@ class Heritage(models.Model):
     clsfc_code = models.IntegerField()
     clsfc_name = models.CharField(max_length=50)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_heritages', blank=True)
+    visit_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='visited_heritages', blank=True)
+    dib_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='dibs_heritages', blank=True)
+
+
+class Heritage_picture(models.Model):
+    heritage = models.ForeignKey(Heritage, on_delete=models.CASCADE)
+    imageurl = models.URLField()
 
 
 class Review(models.Model):
@@ -24,3 +31,8 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user_recommend = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="recommend_reviews", blank=True)
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
+    tagging = models.ManyToManyField(Heritage, related_name='tag_heritages', blank=True)
