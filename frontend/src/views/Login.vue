@@ -3,9 +3,9 @@
     <form action="#" method="POST" class="box">
       <h1>로그인</h1>
       <h2>이메일</h2>
-      <input type="text" v-model="loginData.email" placeholder="이메일을 입력해주세요." autofocus required/>
+      <input type="text" v-model="loginData.email" placeholder="이메일을 입력해주세요" autofocus required="이메일을 입력해 주세요!"/>
       <h2>비밀번호</h2>
-      <input type="password" v-model="loginData.password" placeholder="비밀번호를 입력해주세요" required/>
+      <input type="password" v-model="loginData.password" placeholder="비밀번호를 입력해주세요" required="비밀번호를 입력해주세요!"/>
       <input type="submit" value="로그인" @click="login(loginData)" />
     </form>
     
