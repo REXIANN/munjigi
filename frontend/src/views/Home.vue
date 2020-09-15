@@ -11,7 +11,6 @@
 import HomeIntroduce from "@/components/home/HomeIntroduce.vue";
 import HomeHeritage from "@/components/home/HomeHeritage.vue";
 import HomeCalendar from "@/components/home/HomeCalendar.vue";
-// import { mapMutations } from "vuex";
 import { mapActions } from "vuex"
 
 export default {
