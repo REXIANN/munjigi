@@ -13,6 +13,7 @@
         <router-link class="header" :to="{ name: 'Maps' }">지도</router-link>
         <router-link v-show="!isLogin" class="header-user" :to="{ name: 'Login' }">로그인</router-link>
         <router-link v-show="isLogin" class="header-user" :to="{ name: 'Mypage' }">마이페이지</router-link>
+        <a v-show="isLogin" class="header-user" @click="logout">로그아웃</a>
       </div>
     </div>
    
@@ -21,12 +22,17 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from "vuex"
+import { mapActions } from "vuex"
+
 export default {
   name: "App",
   computed: {
     ...mapGetters(["isLogin"]),
   },
+  methods: {
+    ...mapActions(["logout"])
+  }
 };
 </script>
 <style type="text/css" lang="scss">
