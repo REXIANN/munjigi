@@ -63,7 +63,7 @@ body {
     a {
       width: 5vw;
       height: 100%;
-      
+
       font-weight: bold;
       color: #4e2a2a;
       writing-mode: tb;
@@ -81,4 +81,8 @@ body {
       }
     }
   }
+}
+
+.router-view-margin {
+  margin: $components-margin;
 }

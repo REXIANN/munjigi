@@ -15,7 +15,7 @@
         <router-link v-show="isLogin" class="header_user" :to="{ name: 'Mypage' }">마이페이지</router-link>
       </div>
     </div>
-    <router-view />
+    <router-view class="router-view-margin" />
   </v-app>
 </template>
 
