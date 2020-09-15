@@ -1,16 +1,16 @@
 <template>
   <div>
     This is CommunityReviewList.vue
-    <div v-for="(result, idx) in resultList" :key="idx">
+    <div v-for="(review, idx) in reviewList" :key="idx">
       
-      <v-card class="mx-auto" max-width="400" outlined @click="selectReview(result)">
+      <v-card class="mx-auto" max-width="400" outlined @click="SELECT_REVIEW(review)">
         <v-list-item>
           <v-list-item-content>
-            <v-img :src="result.thumbnail" ></v-img>
-            <div class="overline mb-4">{{ result.title }}</div>
-            <v-list-item-subtitle>{{ result.user }}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{ result.view }}</v-list-item-subtitle>
-            <v-list-item-subtitle>{{ result.created }}</v-list-item-subtitle>
+            <v-img :src="review.thumbnail" ></v-img>
+            <div class="overline mb-4">{{ review.title }}</div>
+            <v-list-item-subtitle>{{ review.user }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ review.view }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ review.created }}</v-list-item-subtitle>
           </v-list-item-content>
 
         </v-list-item>
@@ -20,17 +20,16 @@
 </template>
 
 <script>
-
+import { mapMutations } from "vuex"
 export default {
   name: "CommunityReviewList",
   methods: {
-    selectReview(result) {
-      this.$router.push({ name: "CommunityReviewItem", params: { result }})
-    }
+    ...mapMutations(["SELECT_REVIEW"])
+    
   },
   data() {
     return {
-      resultList: [
+      reviewList: [
         {
           thumbnail: "https://picsum.photos/510/300?random",
           title: "test1",
