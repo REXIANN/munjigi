@@ -1,5 +1,5 @@
 <template>
-  <v-app id="app">
+  <v-app>
     <div id="nav">
       <router-link :to="{ name: 'Home' }">
         <img src="@/assets/logo.png" />
