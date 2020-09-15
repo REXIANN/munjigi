@@ -23,5 +23,6 @@ export default {
 };
 </script>
 
-<style>
+<style type="text/css" lang="scss">
+@import "@/assets/css/views/heritage.scss";
 </style>

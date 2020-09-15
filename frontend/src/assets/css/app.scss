@@ -1,8 +1,16 @@
 @charset 'utf-8';
-@import './components';
+@import "./components";
+
+@font-face {
+  font-family: "EBSHunminjeongeumSBA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/EBSHunminjeongeum.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
 * {
-  font-family: 'NanumBarunGothic', sans-serif;
+  font-family: "NanumBarunGothic", sans-serif;
   word-break: keep-all;
   padding: 0;
   margin: 0;
@@ -23,34 +31,54 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: $main-font;
+  }
 }
 
 // default setting of vuetify
 
-// #app {
-//   font-family: Avenir, Helvetica, Arial, sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   text-align: center;
-//   color: #2c3e50;
-// }
+#app {
+  background-image: url("https://user-images.githubusercontent.com/60081201/93165435-010bfe00-f757-11ea-9ace-75dd97feab19.jpg");
+  background-attachment: fixed;
+  background-origin: border-box;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 #nav {
-  padding: 10px;
+  background-image: url("https://user-images.githubusercontent.com/60081201/93159089-6d333580-f748-11ea-8ab2-7d14eb4737ec.png");
+  background-size: contain;
+  background-repeat: repeat;
+  height: 15vh;
+  div {
+    height: 12vh;
+    margin: 0 3vw;
 
-  img {
-    height: 7vw;
-    display: flex;
-  }
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    writing-mode: tb;
-    text-decoration: none;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    a {
+      width: 5vw;
+      height: 100%;
+      
+      font-weight: bold;
+      color: #4e2a2a;
+      writing-mode: tb;
+      text-decoration: none;
+      font-family: $main-font;
+      &.header {
+        background-image: url("https://user-images.githubusercontent.com/60081201/93159710-c780c600-f749-11ea-9ce3-426c9101f633.png");
+      }
+      &.header_user {
+        background-image: url("https://user-images.githubusercontent.com/60081201/93162618-16c9f500-f750-11ea-9ddc-8c03d06098ae.png");
+      }
+      &.header.router-link-exact-active {
+        color: white;
+        background-image: url("https://user-images.githubusercontent.com/60081201/93162365-9c00da00-f74f-11ea-9b7c-e3e2298c002d.png");
+      }
     }
   }
 }

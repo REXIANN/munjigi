@@ -17,6 +17,6 @@ export default {
 }
 </script>
 
-<style>
-
+<style type="text/css" lang="scss">
+@import "@/assets/css/views/community.scss";
 </style>
