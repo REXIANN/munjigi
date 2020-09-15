@@ -2,17 +2,16 @@
   <div>
     This is CommunityReviewList.vue
     <div v-for="(review, idx) in reviewList" :key="idx">
-      
-      <v-card class="mx-auto" max-width="400" outlined @click="SELECT_REVIEW(review)">
-        <v-list-item>
-          <v-list-item-content>
-            <v-img :src="review.thumbnail" ></v-img>
+      <v-card class="review-list" outlined @click="SELECT_REVIEW(review)">
+        <v-list-item class="d-flex justify-space-around review-list-item">
+          <v-img class="review-list-image" :src="review.thumbnail"></v-img>
+
+          <div class="review-list-text">
             <div class="overline mb-4">{{ review.title }}</div>
             <v-list-item-subtitle>{{ review.user }}</v-list-item-subtitle>
             <v-list-item-subtitle>{{ review.view }}</v-list-item-subtitle>
             <v-list-item-subtitle>{{ review.created }}</v-list-item-subtitle>
-          </v-list-item-content>
-
+          </div>
         </v-list-item>
       </v-card>
     </div>
@@ -20,12 +19,11 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex"
+import { mapMutations } from "vuex";
 export default {
   name: "CommunityReviewList",
   methods: {
-    ...mapMutations(["SELECT_REVIEW"])
-    
+    ...mapMutations(["SELECT_REVIEW"]),
   },
   data() {
     return {
@@ -57,7 +55,6 @@ export default {
           user: "Cathy",
           view: 11,
           created: "2020-09-23",
-
         },
       ],
     };
