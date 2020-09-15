@@ -10,8 +10,6 @@ from .models import Heritage
 class HeritageListAPI(generics.GenericAPIView):
     def get(self, request):
         heritages = Heritage.objects.all()
-        serializer_class = HeritageSerializer
+        serializer = HeritageSerializer(heritages, many=True)
         pagination_class = PageNumberPagination
-        return Response(heritages)
-    
-
+        return Response(serializer.data)
