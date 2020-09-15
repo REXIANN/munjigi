@@ -23,16 +23,6 @@ class Heritage_picture(models.Model):
     imageurl = models.URLField()
 
 
-class Review(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    heritage = models.ForeignKey(Heritage, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    user_recommend = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="recommend_reviews", blank=True)
-
-
 class Tag(models.Model):
     name = models.CharField(max_length=100)
     tagging = models.ManyToManyField(Heritage, related_name='tag_heritages', blank=True)

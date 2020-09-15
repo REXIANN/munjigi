@@ -37,4 +37,7 @@ class LoginUserSerializer(serializers.ModelSerializer):
         user = authenticate(**data)
         if user and user.is_active:
             return user
-        raise serializers.ValidationError("Unable to login with provided credentials.")    
+        raise serializers.ValidationError("Unable to login with provided credentials.")
+
+
+# 회원탈퇴
