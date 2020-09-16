@@ -16,8 +16,7 @@
         <a v-show="isLogin" class="header-user" @click="logout">로그아웃</a>
       </div>
     </div>
-   
-    <router-view />
+    <router-view class="router-view-margin" />
   </v-app>
 </template>
 
