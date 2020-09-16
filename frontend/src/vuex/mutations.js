@@ -10,7 +10,7 @@ export default {
   },
   SELECT_REVIEW(state, review) {
     state.review = review;
-    router.push({ name: "CommunityReviewItem", params: { id: review.view } });
+    router.push({ name: "CommunityReviewItem", params: { id: review.id } });
   },
   SET_USER_DATA(state, user) {
     const userData = {
