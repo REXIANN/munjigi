@@ -1,6 +1,5 @@
 <template>
-  <div>
-    this is Heritage.vue
+  <div class="heritage">
     <HeritageSearchBar />
     <HeritageCarousel />
     <HeritageCards />
