@@ -1,4 +1,4 @@
 export default {
-  isLogin: state => !!state.auth_token,
+  isLogin: state => !!state.authToken,
   config: state => ({ headers: { Authorization: `Token ${state.authToken}` } }) 
 }

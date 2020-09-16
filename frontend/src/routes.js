@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Home from "@/views/Home.vue"
 import Login from "@/views/Login"
 import Community from "@/views/Community"
+import CommunityReviewItem from "@/components/community/CommunityReviewItem"
 import Heritage from "@/views/Heritage"
 import Maps from "@/views/Maps"
 import Signup from "@/views/Signup"
@@ -26,6 +27,11 @@ const routes =  [
     path: "/community",
     name: "Community",
     component: Community,
+  },
+  {
+    path: "/community/:id",
+    name: "CommunityReviewItem",
+    component: CommunityReviewItem
   },
   {
     path: "/maps",
