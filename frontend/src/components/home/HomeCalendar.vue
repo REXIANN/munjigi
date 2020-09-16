@@ -1,22 +1,22 @@
 <template>
-  <div>
-    <div>This is HomeCalendar.vue</div>
+  <div class="homeCalendar">
+    <h1>문화재 월별 행사 정보</h1>
     <v-row class="fill-height">
       <v-col>
         <v-sheet height="64">
           <v-toolbar flat color="white">
-            <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday"
-              >Today</v-btn
-            >
+            <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">Today</v-btn>
             <v-btn fab text small color="grey darken-2" @click="prev">
               <v-icon small>mdi-chevron-left</v-icon>
             </v-btn>
             <v-btn fab text small color="grey darken-2" @click="next">
               <v-icon small>mdi-chevron-right</v-icon>
             </v-btn>
-            <v-toolbar-title v-if="$refs.calendar">{{
+            <v-toolbar-title v-if="$refs.calendar">
+              {{
               $refs.calendar.title
-            }}</v-toolbar-title>
+              }}
+            </v-toolbar-title>
             <!-- <v-spacer></v-spacer>
           <v-menu bottom right>
             <template v-slot:activator="{ on, attrs }">
@@ -39,7 +39,7 @@
                 <v-list-item-title>4 days</v-list-item-title>
               </v-list-item>
             </v-list>
-          </v-menu>-->
+            </v-menu>-->
           </v-toolbar>
         </v-sheet>
         <v-sheet height="600">
@@ -79,9 +79,7 @@
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
               <v-card-actions>
-                <v-btn text color="secondary" @click="selectedOpen = false"
-                  >Cancel</v-btn
-                >
+                <v-btn text color="secondary" @click="selectedOpen = false">Cancel</v-btn>
               </v-card-actions>
             </v-card>
           </v-menu>
@@ -294,7 +292,7 @@ export default {
       }
 
       this.events = events;
-      console.log(events);
+      // console.log(events);
     },
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a;
@@ -303,4 +301,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style type="text/css" lang="scss">
+@import "@/assets/css/components/home/homeCalendar.scss";
+</style>

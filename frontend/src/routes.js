@@ -1,12 +1,18 @@
-import Home from "@/views/Home.vue";
-import Login from "@/views/Login";
-import Community from "@/views/Community";
-import Heritage from "@/views/Heritage";
-import Maps from "@/views/Maps";
-import Signup from "@/views/Signup";
-import Mypage from "@/views/Mypage";
+import Vue from 'vue'
+import VueRouter from 'vue-router'
 
-export default [
+import Home from "@/views/Home.vue"
+import Login from "@/views/Login"
+import Community from "@/views/Community"
+import CommunityReviewItem from "@/components/community/CommunityReviewItem"
+import Heritage from "@/views/Heritage"
+import Maps from "@/views/Maps"
+import Signup from "@/views/Signup"
+import Mypage from "@/views/Mypage"
+
+Vue.use(VueRouter)
+
+const routes =  [
   {
     path: "/",
     name: "Home",
@@ -23,6 +29,11 @@ export default [
     component: Community,
   },
   {
+    path: "/community/:id",
+    name: "CommunityReviewItem",
+    component: CommunityReviewItem
+  },
+  {
     path: "/maps",
     name: "Maps",
     component: Maps,
@@ -30,10 +41,6 @@ export default [
   {
     path: "/login",
     name: "Login",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     component: Login,
   },
   {
@@ -46,4 +53,12 @@ export default [
     name: "Mypage",
     component: Mypage,
   },
-];
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes,
+})
+
+export default router

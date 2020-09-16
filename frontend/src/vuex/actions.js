@@ -1,42 +1,44 @@
 import axios from "axios";
 import cookies from 'vue-cookies'
-
-// import router from '@/routes'
+import router from '@/routes'
 import SERVER from '@/api/drf'
 
 export default {
-  login({ }, loginData) {
-    axios.post(SERVER, loginData)
-      .then((res) => {
+  postAuthData({ commit }, info) {
+    axios.post(info.location, info.data)
+      .then(res => {
         console.log(res)
-        sessionStorage.setItem("loginUID", res.data.object)
+        commit('SET_TOKEN', res.data.token)
+        router.push({ name: 'Home' })
       })
-      .catch((err) => console.log(err.message))
-
-    // if(loginData.autoLogin) {
-    // localStorage.setItem("loginUID", res.data.object)
-    // } else {
-    //   sessionStorage.setItem("loginUID", res.data.object)
-    // }
-    // commit("loginSuccess")
-    // router.push({ name: "MyStudy", params: { UID: res.data.object } })
+      .catch((err) => { console.log(err.message) })
   },
-  logout({ state }) {
-    axios.post(SERVER)
-      .then((res) => {
-        console.log(res)
-        state.auth_token = null
-        localStorage.removeItem('loginUID')
-        sessionStorage.removeItem('loginUID')
+  signup({ dispatch }, signupData) {
+    const info = {
+      location: SERVER.URL + SERVER.ROUTES.signup,
+      data: signupData
+    }
+    dispatch('postAuthData', info)
+
+  },
+  login({ dispatch }, loginData) {
+    const info = {
+      location: SERVER.URL + SERVER.ROUTES.login,
+      data: loginData
+    }
+    dispatch('postAuthData', info)
+  },
+
+  logout({ getters, commit }) {
+    axios.post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config)
+      .then(() => {
+        commit('SET_TOKEN', null)
+        cookies.remove('auth-token')
+        router.push({ name: 'Home' })
       })
       .catch((err) => { console.log(err.message) })
 
 
-  },
-  signup({ state, commit }, signupData) {
-    axios.post(SERVER, signupData)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err.message))
   },
 
 };

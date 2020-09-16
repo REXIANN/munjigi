@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>This is HomeHeritage.vue</div>
     <h1>문화재 인기순</h1>
     <div class="d-flex">
       <HeritageCardItem />
