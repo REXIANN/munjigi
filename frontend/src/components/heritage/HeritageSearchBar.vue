@@ -1,6 +1,10 @@
 <template>
   <div class="heritage-search-bar">
-    <v-text-field class="" label="Main input" :rules="rules" hide-details="auto"></v-text-field>
+    <v-text-field 
+      name="input" 
+      label="찾고자 하는 문화재를 검색해 보세요!" 
+      :rules="rules" 
+      hide-details="auto"></v-text-field>
   </div>
 </template>
 
@@ -12,8 +16,7 @@ export default {
   data() {
     return {
       rules: [
-        (value) => !!value || "Required.",
-        (value) => (value && value.length >= 3) || "Min 3 characters",
+        (value) => !!value || "한 글자 이상 입력하셔야 합니다.",
       ],
     };
   },

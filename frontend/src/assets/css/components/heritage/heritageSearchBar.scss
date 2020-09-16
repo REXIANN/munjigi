@@ -2,23 +2,11 @@
 @import "../../components";
 
 .heritage-search-bar {
+  border: 0;
+  margin: 5vh auto 3vh;
+  width: 80vw;
 
-  input {
-    border: 0;
-    margin: 0;
-    padding: 0;
+  .v-input {
     font-size: 1.6rem;
-    height: 5vh;
-    outline: none;
-  }
-
-  input[type="text"] {
-    width: 40vw;
-    border: 2px inset brown;
-    border-radius: 1vw;
-  }
-
-  input[type="text"]:focus {
-
   }
 }
