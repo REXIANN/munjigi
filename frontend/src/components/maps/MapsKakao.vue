@@ -1,6 +1,6 @@
 <template>
   <div class="maps-kakao">
-    <div id="map" style="width: 70vw; height: 80vh; position: inline-block; margin: 10px auto;"></div>
+    <div id="map" style="width: 70vw; height:90vh; position: inline-block; margin: 0 auto; padding: 0;"></div>
   </div>
 </template>
 

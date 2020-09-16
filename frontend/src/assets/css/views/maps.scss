@@ -1,7 +1,8 @@
 @import "../components";
 
 .maps-info-kakao {
-  margin: 0 auto;
+  margin: 0;
+  padding: 0;
   height: 90vh;
 
   .maps-search {
@@ -36,6 +37,11 @@
 
   .maps-info-list {
     height: 80vh;
+  }
+
+  .maps-kakao {
+    margin: 0;
+    padding: 0;
   }
 
 
