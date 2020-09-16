@@ -2,6 +2,9 @@
   <div>
     This is CommunityReviewItem.vue
     <div>
+      <div v-if="review.user == userData.id">
+        <button>수정</button>
+      </div>
       <span>{{ review.title }}</span>
       <br />
       <span>{{ review.user }}</span>
@@ -20,10 +23,9 @@ import { mapState } from "vuex";
 export default {
   name: "CommunityReviewItem",
   computed: {
-    ...mapState({ review: "review" }),
+    ...mapState({ review: "review" }, ["userData"]),
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

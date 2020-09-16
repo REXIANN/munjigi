@@ -3,7 +3,10 @@
     <div v-for="(review, idx) in reviewList" :key="idx">
       <v-card class="review-list" outlined @click="SELECT_REVIEW(review)">
         <v-list-item class="d-flex justify-space-around review-list-item">
-          <v-img class="review-list-image" src="https://picsum.photos/510/300?random"></v-img>
+          <v-img
+            class="review-list-image"
+            src="https://picsum.photos/510/300?random"
+          ></v-img>
 
           <div class="review-list-text">
             <div class="overline mb-4">{{ review.title }}</div>
@@ -27,6 +30,7 @@ export default {
     axios
       .get(SERVER.URL + SERVER.ROUTES.review + "/", null, null)
       .then((response) => {
+        console.log(response.data);
         this.reviewList = response.data;
       });
   },
@@ -41,5 +45,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
