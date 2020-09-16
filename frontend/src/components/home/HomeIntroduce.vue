@@ -5,7 +5,7 @@
       <v-container class="pa-3 text-center">
         <v-row class="fill-height" align="center" justify="center">
           <template v-for="(item, i) in items">
-            <v-col :key="i" cols="12" md="3">
+            <v-col :key="i" cols="4">
               <v-hover v-slot:default="{ hover }">
                 <v-card
                   @click="$router.push({ name: item.location })"

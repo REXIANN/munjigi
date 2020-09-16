@@ -1,0 +1,12 @@
+@charset "utf-8";
+@import "../../components";
+
+.heritage-search-bar {
+  border: 0;
+  margin: 5vh auto 3vh;
+  width: 80vw;
+
+  .v-input {
+    font-size: 1.6rem;
+  }
+}

@@ -1,27 +1,24 @@
 <template>
-  <div>
-    <div>
-      This is CommunitySearchBar.vue
-    </div>
-    <div>
-      <v-text-field
-        class="mx-4"
-        hide-details
-        label="Search"
-        solo-inverted
-        prepend-inner-icon="search"
-        style="width: 500px; margin: 10px auto;"
-      ></v-text-field>
-    </div>
+  <div class="heritage-search-bar">
+    <v-text-field 
+      name="input" 
+      label="찾고자 하는 문화재를 검색해 보세요!" 
+      :rules="rules" 
+      hide-details="auto"></v-text-field>
   </div>
 </template>
 
 <script>
+import "@/assets/css/components/heritage/heritageSearchBar.scss";
+
 export default {
-    name: 'CommunitySearchBar'
-}
+  name: "CommunitySearchBar",
+  data() {
+    return {
+      rules: [
+        (value) => !!value || "한 글자 이상 입력하셔야 합니다.",
+      ],
+    };
+  },
+};
 </script>
-
-<style>
-
-</style>
