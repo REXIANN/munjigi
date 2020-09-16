@@ -1,15 +1,23 @@
 <template>
   <div>
-      This is community.vue
+    <CommunityCreateReview />
+    <CommunityReviewList />
   </div>
 </template>
 
 <script>
-export default {
+import CommunityReviewList from "@/components/community/CommunityReviewList";
+import CommunityCreateReview from "@/components/community/CommunityCreateReview";
 
-}
+export default {
+  name: "Community",
+  components: {
+    CommunityReviewList,
+    CommunityCreateReview,
+  },
+};
 </script>
 
-<style>
-
+<style type="text/css" lang="scss">
+@import "@/assets/css/views/community.scss";
 </style>

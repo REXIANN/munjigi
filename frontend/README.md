@@ -46,3 +46,16 @@ ADD_COUNT(state) { state.count++ }
 
 - store.js, getters.js, actions.js, mutations.js 네 개의 파일이 존재
 - 실질적으로 저장되는 store.js에 변수들이 담기며 main.js로의 전송을 담당
+
+
+## 사용한 라이브러리
+
+- axios
+- core-js
+- es6-promise
+- vue
+- vue-cookies
+- vue-router
+- vue-slick-carousel
+- vuetify
+- vuex

@@ -1,22 +1,34 @@
 <template>
   <div class="home">
-    This is Home.vue
-    <p>{{ this.$store.state.count }}</p>
-    <button @click="ADD_COUNT">change</button>
+    <HomeIntroduce />
+    <button @click="logout">logout</button>
+    <HomeHeritage />
+    <HomeCalendar />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import { mapMutations } from 'vuex'
+import HomeIntroduce from "@/components/home/HomeIntroduce.vue";
+import HomeHeritage from "@/components/home/HomeHeritage.vue";
+import HomeCalendar from "@/components/home/HomeCalendar.vue";
+import { mapActions } from "vuex";
+
 export default {
-  name: 'Home',
+  name: "Home",
+  components: {
+    HomeIntroduce,
+    HomeHeritage,
+    HomeCalendar,
+  },
   methods: {
-    ...mapMutations(['ADD_COUNT'])
+    ...mapActions(["logout"]),
   },
   data() {
-    return {
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
+
+<style type="text/css" lang="scss">
+@import "@/assets/css/views/home.scss";
+</style>

@@ -1,16 +1,25 @@
 <template>
   <div>
       This is Maps.vue
-      <KakaoMaps />
+      <MapsSearch />
+      <div class="row maps-info-kakao">
+        <MapsInfoList class="col-4"/>
+        <MapsKakao class="col-8"/>
+      </div>
   </div>
 </template>
 
 <script>
-import KakaoMaps from '@/components/KakaoMaps'
+import MapsSearch from '@/components/maps/MapsSearch'
+import MapsInfoList from '@/components/maps/MapsInfoList'
+import MapsKakao from '@/components/maps/MapsKakao'
+
 export default {
   name: 'Maps',
   components: {
-    KakaoMaps
+    MapsSearch,
+    MapsInfoList,
+    MapsKakao,
   },
   data() {
     return {
@@ -20,6 +29,6 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+  @import "@/assets/css/views/maps.scss"
 </style>
