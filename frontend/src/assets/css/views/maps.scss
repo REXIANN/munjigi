@@ -8,10 +8,9 @@
   .maps-search {
 
     input[type="text"] {
-      border: 0;
-      background: white;
+      background: none;
       display: block;
-      border: 3px solid #9d201d;
+      border: 3px solid blue;
       width: 40vw;
       outline: none;
       color: black;
@@ -37,6 +36,8 @@
 
   .maps-info-list {
     height: 80vh;
+    border: 2px solid chocolate;
+    border-radius: 3vw;
   }
 
   .maps-kakao {
