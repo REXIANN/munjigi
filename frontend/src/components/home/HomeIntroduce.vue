@@ -2,10 +2,10 @@
   <div class="homeIntroduce">
     <h1>문지기란?</h1>
     <div>
-      <v-container class="pa-4 text-center">
+      <v-container class="pa-3 text-center">
         <v-row class="fill-height" align="center" justify="center">
           <template v-for="(item, i) in items">
-            <v-col :key="i" cols="12" md="4">
+            <v-col :key="i" cols="12" md="3">
               <v-hover v-slot:default="{ hover }">
                 <v-card
                   @click="$router.push({ name: item.location })"
@@ -16,7 +16,7 @@
                     <v-card-title class="title white--text">
                       <v-row class="fill-height flex-column" justify="space-between">
                         <h2 class="mt-4 subheading">{{ item.title }}</h2>
-                        <h4 class="ma-0">{{ item.text }}</h4>
+                        <h4 class="ma-3">{{ item.text }}</h4>
                       </v-row>
                     </v-card-title>
                   </v-img>
