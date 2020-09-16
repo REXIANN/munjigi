@@ -1,6 +1,5 @@
 <template>
   <div>
-    This is CommunityReviewList.vue
     <div v-for="(review, idx) in reviewList" :key="idx">
       <v-card class="review-list" outlined @click="SELECT_REVIEW(review)">
         <v-list-item class="d-flex justify-space-around review-list-item">
