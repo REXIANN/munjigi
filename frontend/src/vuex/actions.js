@@ -43,12 +43,4 @@ export default {
         console.log(err.message);
       });
   },
-  getReview() {
-    console.log("도착");
-    axios
-      .get(SERVER.URL + SERVER.ROUTES.review + "/", null, null)
-      .then((response) => {
-        console.log(response);
-      });
-  },
 };
