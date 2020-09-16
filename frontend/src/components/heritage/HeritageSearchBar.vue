@@ -1,27 +1,21 @@
 <template>
-  <div>
-    <div>
-      This is CommunitySearchBar.vue
-    </div>
-    <div>
-      <v-text-field
-        class="mx-4"
-        hide-details
-        label="Search"
-        solo-inverted
-        prepend-inner-icon="search"
-        style="width: 500px; margin: 10px auto;"
-      ></v-text-field>
-    </div>
+  <div class="heritage-search-bar">
+    <v-text-field class="" label="Main input" :rules="rules" hide-details="auto"></v-text-field>
   </div>
 </template>
 
 <script>
+import "@/assets/css/components/heritage/heritageSearchBar.scss";
+
 export default {
-    name: 'CommunitySearchBar'
-}
+  name: "CommunitySearchBar",
+  data() {
+    return {
+      rules: [
+        (value) => !!value || "Required.",
+        (value) => (value && value.length >= 3) || "Min 3 characters",
+      ],
+    };
+  },
+};
 </script>
-
-<style>
-
-</style>
