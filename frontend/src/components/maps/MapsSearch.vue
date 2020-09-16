@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="maps-search">
     This is MapsSearch.vue
     <br>
     <input type="text" v-model="keyword">

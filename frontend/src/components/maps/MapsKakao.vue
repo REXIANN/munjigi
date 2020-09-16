@@ -1,10 +1,6 @@
 <template>
-  <div>
-    <div>
-      <span>This is KakaoMaps.vue</span>
-    </div>
-    
-    <div id="map" style="width: 500px; height: 400px; position: inline-block; margin: 10px auto;"></div>
+  <div class="maps-kakao">
+    <div id="map" style="width: 70vw; height: 80vh; position: inline-block; margin: 10px auto;"></div>
   </div>
 </template>
 
