@@ -23,7 +23,7 @@
                 v-model="content"
                 hint="내용을 입력해주세요."
                 required="내용을 입력해 주세요!"
-                @keypress.enter="create"
+                @keypress.enter="createReview"
               ></v-textarea>
             </v-container>
           </v-card-text>
@@ -32,7 +32,7 @@
             <v-btn color="error" text @click="dialog = false">
               <h3>닫기</h3>
             </v-btn>
-            <v-btn color=" darken-1" text @click="create">
+            <v-btn color=" darken-1" text @click="createReview">
               <h3>작성완료</h3>
             </v-btn>
           </v-card-actions>
@@ -54,18 +54,21 @@ export default {
     ...mapGetters(["config"]),
   },
   methods: {
-    create() {
+    createReview() {
       const reviewData = {
         title: this.title,
         content: this.content,
         user: this.userData.id,
       };
-      axios.post(
-        SERVER.URL + SERVER.ROUTES.review + "/",
-        reviewData,
-        this.config
-      );
-      this.dialog = false;
+      axios
+        .post(SERVER.URL + SERVER.ROUTES.review + "/", reviewData, this.config)
+        .then((response) => {
+          this.dialog = false;
+          this.$router.push({
+            name: "CommunityReviewItem",
+            params: { id: response.data.id },
+          });
+        });
     },
   },
   data() {
@@ -78,5 +81,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
