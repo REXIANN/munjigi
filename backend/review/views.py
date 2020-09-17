@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
-from .serializers import ReviewSerializer
+from .serializers import ReviewSerializer, ReviewListSerializer
 from .models import Review
 from backend.pagination import CustomPagination
 
@@ -19,11 +19,11 @@ class ReviewListAPI(GenericAPIView):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = self.get_serializer(page, many=True)
+            serializer = ReviewListSerializer(page, many=True)
             result = self.get_paginated_response(serializer.data)
             data = result.data # pagination data
         else:
-            serializer = self.get_serializer(queryset, many=True)
+            serializer = ReviewListSerializer(queryset, many=True)
             data = serializer.data
         payload = {
             'return_code': '0000',
@@ -48,7 +48,7 @@ class ReviewDetailAPI(generics.GenericAPIView):
     
     def get(self, request, pk):
         review = get_object_or_404(Review, pk=pk)
-        serializer = ReviewSerializer(review)
+        serializer = ReviewListSerializer(review)
         return Response(serializer.data)
     
 
