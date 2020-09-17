@@ -2,5 +2,12 @@
 @import "../../components";
 
 .community-review-item {
-  margin: $components-margin;
+  background-image: url("https://user-images.githubusercontent.com/60081201/93408144-c9c05d00-f8ce-11ea-8c1b-5c737727704f.PNG");
+  background-attachment: fixed;
+  background-origin: border-box;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+  padding: $components-margin;
 }
