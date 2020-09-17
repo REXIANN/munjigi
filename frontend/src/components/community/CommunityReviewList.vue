@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="community-review-list">
     <h1>문화재 방문 리뷰 게시판</h1>
     <div v-for="(review, idx) in reviewList" :key="idx">
       <v-card class="review-list" outlined @click="SELECT_REVIEW(review)">
