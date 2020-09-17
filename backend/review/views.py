@@ -1,23 +1,36 @@
 from rest_framework import generics, status
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import get_object_or_404, GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
-from .serializers import ReviewSerializer
+from .serializers import ReviewSerializer, ReviewListSerializer
 from .models import Review
+from backend.pagination import CustomPagination
 
 
-class ReviewListAPI(generics.GenericAPIView):
-    queryset = Review.objects.all()
+class ReviewListAPI(GenericAPIView):
     serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
+    pagination_class = CustomPagination
 
-    
+
     def get(self, request):
-        reviews = Review.objects.all()
-        serializer = ReviewSerializer(reviews, many=True)
-        pagination_class = PageNumberPagination
-        return Response(serializer.data)
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = ReviewListSerializer(page, many=True)
+            result = self.get_paginated_response(serializer.data)
+            data = result.data # pagination data
+        else:
+            serializer = ReviewListSerializer(queryset, many=True)
+            data = serializer.data
+        payload = {
+            'return_code': '0000',
+            'return_message': 'Success',
+            'data': data
+        }
+        return Response(data)
 
 
     def post(self, request):
@@ -26,15 +39,16 @@ class ReviewListAPI(generics.GenericAPIView):
             serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-
+        
 
 class ReviewDetailAPI(generics.GenericAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     
+    
     def get(self, request, pk):
         review = get_object_or_404(Review, pk=pk)
-        serializer = ReviewSerializer(review)
+        serializer = ReviewListSerializer(review)
         return Response(serializer.data)
     
 
