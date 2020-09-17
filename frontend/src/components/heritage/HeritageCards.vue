@@ -1,23 +1,35 @@
 <template>
   <div>
-    <div>This is CommunityCards.vue</div>
+    <h1>인기 문화재</h1>
+    <button @click="check">체크</button>
 
-    <div class="d-flex">
+    <h1 class="d-flex">
       <HeritageCardItem />
       <HeritageCardItem />
       <HeritageCardItem />
-    </div>
-
+    </h1>
   </div>
 </template>
 
 <script>
-import HeritageCardItem from '@/components/heritage/HeritageCardItem'
+import SERVER from "@/api/drf";
+import axios from "axios";
+import HeritageCardItem from "@/components/heritage/HeritageCardItem";
+
 export default {
   name: "CommunityCards",
   components: {
-    HeritageCardItem
-  }
+    HeritageCardItem,
+  },
+  methods: {
+    check() {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.heritage + "/?page" + "=1")
+        .then((res) => {
+          console.log(res);
+        });
+    },
+  },
 };
 </script>
 

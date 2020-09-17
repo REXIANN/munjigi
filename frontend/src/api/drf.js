@@ -5,5 +5,6 @@ export default {
     login: "/accounts/auth/login/",
     logout: "/accounts/auth/logout/",
     review: "/review",
+    heritage: "/heritage",
   },
 };
