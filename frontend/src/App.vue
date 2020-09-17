@@ -16,13 +16,13 @@
         <a v-show="isLogin" class="header-user" @click="logout">로그아웃</a>
       </div>
     </div>
-    <router-view class="router-view-margin" />
+    <router-view />
   </v-app>
 </template>
 
 <script>
-import { mapGetters } from "vuex"
-import { mapActions } from "vuex"
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -30,8 +30,8 @@ export default {
     ...mapGetters(["isLogin"]),
   },
   methods: {
-    ...mapActions(["logout"])
-  }
+    ...mapActions(["logout"]),
+  },
 };
 </script>
 <style type="text/css" lang="scss">
