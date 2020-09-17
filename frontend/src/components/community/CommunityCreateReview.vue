@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div class="community-create-review">
     <v-row justify="end">
       <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn dark v-bind="attrs" v-on="on">새글쓰기</v-btn>
+          <v-btn class="m-5" dark v-bind="attrs" v-on="on">
+            <h3>리뷰쓰기</h3>
+          </v-btn>
         </template>
         <v-card>
           <v-card-title>
@@ -29,13 +31,28 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="error" text @click="dialog = false">
+            <v-btn color="error" text @click="closeCheck">
               <h3>닫기</h3>
             </v-btn>
             <v-btn color=" darken-1" text @click="createReview">
               <h3>작성완료</h3>
             </v-btn>
           </v-card-actions>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="dialog2" max-width="500px">
+        <v-card>
+          <v-card-title>
+            <h3>작성 중인 내용이 있습니다. 닫으시겠습니까?</h3>
+            <v-spacer></v-spacer>
+          </v-card-title>
+
+          <v-btn text @click="closeReview">
+            <h4>네</h4>
+          </v-btn>
+          <v-btn text @click="dialog2 = false">
+            <h4>아니요</h4>
+          </v-btn>
         </v-card>
       </v-dialog>
     </v-row>
@@ -71,15 +88,30 @@ export default {
           });
         });
     },
+    closeCheck() {
+      if (this.title != "" || this.content != "") {
+        this.dialog2 = true;
+      } else {
+        this.dialog = false;
+      }
+    },
+    closeReview() {
+      this.dialog = false;
+      this.dialog2 = false;
+    },
   },
   data() {
     return {
       title: "",
       content: "",
       dialog: false,
+      dialog2: false,
     };
   },
 };
 </script>
 
-<style></style>
+<style type="text/css" lang="scss">
+@import "@/assets/css/components/community/communityCreateReview.scss";
+</style>
+

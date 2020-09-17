@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="community">
     <CommunityCreateReview />
     <CommunityReviewList />
   </div>
