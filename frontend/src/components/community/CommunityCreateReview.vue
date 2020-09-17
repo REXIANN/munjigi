@@ -79,13 +79,13 @@ export default {
       };
       axios
         .post(SERVER.URL + SERVER.ROUTES.review + "/", reviewData, this.config)
-        .then((response) => {
+        .then(() => {
           this.dialog = false;
-          console.log(response);
-          this.$router.push({
-            name: "CommunityReviewItem",
-            params: { id: response.data.id },
-          });
+          this.$router.push({ name: "Community" });
+          // this.$router.push({
+          //   name: "CommunityReviewItem",
+          //   params: { id: response.data.id },
+          // });
         });
     },
     closeCheck() {

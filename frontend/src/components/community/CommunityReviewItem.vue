@@ -1,11 +1,14 @@
 <template>
   <div class="community-review-item">
+    <v-row>
+      <v-btn dark @click="$router.push({ name: 'Community' })">목록보기</v-btn>
+    </v-row>
     <div v-if="review.user == userData.id">
       <v-row justify="end">
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn dark @click="deleteReview(review.id)">삭제</v-btn>
-            <v-btn dark v-bind="attrs" v-on="on" @click="connectReview()">수정</v-btn>
+            <v-btn class="teal" dark v-bind="attrs" v-on="on" @click="connectReview()">수정</v-btn>
+            <v-btn @click="deleteReview(review.id)">삭제</v-btn>
           </template>
           <v-card>
             <v-card-title>
@@ -35,14 +38,12 @@
         </v-dialog>
       </v-row>
     </div>
-    <span>{{ review.title }}</span>
+    <h1>{{ review.title }}</h1>
     <br />
-    <span>{{ review.user }}</span>
+    <h2>작성자 : {{ review.user }}</h2>
+    <h5>{{ review.created_at }}</h5>
     <br />
-    <span>{{ review.content }}</span>
-    <br />
-    <span>{{ review.created_at }}</span>
-    <br />
+    <h3>{{ review.content }}</h3>
   </div>
 </template>
 
