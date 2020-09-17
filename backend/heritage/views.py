@@ -30,15 +30,6 @@ class HeritageListAPI(GenericAPIView):
         }
         return Response(data)
 
-# class HeritageListAPI(generics.GenericAPIView):
-#     queryset = Heritage.objects.all()
-#     serializer_class = HeritageSerializer
-#     pagination_class = PageNumberPagination
-#     def get(self, request):
-#         heritages = Heritage.objects.all()
-#         serializer = HeritageSerializer(heritages, many=True)
-#         return Response(serializer.data)
-
 
 class HeritageDetailAPI(generics.GenericAPIView):
     queryset = Heritage.objects.all()
