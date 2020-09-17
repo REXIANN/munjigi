@@ -10,4 +10,9 @@ class HeritageSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 
+class HeritageDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Heritage
+        fields = ('__all__')
+
 
