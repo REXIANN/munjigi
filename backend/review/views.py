@@ -14,8 +14,8 @@ class ReviewListAPI(generics.GenericAPIView):
 
     
     def get(self, request):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(many=True)
+        reviews = Review.objects.all()
+        serializer = ReviewSerializer(reviews, many=True)
         pagination_class = PageNumberPagination
         return Response(serializer.data)
 
@@ -33,14 +33,14 @@ class ReviewDetailAPI(generics.GenericAPIView):
     serializer_class = ReviewSerializer
     
     def get(self, request, pk):
-        queryset = get_object_or_404(Review, pk=pk)
-        serializer = self.get_serializer()
+        review = get_object_or_404(Review, pk=pk)
+        serializer = ReviewSerializer(review)
         return Response(serializer.data)
     
 
     def put(self, request, pk):
-        queryset = get_object_or_404(Review, pk=pk)
-        serializer = self.get_serializer(data = request.data)
+        review = get_object_or_404(Review, pk=pk)
+        serializer = ReviewSerializer(review, data = request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
