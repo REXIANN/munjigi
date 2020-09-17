@@ -1,20 +1,21 @@
 <template>
-  <div>
-      This is community.vue
-      <CommunityReviewList />
+  <div class="community">
+    <CommunityCreateReview />
+    <CommunityReviewList />
   </div>
 </template>
 
 <script>
-import CommunityReviewList from '@/components/community/CommunityReviewList'
+import CommunityReviewList from "@/components/community/CommunityReviewList";
+import CommunityCreateReview from "@/components/community/CommunityCreateReview";
 
 export default {
   name: "Community",
   components: {
     CommunityReviewList,
-  }
-  
-}
+    CommunityCreateReview,
+  },
+};
 </script>
 
 <style type="text/css" lang="scss">

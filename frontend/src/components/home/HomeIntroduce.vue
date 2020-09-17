@@ -5,7 +5,7 @@
       <v-container class="pa-3 text-center">
         <v-row class="fill-height" align="center" justify="center">
           <template v-for="(item, i) in items">
-            <v-col :key="i" cols="12" md="3">
+            <v-col :key="i" cols="4">
               <v-hover v-slot:default="{ hover }">
                 <v-card
                   @click="$router.push({ name: item.location })"
@@ -54,7 +54,7 @@ export default {
         text: "문화재 주변 정보 제공",
         img:
           "https://user-images.githubusercontent.com/60081201/93179269-67514a80-f770-11ea-8975-1f6f3a2b0a18.png",
-        location: "Map",
+        location: "Maps",
       },
     ],
     transparent: "rgba(255, 255, 255, 0)",
