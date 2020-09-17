@@ -144,12 +144,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
 }
 
-
-
-# REST_FRAMEWORK = {
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-#     'PAGE_SIZE': 9, 
-#     "DEFAULT_AUTHENTICATION_CLASSES": ("knox.auth.TokenAuthentication",),
-# }
-
 CORS_ORIGIN_ALLOW_ALL = True
+
+SESSION_COOKIE_AGE = 10,800
+SESSION_SAVE_EVERY_REQUEST = True
