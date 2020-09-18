@@ -11,4 +11,7 @@ export default {
   review: {
     type: Object,
   },
+  heritage: {
+    type: Object,
+  },
 };
