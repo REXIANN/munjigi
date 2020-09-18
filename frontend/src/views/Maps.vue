@@ -1,6 +1,5 @@
 <template>
   <div>
-      This is Maps.vue
       <MapsSearch />
       <div class="row maps-info-kakao">
         <MapsInfoList class="col-4"/>
