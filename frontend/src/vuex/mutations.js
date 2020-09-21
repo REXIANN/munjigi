@@ -12,10 +12,10 @@ export default {
     state.review = review;
     router.push({ name: "CommunityReviewItem", params: { id: review.id } });
   },
-  // SELECT_HERITAGE(state, heritage) {
-  //   state.heritage = heritage;
-  //   router.push({ name: "HeritageItem", params: { id: review.id } });
-  // },
+  SELECT_HERITAGE(state, heritage) {
+    state.heritage = heritage;
+    router.push({ name: "HeritageCardDetail", params: { id: heritage.id } });
+  },
   SET_USER_DATA(state, user) {
     const userData = {
       // res.user informations

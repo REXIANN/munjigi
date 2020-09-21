@@ -1,11 +1,11 @@
 <template>
   <div class="heritageCards">
-    <h1>이런 문화재, 알고 계셨나요?</h1>
+    <h1>인기 문화재</h1>
     <!-- {{ heritageList}} -->
     <div class="row">
       <ul v-for="heritage in heritageList" :key="heritage.id">
         <v-hover v-slot:default="{ hover }">
-          <v-card class="d-inline-block mx-auto">
+          <v-card class="d-inline-block mx-auto" @click="SELECT_HERITAGE(heritage)">
             <v-container>
               <h3>{{ heritage.k_name }}</h3>
               <v-row justify="space-between">
@@ -16,9 +16,7 @@
                         v-if="hover"
                         class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-1 white--text"
                         style="height: 100%;"
-                      >
-                        {{ heritage.era }}
-                      </div>
+                      >{{ heritage.era }}</div>
                     </v-expand-transition>
                   </v-img>
                 </v-col>
@@ -52,9 +50,7 @@
       <div
         slot="no-more"
         style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
-      >
-        목록의 끝입니다.
-      </div>
+      >목록의 끝입니다.</div>
     </infinite-loading>
   </div>
 </template>
@@ -64,6 +60,7 @@ import InfiniteLoading from "vue-infinite-loading";
 import SERVER from "@/api/drf";
 import axios from "axios";
 // import HeritageCardItem from "@/components/heritage/HeritageCardItem";
+import { mapMutations } from "vuex";
 
 export default {
   name: "CommunityCards",
@@ -79,6 +76,7 @@ export default {
       });
   },
   methods: {
+    ...mapMutations(["SELECT_HERITAGE"]),
     infiniteHandler($state) {
       axios
         .get(SERVER.URL + SERVER.ROUTES.heritage + "/?page=" + this.limit)
