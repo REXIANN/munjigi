@@ -59,3 +59,14 @@ class HeritageDetailAPI(generics.GenericAPIView):
             return Response(serializer.data)
 
         return Response(serializer.data)
+
+
+class HeritageLikeAPI(generics.GenericAPIView):
+    queryset = Heritage.objects.all()
+    serializer_class = HeritageDetailSerializer
+    def get(self, request, pk):
+        heritage = get_object_or_404(Heritage, pk=pk)
+        if request.user in heritage.like_users.all():
+            heritage.like_users.remove(request.user)
+        else:
+            heritage.like_users.add(request.user)
