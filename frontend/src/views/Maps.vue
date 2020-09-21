@@ -9,25 +9,23 @@
 </template>
 
 <script>
-import MapsSearch from '@/components/maps/MapsSearch'
-import MapsInfoList from '@/components/maps/MapsInfoList'
-import MapsKakao from '@/components/maps/MapsKakao'
+import MapsSearch from "@/components/maps/MapsSearch";
+import MapsInfoList from "@/components/maps/MapsInfoList";
+import MapsKakao from "@/components/maps/MapsKakao";
 
 export default {
-  name: 'Maps',
+  name: "Maps",
   components: {
     MapsSearch,
     MapsInfoList,
     MapsKakao,
   },
   data() {
-    return {
-
-    }
-  }
-}
+    return {};
+  },
+};
 </script>
 
 <style lang="scss">
-  @import "@/assets/css/views/maps.scss"
+@import "@/assets/css/views/maps.scss";
 </style>
