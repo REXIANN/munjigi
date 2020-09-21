@@ -81,6 +81,8 @@ export default {
         .post(SERVER.URL + SERVER.ROUTES.review + "/", reviewData, this.config)
         .then(() => {
           this.dialog = false;
+          this.title = "";
+          this.content = "";
           this.$router.push({ name: "Community" });
           // this.$router.push({
           //   name: "CommunityReviewItem",

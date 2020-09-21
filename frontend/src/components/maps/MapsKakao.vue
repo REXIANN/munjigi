@@ -9,6 +9,13 @@ export default {
   name: "MapsKakao",
   mounted() {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript()
+
+    
+  },
+  computed: {
+    getcoder() {
+      return new kakao.maps.services.Geocoder()
+    }
   },
   methods: {
     initMap() {
@@ -18,11 +25,12 @@ export default {
         level: 3,
       }
       var map = new kakao.maps.Map(container, options)
-
+      this.map = map
+      
       var marker = new kakao.maps.Marker({ position: map.getCenter() })
+      this.marker = marker
       marker.setMap(map)
     },
-
     addScript() {
       const script = document.createElement("script")
       /* global kakao */ script.onload = () => kakao.maps.load(this.initMap)
@@ -31,10 +39,12 @@ export default {
         `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${API_KEY}`
       document.head.appendChild(script)
     },
-    
   },
   data() {
     return {
+      map: null,
+      marker: null,
+      geocoder: null,
     }
   },
 }

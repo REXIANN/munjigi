@@ -45,6 +45,7 @@ body {
 #app {
 }
 
+// navbar SCSS
 #nav {
   background-image: url("https://user-images.githubusercontent.com/60081201/93159089-6d333580-f748-11ea-8ab2-7d14eb4737ec.png");
   background-size: contain;
@@ -58,18 +59,18 @@ body {
     a {
       img {
         margin: auto 1vw;
-        height: 10vh;
+        width: 300px;
       }
     }
   }
 
   .nav-lists {
-    height: 12vh;
+    height: 15vh;
     margin-right: 2vw;
 
     a {
       height: 100%;
-      width: 5vw;
+      width: 40px;
       margin: 0 0.5vw;
       padding: 0 auto;
 
@@ -81,14 +82,13 @@ body {
       writing-mode: tb;
       font-family: $main-font;
 
+      // actions for nav-lists
       &.header {
-        text-align: center;
         background-size: cover;
         background-position: center;
         background-image: url("https://user-images.githubusercontent.com/60081201/93159710-c780c600-f749-11ea-9ce3-426c9101f633.png");
       }
       &.header-user {
-        text-align: center;
         background-size: cover;
         background-position: center;
         background-image: url("https://user-images.githubusercontent.com/60081201/93162618-16c9f500-f750-11ea-9ddc-8c03d06098ae.png");
@@ -96,10 +96,19 @@ body {
       &.header.router-link-exact-active {
         transition: 0.5s;
         color: white;
-        text-align: center;
         background-size: cover;
         background-position: center;
         background-image: url("https://user-images.githubusercontent.com/60081201/93162365-9c00da00-f74f-11ea-9b7c-e3e2298c002d.png");
+      }
+
+      // for the text in nav-lists
+      span {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 0 auto;
       }
     }
   }

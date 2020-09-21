@@ -14,30 +14,64 @@
         </v-list-item>
       </v-card>
     </div>
+    <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
+      <div
+        slot="no-more"
+        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
+      >목록의 끝입니다.</div>
+    </infinite-loading>
   </div>
 </template>
 
 <script>
+import InfiniteLoading from "vue-infinite-loading";
 import SERVER from "@/api/drf";
 import axios from "axios";
 import { mapMutations } from "vuex";
 
 export default {
   name: "CommunityReviewList",
+  components: {
+    InfiniteLoading,
+  },
   mounted() {
     axios
-      .get(SERVER.URL + SERVER.ROUTES.review + "/", null, null)
+      .get(SERVER.URL + SERVER.ROUTES.review + "/?page=1", null, null)
       .then((response) => {
-        console.log(response.data);
-        this.reviewList = response.data;
+        this.reviewList = response.data.results;
       });
   },
   methods: {
     ...mapMutations(["SELECT_REVIEW"]),
+    infiniteHandler($state) {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.review + "/?page=" + this.limit)
+        .then((response) => {
+          setTimeout(() => {
+            if (response.data.results) {
+              this.reviewList = this.reviewList.concat(response.data.results);
+              $state.loaded();
+              this.limit += 1;
+              const EACH_LEN = 10;
+              if (response.data.results.length / EACH_LEN < 1) {
+                $state.complete();
+              }
+            } else {
+              // 끝 지정(No more data)
+              $state.complete();
+            }
+          }, 1000);
+        })
+        .catch((err) => {
+          $state.complete();
+          console.error(err);
+        });
+    },
   },
   data() {
     return {
       reviewList: [],
+      limit: 2,
     };
   },
 };
