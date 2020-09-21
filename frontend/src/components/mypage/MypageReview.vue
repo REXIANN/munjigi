@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>MypageReview.vue | 문화재 리뷰 목록</div>
+    <h2>문화재 리뷰 작성 목록</h2>
     <div v-if="isEmpty">
       아직 등록된 리뷰가 없습니다.
       <button>리뷰 작성하러가기</button>

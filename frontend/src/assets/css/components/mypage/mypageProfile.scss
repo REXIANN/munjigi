@@ -1,0 +1,10 @@
+@import "../../components";
+
+.mypageProfile {
+  background-color: white;
+  border-radius: 20px;
+  margin: $components-margin;
+  .grade-image {
+    justify-content: center;
+  }
+}
