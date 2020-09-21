@@ -1,6 +1,6 @@
 <template>
   <div class="heritageCards">
-    <h1>인기 문화재</h1>
+    <h1>이런 문화재, 알고 계셨나요?</h1>
     <!-- {{ heritageList}} -->
     <div class="row">
       <ul v-for="heritage in heritageList" :key="heritage.id">

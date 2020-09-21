@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>문화재 인기순</h1>
+    <h1>당신을 위한 맞춤 문화재!</h1>
     <div class="d-flex">
       <HeritageCardItem />
       <HeritageCardItem />

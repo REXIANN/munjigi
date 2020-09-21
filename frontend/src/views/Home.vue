@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <HomeIntroduce />
-    <button @click="logout">logout</button>
     <HomeHeritage />
     <HomeCalendar />
   </div>
