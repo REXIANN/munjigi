@@ -3,8 +3,10 @@
     <MypageProfile />
     <MypageMark />
     <MypageReview />
-    <button>개인 정보 수정</button>
-    <button>탈퇴</button>
+    <div class="btn-end">
+      <v-btn dark color="purple">개인 정보 수정</v-btn>
+      <v-btn dark>탈퇴</v-btn>
+    </div>
   </div>
 </template>
 

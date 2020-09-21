@@ -28,17 +28,22 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "HeritageCardDetail",
   computed: {
     ...mapState({ heritage: "heritage" }),
+    ...mapGetters(["config"]),
   },
   methods: {
     like(id) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like")
+        .get(
+          SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like",
+          null,
+          this.config
+        )
         .then((resp) => {
           console.log(resp);
         });
