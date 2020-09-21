@@ -1,0 +1,32 @@
+@charset 'utf-8';
+@import "../../components";
+
+.maps-search {
+  margin: 2vh auto;
+  width: 60vw;
+
+
+  input[type="text"] {
+    background: none;
+    display: block;
+    outline: none;
+    color: black;
+    border-radius: 10vw;
+    transition: 0.3s;
+  }
+
+  input[type="submit"] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 5vh auto;
+    text-align: center;
+    border: 3px solid #9d201d;
+    padding: 2vh 3vw;
+
+    color: white;
+    border-radius: 10vw;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+}

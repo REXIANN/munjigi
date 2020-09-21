@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="maps">
       <MapsSearch />
       <div class="row maps-info-kakao">
         <MapsInfoList class="col-4"/>

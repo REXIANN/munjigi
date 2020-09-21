@@ -1,5 +1,5 @@
 <template>
-  <div class="heritage-search-bar">
+  <div class="maps-search">
     <v-text-field 
       name="input" 
       label="지도에서 문화재를 찾아보세요!" 
@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import '@/assets/css/components/maps/mapsSearch.scss'
+
 export default {
   name: "MapsSearch",
   data() {
