@@ -4,29 +4,22 @@
 .maps-search {
   margin: 2vh auto;
   width: 60vw;
-
+  display: flex;
+  justify-content: space-around;
 
   input[type="text"] {
     background: none;
-    display: block;
     outline: none;
     color: black;
-    border-radius: 10vw;
-    transition: 0.3s;
   }
 
   input[type="submit"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 5vh auto;
+    width: 5vw;
+    background-color: rgb(85, 39, 39);
     text-align: center;
-    border: 3px solid #9d201d;
-    padding: 2vh 3vw;
-
+    outline: none;
     color: white;
-    border-radius: 10vw;
-    transition: 0.3s;
+    border-radius: 30px;
     cursor: pointer;
   }
 }

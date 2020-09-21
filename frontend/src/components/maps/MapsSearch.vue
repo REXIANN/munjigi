@@ -5,7 +5,10 @@
       label="지도에서 문화재를 찾아보세요!" 
       :rules="rules" 
       v-model="keyword"
-      hide-details="auto"></v-text-field>
+      hide-details="auto"
+      @keypress.enter="searchKeyword"  
+    ></v-text-field>
+      <input type="submit" value="검 색" @click="searchKeyword">
   </div>
 </template>
 
@@ -14,6 +17,11 @@ import '@/assets/css/components/maps/mapsSearch.scss'
 
 export default {
   name: "MapsSearch",
+  methods: {
+    searchKeyword() {
+      console.log('search with', this.keyword) 
+    }
+  },
   data() {
     return {
       keyword: null,
