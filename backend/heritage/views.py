@@ -8,6 +8,7 @@ from .serializers import HeritageSerializer, HeritageDetailSerializer
 from .models import Heritage
 from backend.pagination import CustomPagination
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
 
 
 class HeritageListAPI(GenericAPIView):
@@ -61,12 +62,12 @@ class HeritageDetailAPI(generics.GenericAPIView):
         return Response(serializer.data)
 
 
-class HeritageLikeAPI(generics.GenericAPIView):
-    queryset = Heritage.objects.all()
-    serializer_class = HeritageDetailSerializer
-    def get(self, request, pk):
-        heritage = get_object_or_404(Heritage, pk=pk)
-        if request.user in heritage.like_users.all():
-            heritage.like_users.remove(request.user)
-        else:
-            heritage.like_users.add(request.user)
+
+def heritage_like(request, pk):
+    heritage = get_object_or_404(Heritage, pk=pk)
+    user = request.user
+    if user in heritage.like_users:
+        heritage.like_users.remove(user)
+    else:
+        heritage.like_user.add(user)
+        
