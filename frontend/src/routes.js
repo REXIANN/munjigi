@@ -6,6 +6,7 @@ import Login from "@/views/Login";
 import Community from "@/views/Community";
 import CommunityReviewItem from "@/components/community/CommunityReviewItem";
 import Heritage from "@/views/Heritage";
+import HeritageCardDetail from "@/components/heritage/HeritageCardDetail";
 import Maps from "@/views/Maps";
 import Signup from "@/views/Signup";
 import Mypage from "@/views/Mypage";
@@ -23,6 +24,12 @@ const routes = [
     name: "Heritage",
     component: Heritage,
   },
+  {
+    path: "/heritage/:id",
+    name: "HeritageCardDetail",
+    component: HeritageCardDetail,
+  },
+
   {
     path: "/community",
     name: "Community",
