@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <!-- 로그인 유무에 따라 보이기 (로그인 기능 구현시 수정예정) -->
+  <div class="mypage">
     <MypageProfile />
     <MypageMark />
     <MypageReview />
@@ -24,4 +23,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+@import "@/assets/css/views/mypage.scss";
+</style>

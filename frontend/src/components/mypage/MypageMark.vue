@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>MypageMark.vue | 찜한 문화재 목록</div>
+    <div>찜한 문화재 목록</div>
     <div v-if="isEmpty">
       아직 등록된 문화재가 없습니다.
       <button @click="goHeritage">추천 문화재 보러가기</button>
@@ -8,7 +8,7 @@
     <div v-else>
       <ul v-for="markData in markDatas" :key="markData">
         {{
-          markData.k_name
+        markData.k_name
         }}
       </ul>
     </div>
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       markDatas: {
-        "14860000": {
+        14860000: {
           selnum: "14860000",
           k_name: "이광사 초상",
           h_name: "李匡師 肖像",
@@ -48,7 +48,7 @@ export default {
           era: "1775년",
           address: "서울특별시 용산구 서빙고로 137 (용산동6가, 국립중앙박물관)",
         },
-        "14870000": {
+        14870000: {
           selnum: "14870000",
           k_name: "서직수 초상",
           h_name: "徐直修 肖像",

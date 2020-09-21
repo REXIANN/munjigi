@@ -9,6 +9,7 @@
         </v-chip>
       </v-row>
       <h2>{{ heritage.h_name }}</h2>
+      <button @click="like(heritage.id)">좋아요</button>
       <v-row>
         <v-col cols="4">
           <v-img :src="heritage.imageurl" :alt="heritage.k_name" width="300vw" />
@@ -25,14 +26,23 @@
 </template>
 
 <script>
-// import SERVER from "@/api/drf";
-// import axios from "axios";
+import SERVER from "@/api/drf";
+import axios from "axios";
 import { mapState } from "vuex";
 
 export default {
   name: "HeritageCardDetail",
   computed: {
     ...mapState({ heritage: "heritage" }),
+  },
+  methods: {
+    like(id) {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like")
+        .then((resp) => {
+          console.log(resp);
+        });
+    },
   },
 };
 </script>
