@@ -45,5 +45,5 @@ class UserAPI(generics.RetrieveAPIView):
     serializer_class = UserSerializer
 
     def get_object(self):
-        serializer = self.get_serializer(many=True)
         return self.request.user
+
