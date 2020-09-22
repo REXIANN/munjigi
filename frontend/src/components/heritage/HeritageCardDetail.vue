@@ -10,11 +10,19 @@
       </v-row>
       <div>
         <h2>{{ heritage.h_name }}</h2>
-        <v-btn icon>
+
+        <v-btn v-if="likeCheck" icon color="red lighten-2">
           <v-icon @click="like(heritage.id)">mdi-heart</v-icon>
         </v-btn>
-        <v-btn icon>
-          <v-icon>mdi-bookmark</v-icon>
+        <v-btn v-else icon>
+          <v-icon @click="like(heritage.id)">mdi-heart</v-icon>
+        </v-btn>
+
+        <v-btn v-if="dibCheck" icon color="green lighten-2">
+          <v-icon @click="dib(heritage.id)">mdi-bookmark</v-icon>
+        </v-btn>
+        <v-btn v-else icon>
+          <v-icon @click="dib(heritage.id)">mdi-bookmark</v-icon>
         </v-btn>
       </div>
       <v-row>
@@ -39,10 +47,13 @@ import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "HeritageCardDetail",
+  created() {
+    this.likeCheck = this.heritage.like_users.includes(this.userData.id);
+    this.dibCheck = this.heritage.dib_users.includes(this.userData.id);
+  },
   computed: {
-    ...mapState({ heritage: "heritage" }),
     ...mapGetters(["config"]),
-    ...mapState(["userData"]),
+    ...mapState(["userData", "heritage"]),
   },
   methods: {
     like(id) {
@@ -54,10 +65,35 @@ export default {
           },
           null
         )
-        .then((resp) => {
-          console.log(resp);
+        .then(() => {
+          this.likeCheck = !this.likeCheck;
+        })
+        .catch((err) => {
+          console.error(err);
         });
     },
+    dib(id) {
+      axios
+        .post(
+          SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/dib/",
+          {
+            userDataId: this.userData.id,
+          },
+          null
+        )
+        .then(() => {
+          this.dibCheck = !this.dibCheck;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+  },
+  data() {
+    return {
+      likeCheck: false,
+      dibCheck: false,
+    };
   },
 };
 </script>

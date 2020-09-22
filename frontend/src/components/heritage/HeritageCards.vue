@@ -1,13 +1,13 @@
 <template>
   <div class="heritageCards">
     <h1>인기 문화재</h1>
-    <!-- {{ heritageList}} -->
     <div class="row">
       <ul v-for="heritage in heritageList" :key="heritage.id">
         <v-hover v-slot:default="{ hover }">
-          <v-card class="d-inline-block mx-auto" @click="SELECT_HERITAGE(heritage)">
+          <v-card class="d-inline-block mx-auto">
+            {{heritage.like_users}}
             <v-container>
-              <h3>{{ heritage.k_name }}</h3>
+              <h3 @click="SELECT_HERITAGE(heritage)">{{ heritage.k_name }}</h3>
               <v-row justify="space-between">
                 <v-col cols="auto">
                   <v-img height="200" width="200" :src="heritage.imageurl">
@@ -16,6 +16,7 @@
                         v-if="hover"
                         class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-1 white--text"
                         style="height: 100%;"
+                        @click="SELECT_HERITAGE(heritage)"
                       >{{ heritage.era }}</div>
                     </v-expand-transition>
                   </v-img>
@@ -24,12 +25,14 @@
                   <v-row class="flex-column ma-0 fill-height" justify="center">
                     <v-col class="px-0">
                       <v-btn icon>
-                        <v-icon>mdi-heart</v-icon>
+                        <v-icon @click="like(heritage, heritage.id)">mdi-heart</v-icon>
                       </v-btn>
                     </v-col>
                     <v-col class="px-0">
                       <v-btn icon>
-                        <v-icon>mdi-bookmark</v-icon>
+                        <v-icon color="green lighten-2" v-if="true">mdi-bookmark</v-icon>
+                        <v-icon v-else>mdi-bookmark</v-icon>
+                        <!-- <span v-if="heritage.like_users.includes(userData.id)"> -->
                       </v-btn>
                     </v-col>
                     <v-col class="px-0">
@@ -59,14 +62,12 @@
 import InfiniteLoading from "vue-infinite-loading";
 import SERVER from "@/api/drf";
 import axios from "axios";
-// import HeritageCardItem from "@/components/heritage/HeritageCardItem";
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "CommunityCards",
   components: {
     InfiniteLoading,
-    // HeritageCardItem,
   },
   mounted() {
     axios
@@ -74,6 +75,9 @@ export default {
       .then((res) => {
         this.heritageList = res.data.results;
       });
+  },
+  computed: {
+    ...mapGetters(["config"]),
   },
   methods: {
     ...mapMutations(["SELECT_HERITAGE"]),
@@ -97,6 +101,22 @@ export default {
               $state.complete();
             }
           }, 1000);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    like(heritage, id) {
+      axios
+        .post(
+          SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like/",
+          {
+            userDataId: this.userData.id,
+          },
+          null
+        )
+        .then((res) => {
+          console.log(res);
         })
         .catch((err) => {
           console.error(err);
