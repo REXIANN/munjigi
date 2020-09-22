@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
 from django.db import models 
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class UserManager(BaseUserManager):    # 이메일을 ID로 쓰기 위해 변경
     
@@ -40,8 +42,6 @@ class User(AbstractBaseUser,PermissionsMixin):
         null=False,
         unique=True
     )
-    name = models.CharField(max_length=20, null=True)
-    birth = models.DateField(null=True)
     is_active = models.BooleanField(default=True)    
     is_admin = models.BooleanField(default=False)    
     is_superuser = models.BooleanField(default=False)    
@@ -58,3 +58,22 @@ class User(AbstractBaseUser,PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, null=True)
+    lastname = models.CharField(max_length=50, null=True)
+    birth = models.DateField(null=True, blank=True)
+    profile_image = models.ImageField(null=True)
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
