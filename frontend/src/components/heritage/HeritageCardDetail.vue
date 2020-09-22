@@ -43,17 +43,19 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "HeritageCardDetail",
   created() {
-    this.likeCheck = this.heritage.like_users.includes(this.userData.id);
-    this.dibCheck = this.heritage.dib_users.includes(this.userData.id);
+    this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
+  },
+  mounted() {
+    this.likeCheck = this.heritage.like_users.includes(this.userDataId);
+    this.dibCheck = this.heritage.dib_users.includes(this.userDataId);
   },
   computed: {
-    ...mapGetters(["config"]),
-    ...mapState(["userData", "heritage"]),
+    ...mapState(["heritage"]),
   },
   methods: {
     like(id) {
@@ -61,7 +63,7 @@ export default {
         .post(
           SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like/",
           {
-            userDataId: this.userData.id,
+            userDataId: this.userDataId,
           },
           null
         )
@@ -77,7 +79,7 @@ export default {
         .post(
           SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/dib/",
           {
-            userDataId: this.userData.id,
+            userDataId: this.userDataId,
           },
           null
         )
@@ -93,6 +95,7 @@ export default {
     return {
       likeCheck: false,
       dibCheck: false,
+      userDataId: "",
     };
   },
 };
