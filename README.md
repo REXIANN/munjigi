@@ -104,6 +104,7 @@ $ python manage.py runserver
 
 ### 지도 페이지
 
+- 카카오맵 API를 활용하여 지도정보를 제공합니다.
 - 선택한 지역의 문화재들을 확인할 수 있고 그 주변 시설(편의점, 주유소 등) 정보를 제공합니다.
 
 ![지도](https://user-images.githubusercontent.com/60081201/93542935-4158bf80-f995-11ea-9367-5a0e6bd4ddba.PNG)

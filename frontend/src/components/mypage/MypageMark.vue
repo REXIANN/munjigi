@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>찜한 문화재 목록</div>
+    <h2>찜한 문화재 목록</h2>
     <div v-if="isEmpty">
       아직 등록된 문화재가 없습니다.
       <button @click="goHeritage">추천 문화재 보러가기</button>

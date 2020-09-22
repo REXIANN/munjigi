@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <MapsSearch />
-    <div class="row maps-info-kakao">
-      <MapsInfoList class="col-4" />
-      <MapsKakao class="col-8" />
-    </div>
+  <div class="maps">
+      <MapsSearch />
+      <div class="row maps-info-kakao">
+        <MapsInfoList class="col-3"/>
+        <MapsKakao class="col-9"/>
+      </div>
   </div>
 </template>
 
