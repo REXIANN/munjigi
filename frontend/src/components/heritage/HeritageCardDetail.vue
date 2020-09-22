@@ -8,8 +8,15 @@
           <v-icon right>mdi-star</v-icon>
         </v-chip>
       </v-row>
-      <h2>{{ heritage.h_name }}</h2>
-      <button @click="like(heritage.id)">좋아요</button>
+      <div>
+        <h2>{{ heritage.h_name }}</h2>
+        <v-btn icon>
+          <v-icon @click="like(heritage.id)">mdi-heart</v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>mdi-bookmark</v-icon>
+        </v-btn>
+      </div>
       <v-row>
         <v-col cols="4">
           <v-img :src="heritage.imageurl" :alt="heritage.k_name" width="300vw" />
@@ -35,14 +42,17 @@ export default {
   computed: {
     ...mapState({ heritage: "heritage" }),
     ...mapGetters(["config"]),
+    ...mapState(["userData"]),
   },
   methods: {
     like(id) {
       axios
-        .get(
-          SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like",
-          null,
-          this.config
+        .post(
+          SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like/",
+          {
+            userDataId: this.userData.id,
+          },
+          null
         )
         .then((resp) => {
           console.log(resp);
