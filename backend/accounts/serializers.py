@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import User, Profile
+from heritage.models import Heritage
 from django.contrib.auth import authenticate
 
 
@@ -22,9 +23,11 @@ class CreateUserSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     nickname = serializers.CharField()
+    like_heritages = serializers.PrimaryKeyRelatedField(queryset=Heritage.objects.all(), many=True)
+    dibs_heritages = serializers.PrimaryKeyRelatedField(queryset=Heritage.objects.all(), many=True)
     class Meta:
         model = User
-        fields = ('id', 'email', 'nickname')
+        fields = ('id', 'email', 'nickname', 'like_heritages', 'dibs_heritages')
 
 
 # 로그인
@@ -46,6 +49,8 @@ class LoginUserSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     profile_image = serializers.ImageField(use_url=True)
+    like_heritages = UserSerializer(many=True, read_only=True)
+    dibs_heritages = UserSerializer(many=True, read_only=True)
     class Meta:
         model = Profile
         fields = ('__all__')
