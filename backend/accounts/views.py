@@ -1,9 +1,10 @@
 from rest_framework import permissions, generics
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view
 from knox.models import AuthToken
-from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer
+from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, ProfileSerializer
+from .models import Profile, User
 
 
 class RegistrationAPI(generics.GenericAPIView):
@@ -46,4 +47,25 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class ProfileAPI(generics.GenericAPIView):
+    serializer_class = ProfileSerializer
+    queryset = Profile.objects.all()
+
+    def get(self, request, nickname):
+        user = User.objects.get(nickname=nickname)
+        profile = get_object_or_404(Profile, pk=user.id)
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+    
+    def put(self, request, nickname):
+        user = User.objects.get(nickname=nickname)
+        profile = get_object_or_404(Profile, pk=user.id)
+        serializer = ProfileSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
 

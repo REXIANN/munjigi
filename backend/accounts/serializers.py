@@ -21,9 +21,10 @@ class CreateUserSerializer(serializers.ModelSerializer):
 # 접속중인 유저인지 확인
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
+    nickname = serializers.CharField()
     class Meta:
         model = User
-        fields = ('id', 'email')
+        fields = ('id', 'email', 'nickname')
 
 
 # 로그인
@@ -43,6 +44,8 @@ class LoginUserSerializer(serializers.ModelSerializer):
 
 # 프로필
 class ProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    profile_image = serializers.ImageField(use_url=True)
     class Meta:
         model = Profile
         fields = ('__all__')
