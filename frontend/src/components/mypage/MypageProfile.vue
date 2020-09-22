@@ -55,16 +55,27 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import SERVER from "@/api/drf";
+import axios from "axios";
 
 export default {
   name: "MypageProfile",
-  computed: {
-    ...mapState(["userData"]),
+  mounted() {
+    this.userData.userId = sessionStorage.id;
+    this.userData.nickname = sessionStorage.name;
+    axios
+      .get(SERVER.URL + SERVER.ROUTES.mypage + this.userData.nickname)
+      .then((res) => {
+        console.log(res);
+      });
   },
   data() {
     return {
       gradeInfo: false,
+      userData: {
+        userId: "",
+        nickname: "",
+      },
     };
   },
 };
