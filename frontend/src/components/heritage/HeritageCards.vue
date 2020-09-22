@@ -24,7 +24,7 @@
                   <v-row class="flex-column ma-0 fill-height" justify="center">
                     <v-col class="px-0">
                       <v-btn icon @click="like(heritage.id)">
-                        <span v-if="heritage.like_users.includes(userData.id)">
+                        <span v-if="heritage.like_users.includes(userDataId)">
                           <v-icon color="red lighten-2">mdi-heart</v-icon>
                         </span>
                         <span v-else>
@@ -34,7 +34,7 @@
                     </v-col>
                     <v-col class="px-0">
                       <v-btn icon @click="dib(heritage.id)">
-                        <span v-if="heritage.dib_users.includes(userData.id)">
+                        <span v-if="heritage.dib_users.includes(userDataId)">
                           <v-icon color="green lighten-2">mdi-bookmark</v-icon>
                         </span>
                         <span v-else>
@@ -69,7 +69,7 @@
 import InfiniteLoading from "vue-infinite-loading";
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapState, mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "CommunityCards",
@@ -82,13 +82,10 @@ export default {
       .then((res) => {
         this.heritageList = res.data.results;
       });
+    this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
   },
   computed: {
     ...mapGetters(["config"]),
-    ...mapState(["userData"]),
-    isUserLike(likeUsers, user) {
-      return likeUsers.some((elem) => elem === user);
-    },
   },
   methods: {
     ...mapMutations(["SELECT_HERITAGE"]),
@@ -122,7 +119,7 @@ export default {
         .post(
           SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like/",
           {
-            userDataId: this.userData.id,
+            userDataId: this.userDataId,
           },
           null
         )
@@ -136,7 +133,7 @@ export default {
         .post(
           SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/dib/",
           {
-            userDataId: this.userData.id,
+            userDataId: this.userDataId,
           },
           null
         )
@@ -150,6 +147,7 @@ export default {
     return {
       heritageList: [],
       limit: 2,
+      userDataId: "",
     };
   },
 };
