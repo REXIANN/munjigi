@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
 from rest_framework.generics import get_object_or_404, GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -8,7 +8,7 @@ from .serializers import HeritageSerializer, HeritageDetailSerializer
 from .models import Heritage
 from backend.pagination import CustomPagination
 from django.db.models import Count
-from django.contrib.auth.decorators import login_required
+from accounts.models import User
 
 
 class HeritageListAPI(GenericAPIView):
@@ -63,11 +63,16 @@ class HeritageDetailAPI(generics.GenericAPIView):
 
 
 
-def heritage_like(request, pk):
-    heritage = get_object_or_404(Heritage, pk=pk)
-    user = request.user
-    if user in heritage.like_users:
-        heritage.like_users.remove(user)
-    else:
-        heritage.like_user.add(user)
-        
+class HeritageLikeAPI(generics.GenericAPIView):
+    queryset = Heritage.objects.all()
+    serializer_class = HeritageDetailSerializer
+    permissions_classes = [permissions.IsAuthenticated]
+    def post(self, request, pk):
+        heritage = get_object_or_404(Heritage, pk=pk)
+        user = User.objects.get(id=request.data['userDataId'])
+        if user in heritage.like_users.all():
+            heritage.like_users.remove(user)
+        else:
+            heritage.like_users.add(user)
+        serializer = HeritageDetailSerializer(heritage)
+        return Response(serializer.data)
