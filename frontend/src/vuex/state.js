@@ -1,8 +1,7 @@
-import cookies from "vue-cookies";
 
 export default {
   count: 0,
-  authToken: cookies.get("auth-token"),
+  authToken: null,
   userData: {
     nickname: "",
     id: "",
@@ -15,3 +14,4 @@ export default {
     type: Object,
   },
 };
+

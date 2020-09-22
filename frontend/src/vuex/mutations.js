@@ -1,4 +1,3 @@
-import cookies from "vue-cookies";
 import router from "../routes";
 export default {
   ADD_COUNT(state) {
@@ -6,7 +5,6 @@ export default {
   },
   SET_TOKEN(state, token) {
     state.authToken = token;
-    cookies.set("auth-token", token);
   },
   SELECT_REVIEW(state, review) {
     state.review = review;

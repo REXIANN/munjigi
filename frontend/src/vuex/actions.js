@@ -10,6 +10,8 @@ export default {
       .then((res) => {
         commit("SET_TOKEN", res.data.token);
         commit("SET_USER_DATA", res.data.user);
+        cookies.set("auth-token", res.data.token );
+        sessionStorage.setItem("loginUID", res.data.user)
         router.push({ name: "Home" });
       })
       .catch((err) => {
@@ -37,6 +39,7 @@ export default {
       .then(() => {
         commit("SET_TOKEN", null);
         cookies.remove("auth-token");
+        sessionStorage.removeItem('loginUID')
         router.push({ name: "Home" });
       })
       .catch((err) => {
