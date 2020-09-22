@@ -6,9 +6,9 @@
       <button @click="goHeritage">추천 문화재 보러가기</button>
     </div>
     <div v-else>
-      <ul v-for="markData in markDatas" :key="markData">
+      <ul v-for="(markDatum, i) in markData" :key="i">
         {{
-        markData.k_name
+        markDatum.k_name
         }}
       </ul>
     </div>
@@ -19,7 +19,7 @@
 export default {
   name: "MypageMark",
   created() {
-    if (Object.keys(this.markDatas).length === {}) {
+    if (Object.keys(this.markData).length === {}) {
       this.isEmpty = true;
     } else {
       this.isEmpty = false;
@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      markDatas: {
+      markData: {
         14860000: {
           selnum: "14860000",
           k_name: "이광사 초상",

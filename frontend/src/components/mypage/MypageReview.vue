@@ -6,7 +6,7 @@
       <button>리뷰 작성하러가기</button>
     </div>
     <div v-else>
-      <ul v-for="result in resultList" :key="result">
+      <ul v-for="(result, i) in resultList" :key="i">
         <div @click="selectReview(result)">
           {{ result.title }}
           {{ result.created }}
