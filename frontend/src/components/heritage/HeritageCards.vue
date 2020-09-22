@@ -5,7 +5,6 @@
       <ul v-for="heritage in heritageList" :key="heritage.id">
         <v-hover v-slot:default="{ hover }">
           <v-card class="d-inline-block mx-auto">
-            {{heritage.like_users}}
             <v-container>
               <h3 @click="SELECT_HERITAGE(heritage)">{{ heritage.k_name }}</h3>
               <v-row justify="space-between">
@@ -24,15 +23,23 @@
                 <v-col cols="auto" class="text-center pl-0">
                   <v-row class="flex-column ma-0 fill-height" justify="center">
                     <v-col class="px-0">
-                      <v-btn icon>
-                        <v-icon @click="like(heritage, heritage.id)">mdi-heart</v-icon>
+                      <v-btn icon @click="like(heritage.id)">
+                        <span v-if="heritage.like_users.includes(userData.id)">
+                          <v-icon color="red lighten-2">mdi-heart</v-icon>
+                        </span>
+                        <span v-else>
+                          <v-icon>mdi-heart</v-icon>
+                        </span>
                       </v-btn>
                     </v-col>
                     <v-col class="px-0">
-                      <v-btn icon>
-                        <v-icon color="green lighten-2" v-if="true">mdi-bookmark</v-icon>
-                        <v-icon v-else>mdi-bookmark</v-icon>
-                        <!-- <span v-if="heritage.like_users.includes(userData.id)"> -->
+                      <v-btn icon @click="dib(heritage.id)">
+                        <span v-if="heritage.dib_users.includes(userData.id)">
+                          <v-icon color="green lighten-2">mdi-bookmark</v-icon>
+                        </span>
+                        <span v-else>
+                          <v-icon>mdi-bookmark</v-icon>
+                        </span>
                       </v-btn>
                     </v-col>
                     <v-col class="px-0">
@@ -62,7 +69,7 @@
 import InfiniteLoading from "vue-infinite-loading";
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapMutations, mapGetters } from "vuex";
+import { mapState, mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "CommunityCards",
@@ -78,6 +85,10 @@ export default {
   },
   computed: {
     ...mapGetters(["config"]),
+    ...mapState(["userData"]),
+    isUserLike(likeUsers, user) {
+      return likeUsers.some((elem) => elem === user);
+    },
   },
   methods: {
     ...mapMutations(["SELECT_HERITAGE"]),
@@ -106,7 +117,7 @@ export default {
           console.error(err);
         });
     },
-    like(heritage, id) {
+    like(id) {
       axios
         .post(
           SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like/",
@@ -115,9 +126,21 @@ export default {
           },
           null
         )
-        .then((res) => {
-          console.log(res);
-        })
+        .then(() => {})
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    dib(id) {
+      axios
+        .post(
+          SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/dib/",
+          {
+            userDataId: this.userData.id,
+          },
+          null
+        )
+        .then(() => {})
         .catch((err) => {
           console.error(err);
         });
