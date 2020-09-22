@@ -14,6 +14,7 @@
 import MypageProfile from "@/components/mypage/MypageProfile.vue";
 import MypageMark from "@/components/mypage/MypageMark.vue";
 import MypageReview from "@/components/mypage/MypageReview.vue";
+import "@/assets/css/views/mypage.scss";
 
 export default {
   name: "Mypage",
@@ -25,6 +26,3 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "@/assets/css/views/mypage.scss";
-</style>

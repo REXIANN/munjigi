@@ -21,8 +21,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import "@/assets/css/app.scss";
+
 
 export default {
   name: "App",
@@ -34,6 +35,4 @@ export default {
   },
 };
 </script>
-<style type="text/css" lang="scss">
-@import "@/assets/css/app.scss";
-</style>
+
