@@ -138,7 +138,6 @@ AUTH_USER_MODEL = 'accounts.User'
 SITE_ID = 1
 
 
-
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'backend.pagination.CustomPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
@@ -148,3 +147,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 SESSION_COOKIE_AGE = 10800
 SESSION_SAVE_EVERY_REQUEST = True
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
