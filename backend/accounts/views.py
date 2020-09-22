@@ -69,3 +69,11 @@ class ProfileAPI(generics.GenericAPIView):
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 
+class RegistrationCheckAPI(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    def get(self, request, checking):
+        if User.objects.filter(nickname=checking).exists() or User.objects.filter(email=checking).exists():
+            return Response(False)
+        else:
+            return Response(True)

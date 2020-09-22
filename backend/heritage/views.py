@@ -91,3 +91,18 @@ class HeritageBookmarkAPI(generics.GenericAPIView):
             heritage.dib_users.add(user)
         serializer = HeritageDetailSerializer(heritage)
         return Response(serializer.data)
+
+
+class HeritageVisitAPI(generics.GenericAPIView):
+    queryset = Heritage.objects.all()
+    serializer_class = HeritageDetailSerializer
+    permissions_classes = [permissions.IsAuthenticated]
+    def post(self, request, pk):
+        heritage = get_object_or_404(Heritage, pk=pk)
+        user = User.objects.get(id=request.data['userDataId'])
+        if user in heritage.visit_users.all():
+            heritage.visit_users.remove(user)
+        else:
+            heritage.visit_users.add(user)
+        serializer = HeritageDetailSerializer(heritage)
+        return Response(serializer.data)

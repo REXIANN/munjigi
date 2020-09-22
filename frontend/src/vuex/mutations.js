@@ -1,8 +1,5 @@
 import router from "../routes";
 export default {
-  ADD_COUNT(state) {
-    state.count++;
-  },
   SET_TOKEN(state, token) {
     state.authToken = token;
   },
