@@ -72,6 +72,7 @@ export default {
   },
   methods: {
     onFileSelected() {
+      console.log(event);
       this.selectedFile = event.target.files;
       console.log(this.selectedFile);
     },
