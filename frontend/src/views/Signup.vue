@@ -1,17 +1,30 @@
 <template>
   <div>
-    <h1>회원가입</h1>이름 :
-    <input type="text" v-model="signupData.username" />
-    닉네임 :
-    <input type="text" v-model="signupData.nickname" />
-    이메일 :
-    <input type="email" v-model="signupData.email" />
-    <button @click="checkEmail(signupData.email)">중복확인하기</button>
-    비밀번호 :
-    <input type="password" v-model="signupData.password" />
-    <button @click="checkPassword(signupData.password)">중복확인하기</button>
+    <h1>회원가입</h1>
 
     <div>
+      <div>
+        <span>닉네임 : </span>
+        <input type="text" v-model="signupData.nickname" />
+        <button @click="checkNickname(signupData.nickname)">중복확인하기</button>
+      </div>
+      <div>
+        <span>이메일 : </span>
+        <input type="email" v-model="signupData.email" />
+      <button @click="checkEmail(signupData.email)">중복확인하기</button>
+      </div>
+      <div>
+        <span>비밀번호 : </span>
+        <input type="password" v-model="signupData.password" />
+      </div>
+      <div>
+        <span>비밀번호 확인하기 : </span>
+        <input type="password" v-model="passwordConfirm" />
+      </div>
+    </div>
+
+    <div>
+      <!-- 비밀번호 일치 여부 확인해서 active 넣어야 함 -->
       <button @click="signup(signupData)">작성 완료</button>
     </div>
   </div>
@@ -24,13 +37,18 @@ export default {
   name: "Signup",
   methods: {
     ...mapActions(["signup"]),
-    ...mapActions(["checkEmail"]),
-    ...mapActions(["checkPassword"]),
+    checkEmail() {
+
+    },
+    checkNickname() {
+
+    }
   },
   data() {
     return {
+      passwordConfirm: null,
       signupData: {
-        username: "",
+        name: "",
         nickname: "",
         email: "",
         password: "",

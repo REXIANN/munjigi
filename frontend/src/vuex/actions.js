@@ -9,7 +9,7 @@ export default {
       .post(info.location, info.data)
       .then((res) => {
         commit("SET_TOKEN", res.data.token)
-        cookies.set("auth-token", res.data.token)
+        cookies.set("auth-token", res.data.token, 0)
         // sessionStorage에 유저의 정보를 저장
         sessionStorage.setItem("birth", res.data.user.birth)
         sessionStorage.setItem("dateJoined", res.data.user.date_joined)
