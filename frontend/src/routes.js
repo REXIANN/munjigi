@@ -10,6 +10,7 @@ import HeritageCardDetail from "@/components/heritage/HeritageCardDetail";
 import Maps from "@/views/Maps";
 import Signup from "@/views/Signup";
 import Mypage from "@/views/Mypage";
+import ProfileUpdate from "@/views/ProfileUpdate"
 
 Vue.use(VueRouter);
 
@@ -60,6 +61,11 @@ const routes = [
     name: "Mypage",
     component: Mypage,
   },
+  {
+    path: "/profileupdate",
+    name: "ProfileUpdate",
+    component: ProfileUpdate,
+  }
 ];
 
 const router = new VueRouter({
