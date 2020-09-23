@@ -1,7 +1,7 @@
-import axios from "axios"
-import cookies from "vue-cookies"
-import router from "@/routes"
-import SERVER from "@/api/drf"
+import axios from "axios";
+import cookies from "vue-cookies";
+import router from "@/routes";
+import SERVER from "@/api/drf";
 
 export default {
   postAuthData({ commit }, info) {
@@ -21,30 +21,30 @@ export default {
         router.push({ name: "Home" })
       })
       .catch((err) => {
-        console.log(err.message)
-      })
+        console.log(err.message);
+      });
   },
   signup({ dispatch }, signupData) {
     const info = {
       location: SERVER.URL + SERVER.ROUTES.signup,
       data: signupData,
-    }
-    dispatch("postAuthData", info)
+    };
+    dispatch("postAuthData", info);
   },
   login({ dispatch }, loginData) {
     const info = {
       location: SERVER.URL + SERVER.ROUTES.login,
       data: loginData,
-    }
-    dispatch("postAuthData", info)
+    };
+    dispatch("postAuthData", info);
   },
 
   logout({ getters, commit }) {
     axios
       .post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config)
       .then(() => {
-        commit("SET_TOKEN", null)
-        cookies.remove("auth-token")
+        commit("SET_TOKEN", null);
+        cookies.remove("auth-token");
         // 세션에 있는 정보를 지움
         sessionStorage.removeItem("birth")
         sessionStorage.removeItem("dateJoined")
@@ -54,7 +54,7 @@ export default {
         sessionStorage.removeItem("nickname")
       })
       .catch((err) => {
-        console.log(err.message)
-      })
+        console.log(err.message);
+      });
   },
-}
+};

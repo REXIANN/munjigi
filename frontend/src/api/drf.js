@@ -4,7 +4,8 @@ export default {
     signup: "/accounts/auth/register/",
     login: "/accounts/auth/login/",
     logout: "/accounts/auth/logout/",
-    review: "/review",
-    heritage: "/heritage",
+    mypage: "/accounts/",
+    review: "/review/",
+    heritage: "/heritage/",
   },
 };
