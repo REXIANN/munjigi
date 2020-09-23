@@ -16,6 +16,7 @@ export default {
         sessionStorage.setItem("email", res.data.user.email)
         sessionStorage.setItem("id", res.data.user.id)
         sessionStorage.setItem("name", res.data.user.name)
+        sessionStorage.setItem("nickname", res.data.user.nickname)
 
         router.push({ name: "Home" })
       })
@@ -50,6 +51,7 @@ export default {
         sessionStorage.removeItem("email")
         sessionStorage.removeItem("id")
         sessionStorage.removeItem("name")
+        sessionStorage.removeItem("nickname")
       })
       .catch((err) => {
         console.log(err.message)
