@@ -1,14 +1,16 @@
 <template>
   <div class="mypageProfile">
-    <h1>{{ userData.nickname }}님의 마이페이지</h1>
+    {{ userData }}
+    <h1>{{ userData.user.nickname }}님의 마이페이지</h1>
     <v-row justify="space-between">
       <v-col>
-        <v-img
+        <input type="file" @change="onFileSelected()" accept="image/*" style="float:left" />
+        <!-- <v-img
           src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
           alt="사용자 프로필 이미지"
           height="100px"
           width="100px"
-        />
+        />-->
         <div>
           <button>프로필 사진 설정</button>
         </div>
@@ -61,21 +63,25 @@ import axios from "axios";
 export default {
   name: "MypageProfile",
   mounted() {
-    this.userData.userId = sessionStorage.id;
-    this.userData.nickname = sessionStorage.name;
     axios
-      .get(SERVER.URL + SERVER.ROUTES.mypage + this.userData.nickname)
+      .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
       .then((res) => {
-        console.log(res);
-      });
+        this.userData = res.data;
+      })
+      .catch((err) => console.log(err));
+  },
+  methods: {
+    onFileSelected() {
+      console.log(event);
+      this.selectedFile = event.target.files;
+      console.log(this.selectedFile);
+    },
   },
   data() {
     return {
       gradeInfo: false,
-      userData: {
-        userId: "",
-        nickname: "",
-      },
+      userData: "",
+      selectedFile: "",
     };
   },
 };
