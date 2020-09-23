@@ -3,9 +3,9 @@
     <MypageProfile />
     <MypageDib />
     <MypageReview />
-    <div class="btn-end">
-      <v-btn dark color="purple">개인 정보 수정</v-btn>
-      <v-btn dark>탈퇴</v-btn>
+    <div class="mypage-buttons">
+      <router-link :to="{ name: 'ProfileUpdate' }">정보 수정</router-link>
+      <a href="#">회원탈퇴</a>
     </div>
   </div>
 </template>
