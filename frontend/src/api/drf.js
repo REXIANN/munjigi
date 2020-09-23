@@ -6,6 +6,6 @@ export default {
     logout: "/accounts/auth/logout/",
     mypage: "/accounts/",
     review: "/review",
-    heritage: "/heritage",
+    heritage: "/heritage/",
   },
 };
