@@ -2,7 +2,7 @@
   <div class="heritageCards">
     <h1>인기 문화재</h1>
     <div class="row">
-      <ul v-for="heritage in heritageList" :key="heritage.id">
+      <ul v-for="(heritage, idx) in heritageList" :key="heritage.id">
         <v-hover v-slot:default="{ hover }">
           <v-card class="d-inline-block mx-auto">
             <v-container>
@@ -23,8 +23,8 @@
                 <v-col cols="auto" class="text-center pl-0">
                   <v-row class="flex-column ma-0 fill-height" justify="center">
                     <v-col class="px-0">
-                      <v-btn icon @click="like(heritage.id)">
-                        <span v-if="heritage.like_users.includes(userDataId)">
+                      <v-btn icon @click="like(heritage.id, idx)">
+                        <span v-if="heritage.like_users.find((n) => n == userDataId)">
                           <v-icon color="red lighten-2">mdi-heart</v-icon>
                         </span>
                         <span v-else>
@@ -33,8 +33,8 @@
                       </v-btn>
                     </v-col>
                     <v-col class="px-0">
-                      <v-btn icon @click="dib(heritage.id)">
-                        <span v-if="heritage.dib_users.includes(userDataId)">
+                      <v-btn icon @click="dib(heritage.id, idx)">
+                        <span v-if="heritage.dib_users.find((m) => m == userDataId)">
                           <v-icon color="green lighten-2">mdi-bookmark</v-icon>
                         </span>
                         <span v-else>
@@ -78,7 +78,7 @@ export default {
   },
   mounted() {
     axios
-      .get(SERVER.URL + SERVER.ROUTES.heritage + "/?page" + "=1")
+      .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1")
       .then((res) => {
         this.heritageList = res.data.results;
       });
@@ -91,7 +91,7 @@ export default {
     ...mapMutations(["SELECT_HERITAGE"]),
     infiniteHandler($state) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.heritage + "/?page=" + this.limit)
+        .get(SERVER.URL + SERVER.ROUTES.heritage + "?page=" + this.limit)
         .then((response) => {
           setTimeout(() => {
             if (response.data.results) {
@@ -114,7 +114,7 @@ export default {
           console.error(err);
         });
     },
-    like(id) {
+    like(id, idx) {
       axios
         .post(
           SERVER.URL + SERVER.ROUTES.heritage + id + "/like/",
@@ -123,12 +123,18 @@ export default {
           },
           null
         )
-        .then(() => {})
+        .then(() => {
+          axios
+            .get(SERVER.URL + SERVER.ROUTES.heritage + id)
+            .then(
+              (res) => (this.heritageList[idx].like_users = res.data.like_users)
+            );
+        })
         .catch((err) => {
           console.error(err);
         });
     },
-    dib(id) {
+    dib(id, idx) {
       axios
         .post(
           SERVER.URL + SERVER.ROUTES.heritage + id + "/dib/",
@@ -137,7 +143,13 @@ export default {
           },
           null
         )
-        .then(() => {})
+        .then(() => {
+          axios
+            .get(SERVER.URL + SERVER.ROUTES.heritage + id)
+            .then(
+              (res) => (this.heritageList[idx].dib_users = res.data.dib_users)
+            );
+        })
         .catch((err) => {
           console.error(err);
         });
