@@ -10,15 +10,14 @@
       </v-row>
       <div>
         <h2>{{ heritage.h_name }}</h2>
-
-        <v-btn v-if="likeCheck" icon color="red lighten-2">
+        <v-btn v-if="heritage.like_users.find((n) => n == userDataId)" icon color="red lighten-2">
           <v-icon @click="like(heritage.id)">mdi-heart</v-icon>
         </v-btn>
         <v-btn v-else icon>
           <v-icon @click="like(heritage.id)">mdi-heart</v-icon>
         </v-btn>
 
-        <v-btn v-if="dibCheck" icon color="green lighten-2">
+        <v-btn v-if="heritage.dib_users.find((n) => n == userDataId)" icon color="green lighten-2">
           <v-icon @click="dib(heritage.id)">mdi-bookmark</v-icon>
         </v-btn>
         <v-btn v-else icon>
@@ -43,32 +42,30 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapState } from "vuex";
 
 export default {
   name: "HeritageCardDetail",
   created() {
     this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
-  },
-  mounted() {
-    this.likeCheck = this.heritage.like_users.includes(this.userDataId);
-    this.dibCheck = this.heritage.dib_users.includes(this.userDataId);
-  },
-  computed: {
-    ...mapState(["heritage"]),
+    let heritageId = this.$route.params.id;
+    axios
+      .get(SERVER.URL + SERVER.ROUTES.heritage + heritageId)
+      .then((res) => (this.heritage = res.data));
   },
   methods: {
     like(id) {
       axios
         .post(
-          SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like/",
+          SERVER.URL + SERVER.ROUTES.heritage + id + "/like/",
           {
             userDataId: this.userDataId,
           },
           null
         )
         .then(() => {
-          this.likeCheck = !this.likeCheck;
+          axios
+            .get(SERVER.URL + SERVER.ROUTES.heritage + id)
+            .then((res) => (this.heritage = res.data));
         })
         .catch((err) => {
           console.error(err);
@@ -77,14 +74,16 @@ export default {
     dib(id) {
       axios
         .post(
-          SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/dib/",
+          SERVER.URL + SERVER.ROUTES.heritage + id + "/dib/",
           {
             userDataId: this.userDataId,
           },
           null
         )
         .then(() => {
-          this.dibCheck = !this.dibCheck;
+          axios
+            .get(SERVER.URL + SERVER.ROUTES.heritage + id)
+            .then((res) => (this.heritage = res.data));
         })
         .catch((err) => {
           console.error(err);
@@ -93,9 +92,8 @@ export default {
   },
   data() {
     return {
-      likeCheck: false,
-      dibCheck: false,
       userDataId: "",
+      heritage: {},
     };
   },
 };
