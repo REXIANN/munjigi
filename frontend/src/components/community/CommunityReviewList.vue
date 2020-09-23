@@ -5,7 +5,6 @@
       <v-card class="review-list" outlined @click="SELECT_REVIEW(review)">
         <v-list-item class="d-flex justify-space-around review-list-item">
           <v-img class="review-list-image" src="https://picsum.photos/510/300?random"></v-img>
-
           <div class="review-list-text">
             <h3 class="mb-4">{{ review.title }}</h3>
             <v-list-item-subtitle>작성자 : {{ review.user }}</v-list-item-subtitle>
@@ -34,9 +33,9 @@ export default {
   components: {
     InfiniteLoading,
   },
-  mounted() {
+  created() {
     axios
-      .get(SERVER.URL + SERVER.ROUTES.review + "/?page=1", null, null)
+      .get(SERVER.URL + SERVER.ROUTES.review + "?page=1", null, null)
       .then((response) => {
         this.reviewList = response.data.results;
       });
@@ -45,7 +44,7 @@ export default {
     ...mapMutations(["SELECT_REVIEW"]),
     infiniteHandler($state) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.review + "/?page=" + this.limit)
+        .get(SERVER.URL + SERVER.ROUTES.review + "?page=" + this.limit)
         .then((response) => {
           setTimeout(() => {
             if (response.data.results) {

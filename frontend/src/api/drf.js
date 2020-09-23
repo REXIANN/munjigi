@@ -5,7 +5,7 @@ export default {
     login: "/accounts/auth/login/",
     logout: "/accounts/auth/logout/",
     mypage: "/accounts/",
-    review: "/review",
+    review: "/review/",
     heritage: "/heritage/",
   },
 };

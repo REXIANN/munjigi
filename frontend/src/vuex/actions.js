@@ -15,8 +15,8 @@ export default {
         sessionStorage.setItem("dateJoined", res.data.user.date_joined);
         sessionStorage.setItem("email", res.data.user.email);
         sessionStorage.setItem("id", res.data.user.id);
+        sessionStorage.setItem("nickname", res.data.user.nickname);
         sessionStorage.setItem("name", res.data.user.name);
-
         router.push({ name: "Home" });
       })
       .catch((err) => {
