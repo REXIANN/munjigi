@@ -7,14 +7,7 @@
       <v-row justify="end">
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="teal"
-              dark
-              v-bind="attrs"
-              v-on="on"
-              @click="connectReview()"
-              >수정</v-btn
-            >
+            <v-btn class="teal" dark v-bind="attrs" v-on="on" @click="connectReview()">수정</v-btn>
             <v-btn @click="deleteReview(review.id)">삭제</v-btn>
           </template>
           <v-card>
@@ -23,12 +16,7 @@
             </v-card-title>
             <v-card-text>
               <v-container>
-                <v-text-field
-                  label="제목"
-                  v-model="title"
-                  required="제목을 입력해 주세요!"
-                  autofocus
-                ></v-text-field>
+                <v-text-field label="제목" v-model="title" required="제목을 입력해 주세요!" autofocus></v-text-field>
                 <v-textarea
                   label="내용"
                   v-model="content"
@@ -50,12 +38,12 @@
         </v-dialog>
       </v-row>
     </div>
-    <h1>{{ review.title }}</h1>
+    <h1>{{ reviewData.title }}</h1>
     <br />
-    <h2>작성자 : {{ review.user }}</h2>
-    <h5>{{ review.created_at }}</h5>
+    <h2>작성자 : {{ reviewData.user }}</h2>
+    <h5>{{ reviewData.created_at }}</h5>
     <br />
-    <h3>{{ review.content }}</h3>
+    <h3>{{ reviewData.content }}</h3>
   </div>
 </template>
 
@@ -66,26 +54,36 @@ import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "CommunityReviewItem",
+  created() {
+    this.userData.id = sessionStorage.id === undefined ? "" : sessionStorage.id;
+    this.userData.nickname =
+      sessionStorage.nickname === undefined ? "" : sessionStorage.nickname;
+    axios
+      .get(SERVER.URL + SERVER.ROUTES.review + this.review.id)
+      .then((res) => (this.reviewData = res.data));
+  },
   computed: {
-    ...mapState(["userData"]),
     ...mapGetters(["config"]),
     ...mapState({ review: "review" }),
   },
   methods: {
     updateReview(id) {
-      const reviewData = {
+      const reviewUpdateData = {
         title: this.title,
         content: this.content,
         user: this.userData.id,
       };
       axios
         .put(
-          SERVER.URL + SERVER.ROUTES.review + "/" + id + "/",
-          reviewData,
+          SERVER.URL + SERVER.ROUTES.review + id + "/",
+          reviewUpdateData,
           this.config
         )
         .then(() => {
           this.dialog = false;
+          axios
+            .get(SERVER.URL + SERVER.ROUTES.review + this.review.id)
+            .then((res) => (this.reviewData = res.data));
         })
         .catch((err) => {
           console.log(err.message);
@@ -93,7 +91,7 @@ export default {
     },
     deleteReview(id) {
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.review + "/" + id)
+        .delete(SERVER.URL + SERVER.ROUTES.review + id)
         .then(() => {
           this.$router.push({ name: "Community" });
         })
@@ -102,12 +100,23 @@ export default {
         });
     },
     connectReview() {
-      this.title = this.review.title;
-      this.content = this.review.content;
+      this.title = this.reviewData.title;
+      this.content = this.reviewData.content;
     },
   },
   data() {
     return {
+      userData: {
+        id: "",
+        nickname: "",
+      },
+      reviewData: {
+        content: "",
+        created_at: "",
+        id: "",
+        title: "",
+        updated_at: "",
+      },
       title: "",
       content: "",
       dialog: false,

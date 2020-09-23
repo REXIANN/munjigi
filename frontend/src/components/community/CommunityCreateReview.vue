@@ -62,12 +62,14 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "CommunityCreateReview",
+  created() {
+    this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
+  },
   computed: {
-    ...mapState(["userData"]),
     ...mapGetters(["config"]),
   },
   methods: {
@@ -75,19 +77,15 @@ export default {
       const reviewData = {
         title: this.title,
         content: this.content,
-        user: this.userData.id,
+        user: this.userDataId,
       };
       axios
-        .post(SERVER.URL + SERVER.ROUTES.review + "/", reviewData, this.config)
+        .post(SERVER.URL + SERVER.ROUTES.review, reviewData, this.config)
         .then(() => {
           this.dialog = false;
           this.title = "";
           this.content = "";
           this.$router.push({ name: "Community" });
-          // this.$router.push({
-          //   name: "CommunityReviewItem",
-          //   params: { id: response.data.id },
-          // });
         });
     },
     closeCheck() {
@@ -104,6 +102,7 @@ export default {
   },
   data() {
     return {
+      userDataId: "",
       title: "",
       content: "",
       dialog: false,

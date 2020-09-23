@@ -117,7 +117,7 @@ export default {
     like(id) {
       axios
         .post(
-          SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/like/",
+          SERVER.URL + SERVER.ROUTES.heritage + id + "/like/",
           {
             userDataId: this.userDataId,
           },
@@ -131,7 +131,7 @@ export default {
     dib(id) {
       axios
         .post(
-          SERVER.URL + SERVER.ROUTES.heritage + "/" + id + "/dib/",
+          SERVER.URL + SERVER.ROUTES.heritage + id + "/dib/",
           {
             userDataId: this.userDataId,
           },
