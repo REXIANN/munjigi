@@ -21,13 +21,14 @@
     </div>
 
     <div class="submit-buttons">
-      <input type="submit" value="나가기" />
-      <input type="submit" value="작성완료" />
+      <input type="submit" value="나가기" @click="goPreviousPage" />
+      <input type="submit" value="작성완료" @click="changeUserInfo" />
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios"
 import "@/assets/css/views/profileUpdate.scss";
 
 export default {
@@ -43,16 +44,30 @@ export default {
       this.userData.birth = sessionStorage.getItem("birth")
     }
   },
+  methods: {
+    changeUserInfo() {
+      const data = this.userData
+      axios.put(`https://localhost:8080/accounts/${data.nickname}`, data)
+        .then(res => {
+          console.log(res)
+          // 여기에 sessionStorage 업데이트 해주는 거 들어가야함
+        })
+        .catch(err => console.log(err))
+    },
+    goPreviousPage() {
+      this.$router.go(-1)
+    }
+  },
   data() {
     return {
       userData: {
         name: null,
-        id: null,
+        id: sessionStorage.getItem("id"),
         email: sessionStorage.getItem("email"),
         nickname: null,
         birth: null,
       },
-    };
+    }
   },
 };
 </script>
