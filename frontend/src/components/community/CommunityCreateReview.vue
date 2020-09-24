@@ -25,7 +25,6 @@
                 v-model="hertiageId"
                 hint="방문한 문화재를 입력해주세요."
                 required="방문한 문화재를 입력해주세요!"
-                autofocus
               ></v-text-field>
 
               <v-textarea
