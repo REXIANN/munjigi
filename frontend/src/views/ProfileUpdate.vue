@@ -59,7 +59,9 @@ export default {
       this.$router.go(-1)
     },
     verifyNickname() {
-      axios.get(`https://localhost:8080/accounts/auth/register/${this.userData.nickname}/`)
+      const URL = `https://localhost:8080/accounts/auth/register/${this.userData.nickname}/`
+      console.log(URL)
+      axios.get(URL)
         .then( res => {
           console.log(res)
           //닉네임이 사용가능하면 isNicknameVerified = true
