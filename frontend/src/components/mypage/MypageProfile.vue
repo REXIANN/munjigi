@@ -3,26 +3,7 @@
     <h1>{{ userData.user.nickname }}님의 마이페이지</h1>
     <v-row justify="space-between">
       <v-col>
-        <v-file-input
-          show-size
-          counter
-          multiple
-          label="프로필사진"
-          @click="pickFile"
-          v-model="imageName"
-        ></v-file-input>
-        <input
-          type="file"
-          style="display: none"
-          ref="image"
-          accept="image/*"
-          @change="onFilePicked"
-        />
-        <hr />
-        <input type="file" @change="onFileSelected()" accept="image/*" style="float:left" />
-        <div>
-          <button>프로필 사진 설정</button>
-        </div>
+        <!-- <img :src="userData.image" /> -->
       </v-col>
       <v-col>
         <h3>이름 : {{ userData.username }}</h3>
@@ -68,6 +49,7 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
+// import firebase from "firebase";
 
 export default {
   name: "MypageProfile",
@@ -80,36 +62,7 @@ export default {
       })
       .catch((err) => console.log(err));
   },
-  methods: {
-    onFileSelected() {
-      console.log(event);
-      this.selectedFile = event.target.files;
-      console.log(this.selectedFile);
-    },
-    pickFile() {
-      this.$refs.image.click();
-      console.log(this.$refs.image);
-    },
-    onFilePicked(e) {
-      const files = e.target.files;
-      if (files[0] !== undefined) {
-        this.imageName = files[0].name;
-        if (this.imageName.lastIndexOf(".") <= 0) {
-          return;
-        }
-        const fr = new FileReader();
-        fr.readAsDataURL(files[0]);
-        fr.addEventListener("load", () => {
-          this.imageUrl = fr.result;
-          this.imageFile = files[0]; // this is an image file that can be sent to server...
-        });
-      } else {
-        this.imageName = "";
-        this.imageFile = "";
-        this.imageUrl = "";
-      }
-    },
-  },
+  methods: {},
   data() {
     return {
       gradeInfo: false,
