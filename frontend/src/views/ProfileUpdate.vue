@@ -30,6 +30,7 @@
 
 <script>
 import axios from "axios"
+import SERVER from "@/api/drf"
 import "@/assets/css/views/profileUpdate.scss";
 
 export default {
@@ -48,7 +49,8 @@ export default {
   methods: {
     changeUserInfo() {
       const data = this.userData
-      axios.put(`https://localhost:8080/accounts/${data.nickname}/`, data)
+      const URL = `${SERVER.URL}${SERVER.mypage}${data.nickname}/`
+      axios.put(URL, data)
         .then(res => {
           console.log(res)
           // 여기에 sessionStorage 업데이트 해주는 거 들어가야함
@@ -59,7 +61,7 @@ export default {
       this.$router.go(-1)
     },
     verifyNickname() {
-      const URL = `https://localhost:8080/accounts/auth/register/${this.userData.nickname}/`
+      const URL = `${SERVER.URL}${SERVER.signup}${this.userData.nickname}/`
       console.log(URL)
       axios.get(URL)
         .then( res => {
