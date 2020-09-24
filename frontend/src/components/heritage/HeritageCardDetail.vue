@@ -36,16 +36,20 @@
     <br />
     <h3>위치 정보</h3>
     <p>{{ heritage.address }}</p>
-    <h3>리뷰 목록</h3>
+    <HeritageCardDetailReview />
   </div>
 </template>
 
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
+import HeritageCardDetailReview from "@/components/heritage/HeritageCardDetailReview";
 
 export default {
   name: "HeritageCardDetail",
+  components: {
+    HeritageCardDetailReview,
+  },
   created() {
     this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
     let heritageId = this.$route.params.id;
