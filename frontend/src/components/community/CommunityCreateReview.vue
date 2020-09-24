@@ -85,7 +85,7 @@ export default {
       const reviewData = {
         title: this.title,
         content: this.content,
-        heritage: Number(this.hertiageId),
+        heritage: this.hertiageId,
         user: this.userDataId,
       };
       axios
@@ -115,7 +115,7 @@ export default {
       userDataId: "",
       title: "",
       content: "",
-      hertiageId: 0,
+      hertiageId: "",
       dialog: false,
       dialog2: false,
     };
