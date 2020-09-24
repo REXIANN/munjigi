@@ -36,6 +36,7 @@
     <br />
     <h3>위치 정보</h3>
     <p>{{ heritage.address }}</p>
+    <h3>리뷰 목록</h3>
   </div>
 </template>
 
