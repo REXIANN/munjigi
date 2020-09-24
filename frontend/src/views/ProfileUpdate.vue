@@ -48,7 +48,7 @@ export default {
   methods: {
     changeUserInfo() {
       const data = this.userData
-      axios.put(`https://localhost:8080/accounts/${data.nickname}/`, data)
+      axios.put(`http://j3a302.p.ssafy.io:8000/accounts/${data.nickname}/`, data)
         .then(res => {
           console.log(res)
           // 여기에 sessionStorage 업데이트 해주는 거 들어가야함
@@ -59,7 +59,7 @@ export default {
       this.$router.go(-1)
     },
     verifyNickname() {
-      const URL = `https://localhost:8080/accounts/auth/register/${this.userData.nickname}/`
+      const URL = `http://j3a302.p.ssafy.io:8000/accounts/auth/register/${this.userData.nickname}/`
       console.log(URL)
       axios.get(URL)
         .then( res => {
