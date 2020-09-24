@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'nickname', 'password', 'name', 'birth')
+        fields = ('id', 'email', 'nickname', 'password')
         extra_kwargs = {'password': {'write_only': True}}
     
     def create(self, validated_data):
