@@ -38,7 +38,6 @@ export default {
     };
     dispatch("postAuthData", info);
   },
-
   logout({ getters, commit }) {
     axios
       .post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config)

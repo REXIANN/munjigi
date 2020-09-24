@@ -1,23 +1,15 @@
 <template>
   <div class="maps">
-      <MapsSearch />
-      <div class="row maps-info-kakao">
-        <MapsInfoList class="col-3"/>
-        <MapsKakao class="col-9"/>
-      </div>
+    <MapsKakao />
   </div>
 </template>
 
 <script>
-import MapsSearch from "@/components/maps/MapsSearch";
-import MapsInfoList from "@/components/maps/MapsInfoList";
 import MapsKakao from "@/components/maps/MapsKakao";
 
 export default {
   name: "Maps",
   components: {
-    MapsSearch,
-    MapsInfoList,
     MapsKakao,
   },
   data() {
