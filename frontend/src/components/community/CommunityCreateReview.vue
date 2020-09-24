@@ -7,7 +7,7 @@
             <h3>리뷰쓰기</h3>
           </v-btn>
         </template>
-        <v-card>
+        <v-card ref="form" lazy-validation>
           <v-card-title>
             <h1>리뷰 작성하기</h1>
           </v-card-title>
@@ -20,6 +20,13 @@
                 required="제목을 입력해 주세요!"
                 autofocus
               ></v-text-field>
+              <v-text-field
+                label="방문한 문화재"
+                v-model="hertiageId"
+                hint="방문한 문화재를 입력해주세요."
+                required="방문한 문화재를 입력해주세요!"
+              ></v-text-field>
+
               <v-textarea
                 label="내용"
                 v-model="content"
@@ -77,6 +84,7 @@ export default {
       const reviewData = {
         title: this.title,
         content: this.content,
+        heritage: this.hertiageId,
         user: this.userDataId,
       };
       axios
@@ -85,6 +93,7 @@ export default {
           this.dialog = false;
           this.title = "";
           this.content = "";
+          this.hertiageId = "";
           this.$router.push({ name: "Community" });
         });
     },
@@ -105,6 +114,7 @@ export default {
       userDataId: "",
       title: "",
       content: "",
+      hertiageId: "",
       dialog: false,
       dialog2: false,
     };

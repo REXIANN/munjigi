@@ -1,7 +1,7 @@
 <template>
   <div class="mypage">
     <MypageProfile />
-    <MypageMark />
+    <MypageDib />
     <MypageReview />
     <div class="mypage-buttons">
       <router-link :to="{ name: 'ProfileUpdate' }">정보 수정</router-link>
@@ -12,7 +12,7 @@
 
 <script>
 import MypageProfile from "@/components/mypage/MypageProfile.vue";
-import MypageMark from "@/components/mypage/MypageMark.vue";
+import MypageDib from "@/components/mypage/MypageDib.vue";
 import MypageReview from "@/components/mypage/MypageReview.vue";
 import "@/assets/css/views/mypage.scss";
 
@@ -20,7 +20,7 @@ export default {
   name: "Mypage",
   components: {
     MypageProfile,
-    MypageMark,
+    MypageDib,
     MypageReview,
   },
 };

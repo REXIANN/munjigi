@@ -5,8 +5,8 @@ from heritage.models import Heritage
 
 # Create your models here.
 class Review(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # heritage = models.ForeignKey(Heritage, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name= "user_review")
+    heritage = models.ForeignKey(Heritage, on_delete=models.CASCADE, related_name="heritage_reviews")
     title = models.CharField(max_length=100)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
