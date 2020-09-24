@@ -54,7 +54,6 @@ ADD_COUNT(state) { state.count++ }
 - core-js
 - es6-promise
 - vue
-- vue-cookies
 - vue-router
 - vue-slick-carousel
 - vuetify
