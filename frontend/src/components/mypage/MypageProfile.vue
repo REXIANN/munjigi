@@ -3,13 +3,23 @@
     <h1>{{ userData.user.nickname }}님의 마이페이지</h1>
     <v-row justify="space-between">
       <v-col>
+        <v-file-input
+          show-size
+          counter
+          multiple
+          label="프로필사진"
+          @click="pickFile"
+          v-model="imageName"
+        ></v-file-input>
+        <input
+          type="file"
+          style="display: none"
+          ref="image"
+          accept="image/*"
+          @change="onFilePicked"
+        />
+        <hr />
         <input type="file" @change="onFileSelected()" accept="image/*" style="float:left" />
-        <!-- <v-img
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-          alt="사용자 프로필 이미지"
-          height="100px"
-          width="100px"
-        />-->
         <div>
           <button>프로필 사진 설정</button>
         </div>
@@ -65,7 +75,7 @@ export default {
     axios
       .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         this.userData = res.data;
       })
       .catch((err) => console.log(err));
@@ -76,12 +86,36 @@ export default {
       this.selectedFile = event.target.files;
       console.log(this.selectedFile);
     },
+    pickFile() {
+      this.$refs.image.click();
+      console.log(this.$refs.image);
+    },
+    onFilePicked(e) {
+      const files = e.target.files;
+      if (files[0] !== undefined) {
+        this.imageName = files[0].name;
+        if (this.imageName.lastIndexOf(".") <= 0) {
+          return;
+        }
+        const fr = new FileReader();
+        fr.readAsDataURL(files[0]);
+        fr.addEventListener("load", () => {
+          this.imageUrl = fr.result;
+          this.imageFile = files[0]; // this is an image file that can be sent to server...
+        });
+      } else {
+        this.imageName = "";
+        this.imageFile = "";
+        this.imageUrl = "";
+      }
+    },
   },
   data() {
     return {
       gradeInfo: false,
       userData: "",
       selectedFile: "",
+      imageName: "",
     };
   },
 };
