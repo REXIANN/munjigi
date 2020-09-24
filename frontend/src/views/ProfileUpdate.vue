@@ -8,12 +8,13 @@
       <input type="text" disabled v-model="userData.email" />
     </div>
     <div class="profile-update-block">
-      <h3>이름</h3>
-      <input type="text" v-model="userData.name" />
+      <h3>닉네임</h3>
+      <span class="verify-nickname" @click="verifyNickname">닉네임 중복 확인하기</span>
+      <input type="text" v-model="userData.nickname" />
     </div>
     <div class="profile-update-block">
-      <h3>닉네임</h3>
-      <input type="text" v-model="userData.nickname" />
+      <h3>이름</h3>
+      <input type="text" v-model="userData.name" />
     </div>
     <div class="profile-update-block">
       <h3>생년월일</h3>
@@ -22,7 +23,7 @@
 
     <div class="submit-buttons">
       <input type="submit" value="나가기" @click="goPreviousPage" />
-      <input type="submit" value="작성완료" @click="changeUserInfo" />
+      <input type="submit" value="작성완료" :disabled="!isNicknameVerified" @click="changeUserInfo" />
     </div>
   </div>
 </template>
@@ -47,7 +48,7 @@ export default {
   methods: {
     changeUserInfo() {
       const data = this.userData
-      axios.put(`https://localhost:8080/accounts/${data.nickname}`, data)
+      axios.put(`https://localhost:8080/accounts/${data.nickname}/`, data)
         .then(res => {
           console.log(res)
           // 여기에 sessionStorage 업데이트 해주는 거 들어가야함
@@ -56,6 +57,16 @@ export default {
     },
     goPreviousPage() {
       this.$router.go(-1)
+    },
+    verifyNickname() {
+      const URL = `https://localhost:8080/accounts/auth/register/${this.userData.nickname}/`
+      console.log(URL)
+      axios.get(URL)
+        .then( res => {
+          console.log(res)
+          //닉네임이 사용가능하면 isNicknameVerified = true
+        })
+        .catch( err => console.log(err))
     }
   },
   data() {
@@ -67,6 +78,7 @@ export default {
         nickname: null,
         birth: null,
       },
+      isNicknameVerified: false,
     }
   },
 };

@@ -11,4 +11,7 @@ export default {
     state.heritage = heritage;
     router.push({ name: "HeritageCardDetail", params: { id: heritage.id } });
   },
+  SET_KEYWORD(state, keyword) {
+    state.selectedKeyword = keyword
+  }
 };

@@ -1,8 +1,7 @@
-import cookies from "vue-cookies";
-
 export default {
   count: 0,
-  authToken: cookies.get("auth-token"),
+  authToken: sessionStorage.getItem("auth-token") === "undefined"? null: sessionStorage.getItem("auth-token"),
+  selectedKeyword: "",
   review: {
     type: Object,
   },

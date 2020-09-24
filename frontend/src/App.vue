@@ -10,7 +10,7 @@
       <div class="nav-lists">
         <router-link class="header" :to="{ name: 'Heritage' }"><span>문화재</span></router-link>
         <router-link class="header" :to="{ name: 'Community' }"><span>게시판</span></router-link>
-        <router-link class="header" :to="{ name: 'Maps' }">지도</router-link>
+        <router-link class="header" :to="{ name: 'Maps' }"><span>지도</span></router-link>
         <router-link v-show="!isLogin" class="header-user" :to="{ name: 'Login' }"><span>로그인</span></router-link>
         <router-link v-show="isLogin" class="header-user" :to="{ name: 'Mypage' }"><span>내정보</span></router-link>
         <a v-show="isLogin" class="header-user" @click="logout"><span>로그아웃</span></a>
