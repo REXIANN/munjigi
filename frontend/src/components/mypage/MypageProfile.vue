@@ -1,6 +1,5 @@
 <template>
   <div class="mypageProfile">
-    {{ userData }}
     <h1>{{ userData.user.nickname }}님의 마이페이지</h1>
     <v-row justify="space-between">
       <v-col>
@@ -66,6 +65,7 @@ export default {
     axios
       .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
       .then((res) => {
+        console.log(res);
         this.userData = res.data;
       })
       .catch((err) => console.log(err));

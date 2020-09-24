@@ -6,9 +6,25 @@
       <button @click="goHeritage">추천 문화재 보러가기</button>
     </div>
     <div v-else>
-      <ul v-for="(dib, i) in dibData" :key="i">
-        <h5 class="cursor" @click="goDib(dib)">{{ dib }}</h5>
-      </ul>
+      <v-container fluid>
+        <v-row dense>
+          <v-col v-for="(dib, i) in dibData" :key="i" cols="12" sm="2">
+            <v-card class="mx-auto cursor" max-width="300" outlined @click="goDib(dib.id)">
+              <v-list-item three-line>
+                <v-list-item-content>
+                  <h5>{{ dib.h_name }}</h5>
+                  <v-list-item-title>
+                    <h4>{{ dib.k_name }}</h4>
+                  </v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-avatar tile size="80" color="grey">
+                  <v-img :src="dib.imageurl"></v-img>
+                </v-list-item-avatar>
+              </v-list-item>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
   </div>
 </template>
