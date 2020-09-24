@@ -30,8 +30,9 @@
 
 <script>
 import axios from "axios"
+import SERVER from "@/api/drf"
 import "@/assets/css/views/profileUpdate.scss";
-
+import { mapGetters } from "vuex"
 export default {
   name: "ProfileUpdate",
   created() {
@@ -45,10 +46,14 @@ export default {
       this.userData.birth = sessionStorage.getItem("birth")
     }
   },
+  computed: {
+    ...mapGetters(["config"])
+  },
   methods: {
     changeUserInfo() {
       const data = this.userData
-      axios.put(`http://j3a302.p.ssafy.io:8000/accounts/${data.nickname}/`, data)
+      const URL = `${SERVER.URL}${SERVER.mypage}${data.nickname}/`
+      axios.put(URL, data, this.config)
         .then(res => {
           console.log(res)
           // 여기에 sessionStorage 업데이트 해주는 거 들어가야함
@@ -59,7 +64,7 @@ export default {
       this.$router.go(-1)
     },
     verifyNickname() {
-      const URL = `http://j3a302.p.ssafy.io:8000/accounts/auth/register/${this.userData.nickname}/`
+      const URL = `${SERVER.URL}${SERVER.signup}${this.userData.nickname}/`
       console.log(URL)
       axios.get(URL)
         .then( res => {
