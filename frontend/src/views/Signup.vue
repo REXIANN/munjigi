@@ -48,7 +48,6 @@ export default {
     return {
       passwordConfirm: null,
       signupData: {
-        name: "",
         nickname: "",
         email: "",
         password: "",
