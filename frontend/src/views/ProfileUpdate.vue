@@ -32,7 +32,7 @@
 import axios from "axios"
 import SERVER from "@/api/drf"
 import "@/assets/css/views/profileUpdate.scss";
-
+import { mapGetters } from "vuex"
 export default {
   name: "ProfileUpdate",
   created() {
@@ -46,11 +46,14 @@ export default {
       this.userData.birth = sessionStorage.getItem("birth")
     }
   },
+  computed: {
+    ...mapGetters(["config"])
+  },
   methods: {
     changeUserInfo() {
       const data = this.userData
       const URL = `${SERVER.URL}${SERVER.mypage}${data.nickname}/`
-      axios.put(URL, data)
+      axios.put(URL, data, this.config)
         .then(res => {
           console.log(res)
           // 여기에 sessionStorage 업데이트 해주는 거 들어가야함
