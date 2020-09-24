@@ -1,60 +1,38 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+    <div id="nav" class="d-flex justify-space-between">
+      <div class="nav-logo">
+        <router-link :to="{ name: 'Home' }">
+          <img src="@/assets/logo.png" />
+        </router-link>
       </div>
 
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <HelloWorld/>
-    </v-main>
+      <div class="nav-lists">
+        <router-link class="header" :to="{ name: 'Heritage' }"><span>문화재</span></router-link>
+        <router-link class="header" :to="{ name: 'Community' }"><span>게시판</span></router-link>
+        <router-link class="header" :to="{ name: 'Maps' }"><span>지도</span></router-link>
+        <router-link v-show="!isLogin" class="header-user" :to="{ name: 'Login' }"><span>로그인</span></router-link>
+        <router-link v-show="isLogin" class="header-user" :to="{ name: 'Mypage' }"><span>내정보</span></router-link>
+        <a v-show="isLogin" class="header-user" @click="logout"><span>로그아웃</span></a>
+      </div>
+    </div>
+    <router-view />
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import { mapGetters, mapActions } from "vuex";
+import "@/assets/css/app.scss";
+
 
 export default {
-  name: 'App',
-
-  components: {
-    HelloWorld,
+  name: "App",
+  computed: {
+    ...mapGetters(["isLogin"]),
   },
-
-  data: () => ({
-    //
-  }),
+  methods: {
+    ...mapActions(["logout"]),
+  },
 };
 </script>
+
