@@ -25,7 +25,6 @@
                 v-model="hertiageId"
                 hint="방문한 문화재를 입력해주세요."
                 required="방문한 문화재를 입력해주세요!"
-                autofocus
               ></v-text-field>
 
               <v-textarea
@@ -85,7 +84,7 @@ export default {
       const reviewData = {
         title: this.title,
         content: this.content,
-        heritage_id: this.hertiageId,
+        heritage: this.hertiageId,
         user: this.userDataId,
       };
       axios

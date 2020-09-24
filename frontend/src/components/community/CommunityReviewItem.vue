@@ -17,6 +17,7 @@
             <v-card-text>
               <v-container>
                 <v-text-field label="제목" v-model="title" required="제목을 입력해 주세요!" autofocus></v-text-field>
+                <v-text-field label="문화재" v-model="heritage" required></v-text-field>
                 <v-textarea
                   label="내용"
                   v-model="content"
@@ -41,6 +42,7 @@
     <h1>{{ reviewData.title }}</h1>
     <br />
     <h2>작성자 : {{ reviewData.user }}</h2>
+    <h3>방문 문화재 {{ reviewData.heritage }}</h3>
     <h5>{{ reviewData.created_at }}</h5>
     <br />
     <h3>{{ reviewData.content }}</h3>
@@ -71,6 +73,7 @@ export default {
       const reviewUpdateData = {
         title: this.title,
         content: this.content,
+        heritage: this.heritage,
         user: this.userData.id,
       };
       axios
@@ -102,6 +105,7 @@ export default {
     connectReview() {
       this.title = this.reviewData.title;
       this.content = this.reviewData.content;
+      this.heritage = this.reviewData.heritage;
     },
   },
   data() {
@@ -116,9 +120,11 @@ export default {
         id: "",
         title: "",
         updated_at: "",
+        heritage: "",
       },
       title: "",
       content: "",
+      heritage: "",
       dialog: false,
     };
   },
