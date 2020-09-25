@@ -9,7 +9,9 @@
         <h3>이름 : {{ userData.username }}</h3>
         <h3>성씨 본관 :{{ userData.ancestor }}</h3>
         <div>
-          <v-btn @click="searchAncestor(userData.ancestor)">조상과 관련된 문화재 보기</v-btn>
+          <v-btn @click="searchAncestor(userData.ancestor)"
+            >조상과 관련된 문화재 보기</v-btn
+          >
         </div>
       </v-col>
       <v-col>
@@ -23,7 +25,15 @@
         />-->
         <v-dialog v-model="gradeInfo" width="600px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn class="ma-2" tile outlined color="success" v-bind="attrs" v-on="on">신분제알아보기</v-btn>
+            <v-btn
+              class="ma-2"
+              tile
+              outlined
+              color="success"
+              v-bind="attrs"
+              v-on="on"
+              >신분제알아보기</v-btn
+            >
           </template>
           <v-card>
             <v-card-title>
@@ -37,7 +47,9 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="gradeInfo = false">닫기</v-btn>
+              <v-btn color="green darken-1" text @click="gradeInfo = false"
+                >닫기</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -57,7 +69,6 @@ export default {
     axios
       .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
       .then((res) => {
-        // console.log(res);
         this.userData = res.data;
       })
       .catch((err) => console.log(err));

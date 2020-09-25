@@ -9,7 +9,12 @@
       <v-container fluid>
         <v-row dense>
           <v-col v-for="(dib, i) in dibData" :key="i" cols="12" sm="2">
-            <v-card class="mx-auto cursor" max-width="300" outlined @click="goDib(dib.id)">
+            <v-card
+              class="mx-auto cursor"
+              max-width="300"
+              outlined
+              @click="goDib(dib.id)"
+            >
               <v-list-item three-line>
                 <v-list-item-content>
                   <h5>{{ dib.h_name }}</h5>
@@ -40,7 +45,6 @@ export default {
       .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
       .then((res) => {
         this.dibData = res.data.user.dibs_heritages;
-        console.log(this.dibData.length);
         if (this.dibData.length) {
           this.isEmpty = false;
         } else {
