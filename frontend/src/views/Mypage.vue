@@ -5,6 +5,7 @@
     <MypageReview />
     <div class="mypage-buttons">
       <router-link :to="{ name: 'ProfileUpdate' }">정보 수정</router-link>
+      <br />
       <a href="#">회원탈퇴</a>
     </div>
   </div>

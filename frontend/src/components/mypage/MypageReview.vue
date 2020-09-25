@@ -3,7 +3,7 @@
     <h2>문화재 리뷰 작성 목록</h2>
     <div v-if="isEmpty">
       아직 등록된 리뷰가 없습니다.
-      <button>리뷰 작성하러가기</button>
+      <!-- <button @click="goCreateReview">리뷰 작성하러가기</button> -->
     </div>
     <div v-else>
       <ul v-for="(result, i) in resultList" :key="i">
@@ -17,14 +17,23 @@
 </template>
 
 <script>
+import SERVER from "@/api/drf";
+import axios from "axios";
+
 export default {
   name: "MypageReview",
   created() {
-    if (Object.keys(this.resultList).length === {}) {
-      this.isEmpty = true;
-    } else {
-      this.isEmpty = false;
-    }
+    axios
+      .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
+      .then((res) => {
+        this.reviewData = res.data.user.user_review;
+        if (this.reviewData.length) {
+          this.isEmpty = false;
+        } else {
+          this.isEmpty = true;
+        }
+      })
+      .catch((err) => console.log(err));
   },
   methods: {
     selectReview(result) {
@@ -33,36 +42,7 @@ export default {
   },
   data() {
     return {
-      resultList: [
-        {
-          thumbnail: "https://picsum.photos/510/300?random",
-          title: "test1",
-          user: "john",
-          view: 1,
-          created: "2020-09-23",
-        },
-        {
-          thumbnail: "https://picsum.photos/510/300?random",
-          title: "test2",
-          user: "Harry",
-          view: 22,
-          created: "2020-09-23",
-        },
-        {
-          thumbnail: "https://picsum.photos/510/300?random",
-          title: "test3",
-          user: "Taki",
-          view: 33,
-          created: "2020-09-23",
-        },
-        {
-          thumbnail: "https://picsum.photos/510/300?random",
-          title: "test4",
-          user: "Cathy",
-          view: 11,
-          created: "2020-09-23",
-        },
-      ],
+      reviewData: "",
       isEmpty: true,
     };
   },
