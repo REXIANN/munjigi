@@ -65,7 +65,7 @@ export default {
   // },
   mounted() {
     axios
-      .get(SERVER.URL + SERVER.ROUTES.heritage + "/?page" + "=1")
+      .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1")
       .then((res) => {
         this.heritageList = res.data.results;
       });

@@ -6,10 +6,10 @@
       <!-- <button @click="goCreateReview">리뷰 작성하러가기</button> -->
     </div>
     <div v-else>
-      <ul v-for="(result, i) in resultList" :key="i">
-        <div @click="selectReview(result)">
-          {{ result.title }}
-          {{ result.created }}
+      <ul v-for="(review, i) in reviewData" :key="i">
+        <div @click="selectReview(review.id)">
+          <h3>{{ review.title }}</h3>
+          {{ review.created }}
         </div>
       </ul>
     </div>
@@ -36,8 +36,8 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    selectReview(result) {
-      this.$router.push({ name: "CommunityReviewItem", params: { result } });
+    selectReview(id) {
+      this.$router.push({ name: "CommunityReviewItem", params: { id } });
     },
   },
   data() {
