@@ -3,11 +3,18 @@
     <v-row>
       <v-btn dark @click="$router.push({ name: 'Community' })">목록보기</v-btn>
     </v-row>
-    <div v-if="review.user == userData.nickname">
+    <div v-if="review.users == userData.nickname">
       <v-row justify="end">
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn class="teal" dark v-bind="attrs" v-on="on" @click="connectReview()">수정</v-btn>
+            <v-btn
+              class="teal"
+              dark
+              v-bind="attrs"
+              v-on="on"
+              @click="connectReview()"
+              >수정</v-btn
+            >
             <v-btn @click="deleteReview(review.id)">삭제</v-btn>
           </template>
           <v-card>
@@ -16,8 +23,17 @@
             </v-card-title>
             <v-card-text>
               <v-container>
-                <v-text-field label="제목" v-model="title" required="제목을 입력해 주세요!" autofocus></v-text-field>
-                <v-text-field label="문화재" v-model="heritage" required></v-text-field>
+                <v-text-field
+                  label="제목"
+                  v-model="title"
+                  required="제목을 입력해 주세요!"
+                  autofocus
+                ></v-text-field>
+                <v-text-field
+                  label="문화재"
+                  v-model="heritage"
+                  required
+                ></v-text-field>
                 <v-textarea
                   label="내용"
                   v-model="content"
@@ -41,7 +57,7 @@
     </div>
     <h1>{{ reviewData.title }}</h1>
     <br />
-    <h2>작성자 : {{ reviewData.user }}</h2>
+    <h2>작성자 : {{ reviewData.users }}</h2>
     <h3>방문 문화재 {{ reviewData.heritage }}</h3>
     <h5>{{ reviewData.created_at }}</h5>
     <br />
