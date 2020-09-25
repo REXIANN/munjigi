@@ -3,7 +3,7 @@
     <h3>리뷰 목록</h3>
     <div v-for="review in heritageReviewList" :key="review.id">
       <v-row justify="center" no-gutters>
-        <v-col lg="3">작성자 {{ review.user }}</v-col>
+        <v-col lg="3">작성자 | {{ review.users }}</v-col>
         <v-col lg="3">
           <div class="pa-2" outlined tile>
             <h4>{{ review.title }}</h4>
@@ -12,6 +12,9 @@
           </div>
         </v-col>
       </v-row>
+    </div>
+    <div v-if="!heritageReviewList.length">
+      <h5>관련 리뷰가 없습니다.</h5>
     </div>
   </div>
 </template>
