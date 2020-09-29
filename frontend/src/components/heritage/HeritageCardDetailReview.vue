@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>리뷰 목록</h3>
-    <div v-if="sessionStorage.id">리뷰 작성가능</div>
+    <div v-if="authToken"><CommunityCreateReview /></div>
     <div v-for="review in heritageReviewList" :key="review.id">
       <v-row justify="center" no-gutters>
         <v-col lg="3">작성자 | {{ review.users }}</v-col>
@@ -23,14 +23,22 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
+import { mapState } from "vuex";
+import CommunityCreateReview from "@/components/community/CommunityCreateReview";
 
 export default {
   name: "HeritageCardDetailReview",
+  components: {
+    CommunityCreateReview,
+  },
   created() {
     let heritageId = this.$route.params.id;
     axios
       .get(SERVER.URL + SERVER.ROUTES.heritage + heritageId)
       .then((res) => (this.heritageReviewList = res.data.heritage_reviews));
+  },
+  computed: {
+    ...mapState(["authToken"]),
   },
   data() {
     return {
