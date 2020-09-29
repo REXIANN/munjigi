@@ -18,6 +18,8 @@
         </v-list-item>
       </v-card>
     </div>
+    {{ reviewList.length }}
+
     <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
       <div
         slot="no-more"
@@ -50,6 +52,7 @@ export default {
   methods: {
     ...mapMutations(["SELECT_REVIEW"]),
     infiniteHandler($state) {
+      // if (this.reviewList.length >= 10) {
       axios
         .get(SERVER.URL + SERVER.ROUTES.review + "?page=" + this.limit)
         .then((response) => {
@@ -69,9 +72,11 @@ export default {
           }, 1000);
         })
         .catch((err) => {
-          $state.complete();
           console.error(err);
         });
+      // } else {
+      //   $state.complete();
+      // }
     },
   },
   data() {
