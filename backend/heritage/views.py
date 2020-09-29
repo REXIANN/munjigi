@@ -17,10 +17,15 @@ class HeritageListAPI(GenericAPIView):
     pagination_class = CustomPagination
     def get(self, request):
         sort = request.GET.get('sort','')
+        query = request.GET.get('query', '')
         if sort == 'likes':
             queryset = Heritage.objects.annotate(like_count=Count('like_users')).order_by('-like_count')
+            if query:
+                queryset = queryset.filter(k_name__icontains=query)
         else:
             queryset = self.filter_queryset(self.get_queryset())
+            if query:
+                queryset = queryset.filter(k_name__icontains=query)
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
