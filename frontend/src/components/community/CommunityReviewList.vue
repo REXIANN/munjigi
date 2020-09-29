@@ -18,7 +18,6 @@
         </v-list-item>
       </v-card>
     </div>
-    <!-- {{ reviewList.length }} -->
     <div v-if="reviewList.length >= 10">
       <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
         <div
@@ -53,7 +52,6 @@ export default {
   methods: {
     ...mapMutations(["SELECT_REVIEW"]),
     infiniteHandler($state) {
-      // if (this.reviewList.length >= 10) {
       axios
         .get(SERVER.URL + SERVER.ROUTES.review + "?page=" + this.limit)
         .then((response) => {
