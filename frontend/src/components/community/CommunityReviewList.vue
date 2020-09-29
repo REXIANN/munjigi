@@ -18,16 +18,17 @@
         </v-list-item>
       </v-card>
     </div>
-    {{ reviewList.length }}
-
-    <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
-      <div
-        slot="no-more"
-        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px"
-      >
-        목록의 끝입니다.
-      </div>
-    </infinite-loading>
+    <!-- {{ reviewList.length }} -->
+    <div v-if="reviewList.length >= 10">
+      <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
+        <div
+          slot="no-more"
+          style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px"
+        >
+          목록의 끝입니다.
+        </div>
+      </infinite-loading>
+    </div>
   </div>
 </template>
 
