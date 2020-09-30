@@ -79,7 +79,6 @@ export default {
     if (heritageid) {
       this.location.heritage = true;
       this.heritageId = heritageid;
-      console.log(this.heritageId);
     } else {
       this.location.community = true;
     }
