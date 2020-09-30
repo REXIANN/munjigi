@@ -7,10 +7,11 @@ import Community from "@/views/Community";
 import CommunityReviewItem from "@/components/community/CommunityReviewItem";
 import Heritage from "@/views/Heritage";
 import HeritageCardDetail from "@/components/heritage/HeritageCardDetail";
+import HeritageSearchBar from "@/components/heritage/HeritageSearchBar";
 import Maps from "@/views/Maps";
 import Signup from "@/views/Signup";
 import Mypage from "@/views/Mypage";
-import ProfileUpdate from "@/views/ProfileUpdate"
+import ProfileUpdate from "@/views/ProfileUpdate";
 
 Vue.use(VueRouter);
 
@@ -30,7 +31,11 @@ const routes = [
     name: "HeritageCardDetail",
     component: HeritageCardDetail,
   },
-
+  {
+    path: "/heritage/search/",
+    name: "HeritageSearchBar",
+    component: HeritageSearchBar,
+  },
   {
     path: "/community",
     name: "Community",
@@ -65,7 +70,7 @@ const routes = [
     path: "/profileupdate",
     name: "ProfileUpdate",
     component: ProfileUpdate,
-  }
+  },
 ];
 
 const router = new VueRouter({

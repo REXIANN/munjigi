@@ -91,7 +91,6 @@ export default {
       .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1")
       .then((res) => {
         this.heritageList = res.data.results;
-        console.log(res);
       });
     this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
   },

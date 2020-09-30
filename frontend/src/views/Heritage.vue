@@ -1,21 +1,22 @@
 <template>
   <div class="heritage">
-    <HeritageSearchBar />
+    <div class="searchBar">
+      <h2 @click="$router.push({ name: 'HeritageSearchBar' })">
+        <v-icon>mdi-magnify</v-icon>문화재 검색하기
+      </h2>
+    </div>
     <HeritageCarousel />
     <HeritageCards />
   </div>
 </template>
 
 <script>
-import HeritageSearchBar from "@/components/heritage/HeritageSearchBar";
 import HeritageCarousel from "@/components/heritage/HeritageCarousel";
 import HeritageCards from "@/components/heritage/HeritageCards";
 
 export default {
   name: "Heritage",
-
   components: {
-    HeritageSearchBar,
     HeritageCarousel,
     HeritageCards,
   },
