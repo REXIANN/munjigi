@@ -1,6 +1,15 @@
 <template>
   <div class="heritageCards">
-    <h1>인기 문화재</h1>
+    <h1>{{ chooseType }} 문화재</h1>
+    <v-col cols="12" sm="3">
+      <v-select
+        :items="searchType"
+        v-model="chooseType"
+        outlined
+        @change="changeHeritage(chooseType)"
+      >
+      </v-select>
+    </v-col>
     <div class="row">
       <ul v-for="(heritage, idx) in heritageList" :key="heritage.id">
         <v-hover v-slot:default="{ hover }">
@@ -88,7 +97,7 @@ export default {
   },
   mounted() {
     axios
-      .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1")
+      .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1&sort=likes/")
       .then((res) => {
         this.heritageList = res.data.results;
       });
@@ -99,9 +108,29 @@ export default {
   },
   methods: {
     ...mapMutations(["SELECT_HERITAGE"]),
+    changeHeritage(currentType) {
+      this.limit = 2;
+      if (currentType === "인기순") {
+        axios
+          .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1&sort=likes/")
+          .then((res) => {
+            this.heritageList = res.data.results;
+          });
+      } else {
+        axios
+          .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1")
+          .then((res) => {
+            this.heritageList = res.data.results;
+          });
+      }
+    },
     infiniteHandler($state) {
+      let URL = SERVER.URL + SERVER.ROUTES.heritage + "?page=" + this.limit;
+      if (this.chooseType === "인기순") {
+        URL += "&sort=likes/";
+      }
       axios
-        .get(SERVER.URL + SERVER.ROUTES.heritage + "?page=" + this.limit)
+        .get(URL)
         .then((response) => {
           setTimeout(() => {
             if (response.data.results) {
@@ -170,6 +199,8 @@ export default {
       heritageList: [],
       limit: 2,
       userDataId: "",
+      searchType: ["인기순", "최신순"],
+      chooseType: "인기순",
     };
   },
 };
