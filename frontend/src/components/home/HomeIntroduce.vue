@@ -2,8 +2,8 @@
   <div class="homeIntroduce">
     <h1>문지기란?</h1>
     <div>
-      <v-container class="pa-3 text-center">
-        <v-row class="fill-height" align="center" justify="center">
+      <v-container class=" text-center">
+        <v-row class="v-cards-container fill-height" align="center" justify="center">
           <template v-for="(item, i) in items">
             <v-col :key="i" cols="4">
               <v-hover v-slot:default="{ hover }">
@@ -12,9 +12,16 @@
                   class="rounded-card"
                   :elevation="hover ? 12 : 2"
                 >
-                  <v-img :src="item.img" gradient="rgba(0,0,0,.5), rgba(0,0,0,.5)" height="225px">
+                  <v-img
+                    :src="item.img"
+                    gradient="rgba(0,0,0,.5), rgba(0,0,0,.5)"
+                    height="225px"
+                  >
                     <v-card-title class="title white--text">
-                      <v-row class="fill-height flex-column" justify="space-between">
+                      <v-row
+                        class="fill-height flex-column"
+                        justify="space-between"
+                      >
                         <h2 class="mt-4 subheading">{{ item.title }}</h2>
                         <h4 class="ma-3">{{ item.text }}</h4>
                       </v-row>
@@ -31,6 +38,8 @@
 </template>
 
 <script>
+import "@/assets/css/components/home/homeIntroduce.scss";
+
 export default {
   name: "HomeIntroduce",
   data: () => ({
@@ -62,7 +71,6 @@ export default {
 };
 </script>
 
-<style type="text/css" lang="scss">
-@import "@/assets/css/components/home/homeIntroduce.scss";
+<style>
 </style>
 
