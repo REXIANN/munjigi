@@ -67,6 +67,11 @@ class ProfileAPI(generics.GenericAPIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, nickname):
+        user = User.objects.get(nickname=nickname)
+        user.delete()
+        
 
 
 class RegistrationCheckAPI(generics.GenericAPIView):
