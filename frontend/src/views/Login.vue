@@ -18,7 +18,7 @@
         placeholder="비밀번호를 입력해주세요"
         required="비밀번호를 입력해주세요!"
       />
-      <input type="submit" value="로그인" @click="login(loginData)" />
+      <h3><input type="submit" value="로그인" @click="login(loginData)" /></h3>
     </div>
 
     <h3>
