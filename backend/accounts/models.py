@@ -65,7 +65,7 @@ class Profile(models.Model):
     name = models.CharField(max_length=50, null=True)
     lastname = models.CharField(max_length=50, null=True)
     birth = models.DateField(null=True, blank=True)
-    profile_image = models.ImageField(null=True)
+    profile_image = models.URLField(null=True)
 
 
 @receiver(post_save, sender=User)
