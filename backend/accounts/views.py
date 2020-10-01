@@ -82,3 +82,15 @@ class RegistrationCheckAPI(generics.GenericAPIView):
             return Response(False)
         else:
             return Response(True)
+
+
+class PasswordCheckAPI(generics.GenericAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    def post(self, request):
+        user = request.user
+        password = request.POST.get('password')
+        if request.password == password:
+            return Response(True)
+        else:
+            return Response(False)
