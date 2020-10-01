@@ -3,7 +3,17 @@
     <h1>{{ userData.user.nickname }}님의 마이페이지</h1>
     <v-row justify="space-between">
       <v-col>
-        <!-- <img :src="userData.image" /> -->
+        <img :src="userImage" />
+        <div>
+          <input type="file" @change="previewImage" accept="image/*" />
+        </div>
+        <div>
+          <p>
+            미리보기 준비 중 : {{ uploadValue.toFixed() + "%" }}
+            <progress id="progress" :value="uploadValue" max="100"></progress>
+          </p>
+          <v-btn @click="submitFile">업로드하기</v-btn>
+        </div>
       </v-col>
       <v-col>
         <h3>이름 : {{ userData.username }}</h3>
@@ -61,7 +71,7 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-// import firebase from "firebase";
+import firebase from "firebase";
 
 export default {
   name: "MypageProfile",
@@ -70,16 +80,67 @@ export default {
       .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
       .then((res) => {
         this.userData = res.data;
+        console.log(this.userData);
       })
       .catch((err) => console.log(err));
   },
-  methods: {},
+  methods: {
+    previewImage(event) {
+      this.uploadValue = 0;
+      this.picture = null;
+      this.imageData = event.target.files[0];
+      this.onUpload();
+    },
+    onUpload() {
+      this.picture = null;
+      const storageRef = firebase
+        .storage()
+        .ref(`${this.imageData.name}`)
+        .put(this.imageData);
+      storageRef.on(
+        `state_changed`,
+        (snapshot) => {
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.log(error.message);
+        },
+        () => {
+          this.uploadValue = 100;
+          storageRef.snapshot.ref.getDownloadURL().then((url) => {
+            this.picture = url;
+            this.userImage = url;
+          });
+        }
+      );
+    },
+    submitFile() {
+      console.log(this.picture);
+      axios
+        .put(
+          SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/",
+          {
+            profile_image: this.userImage,
+          },
+          null
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    },
+  },
   data() {
     return {
       gradeInfo: false,
       userData: "",
-      selectedFile: "",
-      imageName: "",
+      userImage: "",
+      imageData: null,
+      picture: null,
+      uploadValue: 0,
+      file: "",
+      selectedFile: null,
     };
   },
 };
