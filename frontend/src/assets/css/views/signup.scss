@@ -10,40 +10,48 @@
 }
 
 .box {
-  background: #5b1311;
+  margin: 4vh auto;
+  padding: 0;
+  background-color: bisque;
   width: 45vw;
-  height: 90vh;
+  height: 70vh;
   text-align: center;
-  color: white;
-  margin: 5vh auto;
-  padding: 2vh 0;
   border-radius: 3vw;
+  position: relative;
 
   h1 {
-    color: white;
-    margin: 6vh auto;
+    margin: 10vh auto 3vh;
   }
 
-  input[type="text"],
-  input[type="password"] {
+  button {
+    margin: 0;
+    padding: 0.2vh 0.5vw;
+    background-color: grey;
+    color: white;
+    border-radius: 10px;
+    outline: none;
+  }
+  button:hover {
+    cursor: pointer;
+  }
+
+  input[type="text"], input[type="password"] {
     border: 0;
     background: none;
     display: block;
     margin: 1vh auto;
     text-align: center;
-    border: 3px solid #9d201d;
+    border: 3px solid sandybrown;
     padding: 2vh 3vw;
     width: 40vw;
     outline: none;
-    color: white;
     border-radius: 10vw;
     transition: 0.3s;
   }
 
-  input[type="text"]:focus,
-  input[type="password"]:focus {
+  input[type="text"]:focus, input[type="password"]:focus {
     width: 43vw;
-    border-color: #de2d29;
+    border-color: salmon;
   }
 
   input[type="submit"] {
@@ -55,7 +63,6 @@
     border: 3px solid #9d201d;
     padding: 2vh 3vw;
     width: 30vw;
-    color: white;
     outline: none;
     border-radius: 10vw;
     transition: 0.3s;
