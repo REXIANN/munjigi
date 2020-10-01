@@ -1,38 +1,19 @@
 <template>
   <div class="homeIntroduce">
     <h1>문지기란?</h1>
-    <div>
-      <v-container class=" text-center">
-        <v-row class="v-cards-container fill-height" align="center" justify="center">
-          <template v-for="(item, i) in items">
-            <v-col :key="i" cols="4">
-              <v-hover v-slot:default="{ hover }">
-                <v-card
-                  @click="$router.push({ name: item.location })"
-                  class="rounded-card"
-                  :elevation="hover ? 12 : 2"
-                >
-                  <v-img
-                    :src="item.img"
-                    gradient="rgba(0,0,0,.5), rgba(0,0,0,.5)"
-                    height="225px"
-                  >
-                    <v-card-title class="title white--text">
-                      <v-row
-                        class="fill-height flex-column"
-                        justify="space-between"
-                      >
-                        <h2 class="mt-4 subheading">{{ item.title }}</h2>
-                        <h4 class="ma-3">{{ item.text }}</h4>
-                      </v-row>
-                    </v-card-title>
-                  </v-img>
-                </v-card>
-              </v-hover>
-            </v-col>
-          </template>
-        </v-row>
-      </v-container>
+
+    <div class="v-cards-container">
+      <div
+        v-for="(item, i) in items"
+        :key="i"
+        class="v-card"
+        @click="$router.push({ name: item.location })"
+      >
+        <v-img :src="item.img" gradient="rgba(0,0,0,.5), rgba(0,0,0,.5)">
+          <h1 class="card-title">{{ item.title }}</h1>
+          <h2 class="card-title">{{ item.text }}</h2>
+        </v-img>
+      </div>
     </div>
   </div>
 </template>
@@ -66,7 +47,6 @@ export default {
         location: "Maps",
       },
     ],
-    transparent: "rgba(255, 255, 255, 0)",
   }),
 };
 </script>
