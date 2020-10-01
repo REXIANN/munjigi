@@ -67,7 +67,7 @@ export default {
       var ps = new kakao.maps.services.Places(map);
 
       // 키워드로 장소를 검색합니다
-      ps.keywordSearch("가야밀면", placesSearchCB);
+      ps.keywordSearch("천마총", placesSearchCB);
 
       // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
       var zoomControl = new kakao.maps.ZoomControl();
