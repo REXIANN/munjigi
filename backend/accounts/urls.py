@@ -7,5 +7,5 @@ urlpatterns = [
     path('auth/user/', UserAPI.as_view()),
     path('<nickname>/', ProfileAPI.as_view()),
     path('register/<checking>/', RegistrationCheckAPI.as_view()),
-    path('passwordcheck/', PasswordCheckAPI.as_view()),
+    path('<nickname>/passwordcheck/', PasswordCheckAPI.as_view()),
 ]   
