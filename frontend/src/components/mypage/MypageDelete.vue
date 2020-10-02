@@ -37,10 +37,15 @@ import axios from "axios";
 export default {
   name: "MypageDelete",
   methods: {
+    created() {
+       if (sessionStorage.getItem("nickname") !== "undefined") {
+      this.userData.nickname = sessionStorage.getItem("nickname");
+      }
+    },
     checkPw() {
       axios
         .post(
-          SERVER.URL + SERVER.ROUTES.mypage + "passwordcheck" + "/",
+          SERVER.URL + SERVER.ROUTES.mypage + this.userData.nickname + "/passwordcheck" + "/",
           {
             password: this.checkPassword,
           },
@@ -61,6 +66,9 @@ export default {
   },
   data() {
     return {
+      userData : {
+        nickname: sessionStorage.getItem("nickname")
+      },
       gradeInfo: false,
       checkPassword: "",
     };

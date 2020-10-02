@@ -37,8 +37,8 @@ class ReviewListAPI(GenericAPIView):
         serializer = self.get_serializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data)
+        return Response(serializer.errors)
         
 
 class ReviewDetailAPI(generics.GenericAPIView):
@@ -58,11 +58,11 @@ class ReviewDetailAPI(generics.GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors)
     
 
     def delete(self, request, pk):
         queryset = get_object_or_404(Review, pk=pk)
         queryset.delete()
-        return Response(status = status.HTTP_204_NO_CONTENT)
+        return
         
