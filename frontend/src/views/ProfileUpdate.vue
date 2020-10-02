@@ -4,18 +4,15 @@
     <div class="profile-update-block">
       <h3>이메일</h3>
       <span>이메일 주소는 변경하실 수 없습니다.</span>
-      <input type="text" disabled v-model="userData.email" />
-    </div>
-    <div class="profile-update-block">
-      <h3>닉네임</h3>
-      <span class="verify-nickname" @click="verifyNickname"
-        >닉네임 중복 확인하기</span
-      >
-      <input type="text" v-model="userData.nickname" />
+      <input type="text" disabled v-model="email" />
     </div>
     <div class="profile-update-block">
       <h3>이름</h3>
       <input type="text" v-model="userData.name" />
+    </div>
+    <div class="profile-update-block">
+      <h3>조상 성씨</h3>
+      <input type="text" v-model="userData.lastname" />
     </div>
     <div class="profile-update-block">
       <h3>생년월일</h3>
@@ -24,12 +21,7 @@
 
     <div class="submit-buttons">
       <input type="submit" value="나가기" @click="goPreviousPage" />
-      <input
-        type="submit"
-        value="작성완료"
-        :disabled="!isNicknameVerified"
-        @click="changeUserInfo"
-      />
+      <input type="submit" value="작성완료" @click="changeUserInfo" />
     </div>
   </div>
 </template>
@@ -43,15 +35,15 @@ import { mapGetters } from "vuex";
 export default {
   name: "ProfileUpdate",
   created() {
-    if (sessionStorage.getItem("name") !== "undefined") {
-      this.userData.name = sessionStorage.getItem("name");
-    }
-    if (sessionStorage.getItem("nickname") !== "undefined") {
-      this.userData.nickname = sessionStorage.getItem("nickname");
-    }
-    if (sessionStorage.getItem("birth") !== "undefined") {
-      this.userData.birth = sessionStorage.getItem("birth");
-    }
+    axios
+      .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
+      .then((res) => {
+        this.userData.name = res.data.name;
+        this.userData.lastname = res.data.lastname;
+        this.userData.profile_image = res.data.profile_image;
+        this.userData.birth = res.data.birth;
+        console.log(this.userData);
+      });
   },
   computed: {
     ...mapGetters(["config"]),
@@ -60,7 +52,7 @@ export default {
     changeUserInfo() {
       axios
         .put(
-          SERVER.URL + SERVER.ROUTES.mypage + this.userData.nickname + "/",
+          SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/",
           {
             data: this.userData,
           },
@@ -75,31 +67,18 @@ export default {
     goPreviousPage() {
       this.$router.go(-1);
     },
-    verifyNickname() {
-      axios
-        .get(SERVER.URL + SERVER.ROUTES.validity + this.userData.nickname + "/")
-        .then((res) => {
-          if (res.data == true) {
-            alert("사용가능한 닉네임입니다.");
-            this.isNicknameVerified = true;
-          } else {
-            alert("새로운 닉네임을 입력해주세요.");
-            this.userData.nickname = "";
-          }
-        })
-        .catch((err) => console.log(err));
-    },
   },
   data() {
     return {
       userData: {
         name: null,
         id: sessionStorage.getItem("id"),
-        email: sessionStorage.getItem("email"),
-        nickname: null,
+        lastname: "",
+        profile_image: "",
         birth: null,
       },
-      isNicknameVerified: false,
+      email: sessionStorage.getItem("email"),
+      nickname: sessionStorage.getItem("nickname"),
     };
   },
 };
