@@ -17,9 +17,8 @@
             autofocus
             v-model="checkPassword"
             placeholder="비밀번호를 입력해주세요. "
-            @keypress="checkPw"
           />
-          <v-btn text color="error" click="checkPw"><h3>확인</h3></v-btn>
+          <v-btn text color="error" @click="checkPw"><h3>확인</h3></v-btn>
         </h3>
 
         <v-card-actions>
@@ -40,12 +39,24 @@ export default {
   methods: {
     checkPw() {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
-        .then(() => {
-          alert("탈퇴가 완료되었습니다.");
-          this.$router.push({ name: "Home" });
-        })
-        .catch((err) => console.log(err));
+        .post(
+          SERVER.URL + SERVER.ROUTES.mypage + "passwordcheck" + "/",
+          {
+            password: this.checkPassword,
+          },
+          null
+        )
+        .then((res) => {
+          console.log(res);
+          // 비밀번호가 맞으면 탈퇴처리하기
+          // axios
+          //   .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
+          //   .then(() => {
+          //     alert("탈퇴가 완료되었습니다.");
+          //     this.$router.push({ name: "Home" });
+          //   })
+          //   .catch((err) => console.log(err));
+        });
     },
   },
   data() {
