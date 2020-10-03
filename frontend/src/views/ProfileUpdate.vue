@@ -54,17 +54,20 @@ export default {
         name: this.userData.name,
         lastname: this.userData.lastname,
         profile_image: this.userData.profile_image,
-        birth: this.userData.birth
-      }
+        birth: this.userData.birth,
+      };
       axios
         .put(
           SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/",
           data,
           null
         )
-        .then((res) => {
-          console.log(res);
-          // 여기에 sessionStorage 업데이트 해주는 거 들어가야함
+        .then(() => {
+          alert("개인 정보가 수정되었습니다.");
+          sessionStorage["birth"] = this.userData.birth;
+          sessionStorage["lastname"] = this.userData.lastname;
+          sessionStorage["name"] = this.userData.name;
+          this.$router.push({ name: "Mypage" });
         })
         .catch((err) => console.log(err));
     },
