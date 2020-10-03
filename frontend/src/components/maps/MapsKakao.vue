@@ -39,6 +39,8 @@ import { mapState, mapMutations } from "vuex";
 export default {
   name: "MapsKakao",
   mounted() {
+    this.getLocation();
+
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   computed: {
@@ -55,7 +57,7 @@ export default {
 
       var mapContainer = document.getElementById("map"), // 지도를 표시할 div
         mapOption = {
-          center: new kakao.maps.LatLng(37.501272, 127.039559), // 지도의 중심좌표
+          center: new kakao.maps.LatLng(this.latitude, this.longitude), // 지도의 중심좌표
           level: 3, // 지도의 확대 레벨
         };
 
@@ -69,6 +71,7 @@ export default {
       var ps = new kakao.maps.services.Places(map);
 
       // 키워드로 장소를 검색합니다
+      // const keyword = this.keyword
       ps.keywordSearch("천마총", placesSearchCB);
 
       // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
@@ -103,16 +106,12 @@ export default {
 
       // 카테고리 검색을 요청하는 함수입니다
       function searchPlaces() {
-        if (!currCategory) {
-          return;
-        }
+        // if (!keyword.replace(/^\s+|\s+$/g, "")) {
+        //   alert("키워드를 입력해주세요!");
+        //   return false;
+        // }
 
-        // 커스텀 오버레이를 숨깁니다
-        placeOverlay.setMap(null);
-
-        // 지도에 표시되고 있는 마커를 제거합니다
-        removeMarker();
-
+        // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
         ps.categorySearch(currCategory, placesSearchCBB, {
           useMapBounds: true,
         });
@@ -319,10 +318,34 @@ export default {
       script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${API_KEY}&libraries=services`;
       document.head.appendChild(script);
     },
+    getLocation() {
+      if (navigator.geolocation) {
+        // GPS를 지원하면
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log(position.coords);
+            this.latitude = position.coords.latitude;
+            this.longitude = position.coords.longitude;
+          },
+          (error) => {
+            console.error(error);
+          },
+          {
+            enableHighAccuracy: false,
+            maximumAge: 0,
+            timeout: Infinity,
+          }
+        );
+      } else {
+        alert("GPS를 지원하지 않습니다");
+      }
+    },
   },
   data() {
     return {
       keyword: null,
+      latitude: null,
+      longitude: null,
     };
   },
 };
