@@ -50,12 +50,16 @@ export default {
   },
   methods: {
     changeUserInfo() {
+      const data = {
+        name: this.userData.name,
+        lastname: this.userData.lastname,
+        profile_image: this.userData.profile_image,
+        birth: this.userData.birth
+      }
       axios
         .put(
           SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/",
-          {
-            data: this.userData,
-          },
+          data,
           null
         )
         .then((res) => {
@@ -74,7 +78,7 @@ export default {
         name: null,
         id: sessionStorage.getItem("id"),
         lastname: "",
-        profile_image: "",
+        profile_image: null,
         birth: null,
       },
       email: sessionStorage.getItem("email"),
