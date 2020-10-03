@@ -42,7 +42,6 @@ export default {
         this.userData.lastname = res.data.lastname;
         this.userData.profile_image = res.data.profile_image;
         this.userData.birth = res.data.birth;
-        console.log(this.userData);
       });
   },
   computed: {
