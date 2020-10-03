@@ -38,36 +38,57 @@ export default {
   name: "MypageDelete",
   methods: {
     created() {
-       if (sessionStorage.getItem("nickname") !== "undefined") {
-      this.userData.nickname = sessionStorage.getItem("nickname");
+      if (sessionStorage.getItem("nickname") !== "undefined") {
+        this.userData.nickname = sessionStorage.getItem("nickname");
       }
     },
     checkPw() {
       axios
         .post(
-          SERVER.URL + SERVER.ROUTES.mypage + this.userData.nickname + "/passwordcheck" + "/",
+          SERVER.URL +
+            SERVER.ROUTES.mypage +
+            this.userData.nickname +
+            "/passwordcheck" +
+            "/",
           {
             password: this.checkPassword,
           },
           null
         )
         .then((res) => {
-          console.log(res);
-          // 비밀번호가 맞으면 탈퇴처리하기
-          // axios
-          //   .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
-          //   .then(() => {
-          //     alert("탈퇴가 완료되었습니다.");
-          //     this.$router.push({ name: "Home" });
-          //   })
-          //   .catch((err) => console.log(err));
-        });
+          if (res.data) {
+            axios
+              .delete(
+                SERVER.URL +
+                  SERVER.ROUTES.mypage +
+                  sessionStorage.nickname +
+                  "/"
+              )
+              .then(() => {
+                alert("탈퇴가 완료되었습니다.");
+                this.gradeInfo = false;
+                // sessionStorage.removeItem("auth-token");
+                // sessionStorage.removeItem("birth");
+                // sessionStorage.removeItem("dateJoined");
+                // sessionStorage.removeItem("email");
+                // sessionStorage.removeItem("id");
+                // sessionStorage.removeItem("name");
+                // sessionStorage.removeItem("nickname");
+                this.$router.push({ name: "Home" });
+              })
+              .catch((err) => console.log(err));
+          } else {
+            alert("비밀번호가 틀렸습니다.");
+            this.checkPassword = "";
+          }
+        })
+        .catch((err) => console.log(err));
     },
   },
   data() {
     return {
-      userData : {
-        nickname: sessionStorage.getItem("nickname")
+      userData: {
+        nickname: sessionStorage.getItem("nickname"),
       },
       gradeInfo: false,
       checkPassword: "",
