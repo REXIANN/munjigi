@@ -51,7 +51,6 @@ class LoginUserSerializer(serializers.ModelSerializer):
 # 프로필
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    profile_image = serializers.ImageField(use_url=True)
     class Meta:
         model = Profile
         fields = ('__all__')

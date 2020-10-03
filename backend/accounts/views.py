@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from knox.models import AuthToken
 from django.contrib.auth.hashers import check_password
+from django.http import QueryDict
 from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, ProfileSerializer, UserPasswordSerializer
 from .models import Profile, User
 
@@ -64,11 +65,19 @@ class ProfileAPI(generics.GenericAPIView):
     def put(self, request, nickname):
         user = User.objects.get(nickname=nickname)
         profile = get_object_or_404(Profile, pk=user.id)
-        serializer = ProfileSerializer(profile, data=request.data)
+        if type(request.data) == dict:
+            ordinary_dict = request.data
+            query_dict = QueryDict('', mutable=True)
+            query_dict.update(ordinary_dict)
+        else:
+            query_dict = request.data
+        serializer = ProfileSerializer(profile, data=query_dict)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors)
+        
+
+        return Response(serializer.errors, status=400)
     
     def delete(self, request, nickname):
         user = User.objects.get(nickname=nickname)
