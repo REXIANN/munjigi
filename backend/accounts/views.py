@@ -3,8 +3,10 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from knox.models import AuthToken
-from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, ProfileSerializer
+from django.contrib.auth.hashers import check_password
+from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, ProfileSerializer, UserPasswordSerializer
 from .models import Profile, User
+
 
 
 class RegistrationAPI(generics.GenericAPIView):
@@ -66,7 +68,12 @@ class ProfileAPI(generics.GenericAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors)
+    
+    def delete(self, request, nickname):
+        user = User.objects.get(nickname=nickname)
+        user.delete()
+        
 
 
 class RegistrationCheckAPI(generics.GenericAPIView):
@@ -77,3 +84,16 @@ class RegistrationCheckAPI(generics.GenericAPIView):
             return Response(False)
         else:
             return Response(True)
+
+
+class PasswordCheckAPI(generics.GenericAPIView):
+    serializer_class = UserPasswordSerializer
+    queryset = User.objects.all()
+
+    def post(self, request, nickname):
+        password = request.data['password']
+        user = User.objects.get(nickname=nickname)
+        if check_password(password, user.password):
+            return Response(True)
+        else:
+            return Response(False)

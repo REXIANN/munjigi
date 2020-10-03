@@ -8,7 +8,12 @@
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 90vh;
-  .btn-end {
+  .mypage-buttons {
     text-align: end;
+    color: white;
+    a {
+      text-decoration: none;
+      color: white;
+    }
   }
 }

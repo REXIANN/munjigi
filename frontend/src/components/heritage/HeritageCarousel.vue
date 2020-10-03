@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>오늘의 인기 문화재!</h1>
+    <h1>추천 문화재!</h1>
 
     <!-- <VueSlickCarousel v-bind="settings">
       <div style="height:20vh;">1</div>
@@ -65,7 +65,7 @@ export default {
   // },
   mounted() {
     axios
-      .get(SERVER.URL + SERVER.ROUTES.heritage + "/?page" + "=1")
+      .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1")
       .then((res) => {
         this.heritageList = res.data.results;
       });

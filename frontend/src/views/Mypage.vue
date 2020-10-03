@@ -4,8 +4,10 @@
     <MypageDib />
     <MypageReview />
     <div class="mypage-buttons">
-      <router-link :to="{ name: 'ProfileUpdate' }">정보 수정</router-link>
-      <a href="#">회원탈퇴</a>
+      <v-btn dark color="purple">
+        <router-link :to="{ name: 'ProfileUpdate' }">정보 수정</router-link>
+      </v-btn>
+      <MypageDelete />
     </div>
   </div>
 </template>
@@ -14,6 +16,7 @@
 import MypageProfile from "@/components/mypage/MypageProfile.vue";
 import MypageDib from "@/components/mypage/MypageDib.vue";
 import MypageReview from "@/components/mypage/MypageReview.vue";
+import MypageDelete from "@/components/mypage/MypageDelete.vue";
 import "@/assets/css/views/mypage.scss";
 
 export default {
@@ -22,6 +25,7 @@ export default {
     MypageProfile,
     MypageDib,
     MypageReview,
+    MypageDelete,
   },
 };
 </script>

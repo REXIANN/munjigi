@@ -22,7 +22,7 @@
               ></v-text-field>
               <v-text-field
                 label="방문한 문화재"
-                v-model="hertiageId"
+                v-model="heritageId"
                 hint="방문한 문화재를 입력해주세요."
                 required="방문한 문화재를 입력해주세요!"
               ></v-text-field>
@@ -75,6 +75,13 @@ export default {
   name: "CommunityCreateReview",
   created() {
     this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
+    let heritageid = this.$route.params.id;
+    if (heritageid) {
+      this.location.heritage = true;
+      this.heritageId = heritageid;
+    } else {
+      this.location.community = true;
+    }
   },
   computed: {
     ...mapGetters(["config"]),
@@ -84,7 +91,7 @@ export default {
       const reviewData = {
         title: this.title,
         content: this.content,
-        heritage: this.hertiageId,
+        heritage: this.heritageId,
         user: this.userDataId,
       };
       axios
@@ -93,8 +100,15 @@ export default {
           this.dialog = false;
           this.title = "";
           this.content = "";
-          this.hertiageId = "";
-          this.$router.push({ name: "Community" });
+          this.heritageId = "";
+          if (this.location.community) {
+            this.$router.push({ name: "Community" });
+          } else {
+            this.$router.push({
+              name: "HeritageCardDetail",
+              params: { id: this.heritageId },
+            });
+          }
         });
     },
     closeCheck() {
@@ -114,9 +128,13 @@ export default {
       userDataId: "",
       title: "",
       content: "",
-      hertiageId: "",
+      heritageId: "",
       dialog: false,
       dialog2: false,
+      location: {
+        heritage: false,
+        community: false,
+      },
     };
   },
 };

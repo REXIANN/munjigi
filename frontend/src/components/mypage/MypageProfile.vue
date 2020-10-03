@@ -3,13 +3,25 @@
     <h1>{{ userData.user.nickname }}님의 마이페이지</h1>
     <v-row justify="space-between">
       <v-col>
-        <!-- <img :src="userData.image" /> -->
+        <img :src="userImage" />
+        <div>
+          <input type="file" @change="previewImage" accept="image/*" />
+        </div>
+        <div>
+          <p>
+            미리보기 준비 중 : {{ uploadValue.toFixed() + "%" }}
+            <progress id="progress" :value="uploadValue" max="100"></progress>
+          </p>
+          <v-btn @click="submitFile">업로드하기</v-btn>
+        </div>
       </v-col>
       <v-col>
         <h3>이름 : {{ userData.username }}</h3>
         <h3>성씨 본관 :{{ userData.ancestor }}</h3>
         <div>
-          <v-btn @click="searchAncestor(userData.ancestor)">조상과 관련된 문화재 보기</v-btn>
+          <v-btn @click="searchAncestor(userData.ancestor)"
+            >조상과 관련된 문화재 보기</v-btn
+          >
         </div>
       </v-col>
       <v-col>
@@ -23,7 +35,15 @@
         />-->
         <v-dialog v-model="gradeInfo" width="600px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn class="ma-2" tile outlined color="success" v-bind="attrs" v-on="on">신분제알아보기</v-btn>
+            <v-btn
+              class="ma-2"
+              tile
+              outlined
+              color="success"
+              v-bind="attrs"
+              v-on="on"
+              >신분제알아보기</v-btn
+            >
           </template>
           <v-card>
             <v-card-title>
@@ -37,7 +57,9 @@
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="gradeInfo = false">닫기</v-btn>
+              <v-btn color="green darken-1" text @click="gradeInfo = false"
+                >닫기</v-btn
+              >
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -49,7 +71,7 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-// import firebase from "firebase";
+import firebase from "firebase";
 
 export default {
   name: "MypageProfile",
@@ -57,18 +79,68 @@ export default {
     axios
       .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
       .then((res) => {
-        // console.log(res);
         this.userData = res.data;
+        console.log(this.userData);
       })
       .catch((err) => console.log(err));
   },
-  methods: {},
+  methods: {
+    previewImage(event) {
+      this.uploadValue = 0;
+      this.picture = null;
+      this.imageData = event.target.files[0];
+      this.onUpload();
+    },
+    onUpload() {
+      this.picture = null;
+      const storageRef = firebase
+        .storage()
+        .ref(`${this.imageData.name}`)
+        .put(this.imageData);
+      storageRef.on(
+        `state_changed`,
+        (snapshot) => {
+          this.uploadValue =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },
+        (error) => {
+          console.log(error.message);
+        },
+        () => {
+          this.uploadValue = 100;
+          storageRef.snapshot.ref.getDownloadURL().then((url) => {
+            this.picture = url;
+            this.userImage = url;
+          });
+        }
+      );
+    },
+    submitFile() {
+      console.log(this.picture);
+      axios
+        .put(
+          SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/",
+          {
+            profile_image: this.userImage,
+          },
+          null
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    },
+  },
   data() {
     return {
       gradeInfo: false,
       userData: "",
-      selectedFile: "",
-      imageName: "",
+      userImage: "",
+      imageData: null,
+      picture: null,
+      uploadValue: 0,
+      file: "",
+      selectedFile: null,
     };
   },
 };

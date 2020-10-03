@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import User, Profile
 from heritage.models import Heritage
 from heritage.serializers import HeritageDetailSerializer
-from review.serializers import ReviewSerializer
+from review.serializers import ReviewListSerializer
 from django.contrib.auth import authenticate
 
 
@@ -27,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
     nickname = serializers.CharField()
     like_heritages = HeritageDetailSerializer(many=True, read_only=True)
     dibs_heritages = HeritageDetailSerializer(many=True, read_only=True)
-    user_review = ReviewSerializer(many=True, read_only=True)
+    user_review = ReviewListSerializer(many=True, read_only=True)
     class Meta:
         model = User
         fields = ('id', 'email', 'nickname', 'like_heritages', 'dibs_heritages', 'user_review')
@@ -55,3 +55,10 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('__all__')
+
+
+# 비밀번호 확인
+class UserPasswordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'password')

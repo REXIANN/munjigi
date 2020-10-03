@@ -1,9 +1,10 @@
 <template>
   <div>
     <h3>리뷰 목록</h3>
+    <div v-if="authToken"><CommunityCreateReview /></div>
     <div v-for="review in heritageReviewList" :key="review.id">
       <v-row justify="center" no-gutters>
-        <v-col lg="3">작성자 {{ review.user }}</v-col>
+        <v-col lg="3">작성자 | {{ review.users }}</v-col>
         <v-col lg="3">
           <div class="pa-2" outlined tile>
             <h4>{{ review.title }}</h4>
@@ -13,20 +14,31 @@
         </v-col>
       </v-row>
     </div>
+    <div v-if="!heritageReviewList.length">
+      <h5>관련 리뷰가 없습니다.</h5>
+    </div>
   </div>
 </template>
 
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
+import { mapState } from "vuex";
+import CommunityCreateReview from "@/components/community/CommunityCreateReview";
 
 export default {
   name: "HeritageCardDetailReview",
+  components: {
+    CommunityCreateReview,
+  },
   created() {
     let heritageId = this.$route.params.id;
     axios
       .get(SERVER.URL + SERVER.ROUTES.heritage + heritageId)
       .then((res) => (this.heritageReviewList = res.data.heritage_reviews));
+  },
+  computed: {
+    ...mapState(["authToken"]),
   },
   data() {
     return {

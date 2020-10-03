@@ -4,21 +4,30 @@
     <div v-for="(review, idx) in reviewList" :key="idx">
       <v-card class="review-list" outlined @click="SELECT_REVIEW(review)">
         <v-list-item class="d-flex justify-space-around review-list-item">
-          <v-img class="review-list-image" src="https://picsum.photos/510/300?random"></v-img>
+          <v-img
+            class="review-list-image"
+            src="https://picsum.photos/510/300?random"
+          ></v-img>
           <div class="review-list-text">
             <h3 class="mb-4">{{ review.title }}</h3>
-            <v-list-item-subtitle>작성자 : {{ review.user }}</v-list-item-subtitle>
+            <v-list-item-subtitle
+              >작성자 : {{ review.users }}</v-list-item-subtitle
+            >
             <v-list-item-subtitle>{{ review.created_at }}</v-list-item-subtitle>
           </div>
         </v-list-item>
       </v-card>
     </div>
-    <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
-      <div
-        slot="no-more"
-        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
-      >목록의 끝입니다.</div>
-    </infinite-loading>
+    <div v-if="reviewList.length >= 10">
+      <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
+        <div
+          slot="no-more"
+          style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px"
+        >
+          목록의 끝입니다.
+        </div>
+      </infinite-loading>
+    </div>
   </div>
 </template>
 
@@ -62,9 +71,11 @@ export default {
           }, 1000);
         })
         .catch((err) => {
-          $state.complete();
           console.error(err);
         });
+      // } else {
+      //   $state.complete();
+      // }
     },
   },
   data() {

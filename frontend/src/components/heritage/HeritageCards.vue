@@ -1,6 +1,15 @@
 <template>
   <div class="heritageCards">
-    <h1>인기 문화재</h1>
+    <h1>{{ chooseType }} 문화재</h1>
+    <v-col cols="12" sm="3">
+      <v-select
+        :items="searchType"
+        v-model="chooseType"
+        outlined
+        @change="changeHeritage(chooseType)"
+      >
+      </v-select>
+    </v-col>
     <div class="row">
       <ul v-for="(heritage, idx) in heritageList" :key="heritage.id">
         <v-hover v-slot:default="{ hover }">
@@ -14,9 +23,11 @@
                       <div
                         v-if="hover"
                         class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-1 white--text"
-                        style="height: 100%;"
+                        style="height: 100%"
                         @click="SELECT_HERITAGE(heritage)"
-                      >{{ heritage.era }}</div>
+                      >
+                        {{ heritage.era }}
+                      </div>
                     </v-expand-transition>
                   </v-img>
                 </v-col>
@@ -24,7 +35,11 @@
                   <v-row class="flex-column ma-0 fill-height" justify="center">
                     <v-col class="px-0">
                       <v-btn icon @click="like(heritage.id, idx)">
-                        <span v-if="heritage.like_users.find((n) => n == userDataId)">
+                        <span
+                          v-if="
+                            heritage.like_users.find((n) => n == userDataId)
+                          "
+                        >
                           <v-icon color="red lighten-2">mdi-heart</v-icon>
                         </span>
                         <span v-else>
@@ -34,7 +49,9 @@
                     </v-col>
                     <v-col class="px-0">
                       <v-btn icon @click="dib(heritage.id, idx)">
-                        <span v-if="heritage.dib_users.find((m) => m == userDataId)">
+                        <span
+                          v-if="heritage.dib_users.find((m) => m == userDataId)"
+                        >
                           <v-icon color="green lighten-2">mdi-bookmark</v-icon>
                         </span>
                         <span v-else>
@@ -59,8 +76,10 @@
     <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
       <div
         slot="no-more"
-        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
-      >목록의 끝입니다.</div>
+        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px"
+      >
+        목록의 끝입니다.
+      </div>
     </infinite-loading>
   </div>
 </template>
@@ -78,7 +97,7 @@ export default {
   },
   mounted() {
     axios
-      .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1")
+      .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1&sort=likes/")
       .then((res) => {
         this.heritageList = res.data.results;
       });
@@ -89,9 +108,29 @@ export default {
   },
   methods: {
     ...mapMutations(["SELECT_HERITAGE"]),
+    changeHeritage(currentType) {
+      this.limit = 2;
+      if (currentType === "인기순") {
+        axios
+          .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1&sort=likes/")
+          .then((res) => {
+            this.heritageList = res.data.results;
+          });
+      } else {
+        axios
+          .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1")
+          .then((res) => {
+            this.heritageList = res.data.results;
+          });
+      }
+    },
     infiniteHandler($state) {
+      let URL = SERVER.URL + SERVER.ROUTES.heritage + "?page=" + this.limit;
+      if (this.chooseType === "인기순") {
+        URL += "&sort=likes/";
+      }
       axios
-        .get(SERVER.URL + SERVER.ROUTES.heritage + "?page=" + this.limit)
+        .get(URL)
         .then((response) => {
           setTimeout(() => {
             if (response.data.results) {
@@ -160,6 +199,8 @@ export default {
       heritageList: [],
       limit: 2,
       userDataId: "",
+      searchType: ["인기순", "최신순"],
+      chooseType: "인기순",
     };
   },
 };
