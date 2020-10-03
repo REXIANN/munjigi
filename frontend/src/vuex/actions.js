@@ -1,5 +1,4 @@
 import axios from "axios";
-import cookies from "vue-cookies";
 import router from "@/routes";
 import SERVER from "@/api/drf";
 
@@ -43,7 +42,6 @@ export default {
       .post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config)
       .then(() => {
         commit("SET_TOKEN", null);
-        cookies.remove("auth-token");
         // 세션에 있는 정보를 지움
         sessionStorage.removeItem("auth-token")
         sessionStorage.removeItem("birth")
