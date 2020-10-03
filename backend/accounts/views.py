@@ -82,7 +82,7 @@ class ProfileAPI(generics.GenericAPIView):
     def delete(self, request, nickname):
         user = User.objects.get(nickname=nickname)
         user.delete()
-        
+        return Response(True)
 
 
 class RegistrationCheckAPI(generics.GenericAPIView):
