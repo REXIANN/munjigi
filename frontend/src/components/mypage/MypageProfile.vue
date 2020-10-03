@@ -16,8 +16,8 @@
         </div>
       </v-col>
       <v-col>
-        <h3>이름 : {{ userData.username }}</h3>
-        <h3>성씨 본관 :{{ userData.ancestor }}</h3>
+        <h3>이름 : {{ userData.name }}</h3>
+        <h3>성씨 본관 :{{ userData.lastname }}</h3>
         <div>
           <v-btn @click="searchAncestor(userData.ancestor)"
             >조상과 관련된 문화재 보기</v-btn
@@ -80,7 +80,7 @@ export default {
       .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
       .then((res) => {
         this.userData = res.data;
-        console.log(this.userData);
+        this.userImage = res.data.profile_image;
       })
       .catch((err) => console.log(err));
   },
@@ -116,17 +116,30 @@ export default {
       );
     },
     submitFile() {
-      console.log(this.picture);
+      const data = {
+        name: this.userData.name,
+        lastname: this.userData.lastname,
+        profile_image: this.userImage,
+        birth: this.userData.birth,
+      };
       axios
         .put(
           SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/",
-          {
-            profile_image: this.userImage,
-          },
+          data,
           null
         )
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          axios
+            .get(
+              SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/"
+            )
+            .then((res) => {
+              this.userData = res.data;
+              this.uploadValue = 0;
+              this.userImage = res.data.profile_image;
+              alert("프로필이미지가 변경되었습니다.");
+            })
+            .catch((err) => console.log(err));
         })
         .catch((err) => console.log(err));
     },

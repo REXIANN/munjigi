@@ -17,10 +17,10 @@
             autofocus
             v-model="checkPassword"
             placeholder="비밀번호를 입력해주세요. "
+            @keyup.enter="checkPw"
           />
           <v-btn text color="error" @click="checkPw"><h3>확인</h3></v-btn>
         </h3>
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="gradeInfo = false"><h3>닫기</h3> </v-btn>
@@ -33,41 +33,57 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
+import cookies from "vue-cookies";
 
 export default {
   name: "MypageDelete",
   methods: {
     created() {
-       if (sessionStorage.getItem("nickname") !== "undefined") {
-      this.userData.nickname = sessionStorage.getItem("nickname");
+      if (sessionStorage.getItem("nickname") !== "undefined") {
+        this.userData.nickname = sessionStorage.getItem("nickname");
       }
     },
     checkPw() {
       axios
         .post(
-          SERVER.URL + SERVER.ROUTES.mypage + this.userData.nickname + "/passwordcheck" + "/",
+          SERVER.URL +
+            SERVER.ROUTES.mypage +
+            this.userData.nickname +
+            "/passwordcheck" +
+            "/",
           {
             password: this.checkPassword,
           },
           null
         )
         .then((res) => {
-          console.log(res);
-          // 비밀번호가 맞으면 탈퇴처리하기
-          // axios
-          //   .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
-          //   .then(() => {
-          //     alert("탈퇴가 완료되었습니다.");
-          //     this.$router.push({ name: "Home" });
-          //   })
-          //   .catch((err) => console.log(err));
+          if (res.data === true) {
+            axios
+              .delete(
+                SERVER.URL +
+                  SERVER.ROUTES.mypage +
+                  sessionStorage.nickname +
+                  "/"
+              )
+              .then(() => {
+                alert("탈퇴가 완료되었습니다.");
+                // 세션에 있는 정보를 지움
+                cookies.remove("auth-token");
+                sessionStorage.clear();
+                this.$router.push({ name: "Home" });
+              })
+              .catch((err) => console.log(err));
+          } else {
+            alert("비밀번호가 틀렸습니다.");
+            this.checkPassword = "";
+          }
         });
     },
   },
   data() {
     return {
-      userData : {
-        nickname: sessionStorage.getItem("nickname")
+      userData: {
+        nickname: sessionStorage.getItem("nickname"),
       },
       gradeInfo: false,
       checkPassword: "",
