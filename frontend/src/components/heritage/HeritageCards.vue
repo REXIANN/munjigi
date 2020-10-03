@@ -10,14 +10,14 @@
       >
       </v-select>
     </v-col>
+    <!-- 문화재 인피티니 카드 -->
     <div class="row">
-      <ul v-for="(heritage, idx) in heritageList" :key="heritage.id">
-        <v-hover v-slot:default="{ hover }">
-          <v-card class="d-inline-block mx-auto">
-            <v-container>
-              <h3 @click="SELECT_HERITAGE(heritage)">{{ heritage.k_name }}</h3>
-              <v-row justify="space-between">
-                <v-col cols="auto">
+        <v-card class="d-inline-block my-4 mx-auto" v-for="(heritage, idx) in heritageList" :key="heritage.id">
+          <v-container>
+            <h3 @click="SELECT_HERITAGE(heritage)">{{ heritage.k_name.length > 15 ? heritage.k_name.slice(0, 15) + "..." : heritage.k_name }}</h3>
+            <v-row justify="space-around">
+              <v-col cols="auto">
+                <v-hover v-slot:default="{ hover }">
                   <v-img height="200" width="200" :src="heritage.imageurl">
                     <v-expand-transition>
                       <div
@@ -30,47 +30,44 @@
                       </div>
                     </v-expand-transition>
                   </v-img>
-                </v-col>
-                <v-col cols="auto" class="text-center pl-0">
-                  <v-row class="flex-column ma-0 fill-height" justify="center">
-                    <v-col class="px-0">
-                      <v-btn icon @click="like(heritage.id, idx)">
-                        <span
-                          v-if="
-                            heritage.like_users.find((n) => n == userDataId)
-                          "
-                        >
-                          <v-icon color="red lighten-2">mdi-heart</v-icon>
-                        </span>
-                        <span v-else>
-                          <v-icon>mdi-heart</v-icon>
-                        </span>
-                      </v-btn>
-                    </v-col>
-                    <v-col class="px-0">
-                      <v-btn icon @click="dib(heritage.id, idx)">
-                        <span
-                          v-if="heritage.dib_users.find((m) => m == userDataId)"
-                        >
-                          <v-icon color="green lighten-2">mdi-bookmark</v-icon>
-                        </span>
-                        <span v-else>
-                          <v-icon>mdi-bookmark</v-icon>
-                        </span>
-                      </v-btn>
-                    </v-col>
-                    <v-col class="px-0">
-                      <v-btn icon>
-                        <v-icon>mdi-share-variant</v-icon>
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card>
-        </v-hover>
-      </ul>
+                </v-hover>
+              </v-col>
+              <v-col cols="auto" class="text-center pl-0">
+                <v-row class="flex-column ma-0 fill-height" justify="center">
+                  <v-col class="px-0">
+                    <v-btn icon @click="like(heritage.id, idx)">
+                      <span
+                        v-if="heritage.like_users.find((n) => n == userDataId)"
+                      >
+                        <v-icon color="red lighten-2">mdi-heart</v-icon>
+                      </span>
+                      <span v-else>
+                        <v-icon>mdi-heart</v-icon>
+                      </span>
+                    </v-btn>
+                  </v-col>
+                  <v-col class="px-0">
+                    <v-btn icon @click="dib(heritage.id, idx)">
+                      <span
+                        v-if="heritage.dib_users.find((m) => m == userDataId)"
+                      >
+                        <v-icon color="green lighten-2">mdi-bookmark</v-icon>
+                      </span>
+                      <span v-else>
+                        <v-icon>mdi-bookmark</v-icon>
+                      </span>
+                    </v-btn>
+                  </v-col>
+                  <v-col class="px-0">
+                    <v-btn icon>
+                      <v-icon>mdi-share-variant</v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
     </div>
 
     <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
@@ -169,8 +166,8 @@ export default {
               (res) => (this.heritageList[idx].like_users = res.data.like_users)
             );
         })
-        .catch((err) => {
-          console.error(err);
+        .catch(() => {
+          alert("로그인 후 이용가능한 기능입니다!")
         });
     },
     dib(id, idx) {
@@ -189,8 +186,8 @@ export default {
               (res) => (this.heritageList[idx].dib_users = res.data.dib_users)
             );
         })
-        .catch((err) => {
-          console.error(err);
+        .catch(() => {
+          alert("로그인 후 이용가능한 기능입니다!")
         });
     },
   },

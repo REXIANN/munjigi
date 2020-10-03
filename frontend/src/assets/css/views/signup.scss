@@ -1,9 +1,8 @@
 @import "../components";
 
 .signup {
+  height: 100%;
   background-image: url("https://user-images.githubusercontent.com/60081201/94753625-bed6f380-03c9-11eb-933b-41e803eb9c24.PNG");
-  background-attachment: fixed;
-  //   background-origin: border-box;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -14,7 +13,6 @@
   padding: 0;
   background-color: bisque;
   width: 45vw;
-  height: 70vh;
   text-align: center;
   border-radius: 3vw;
   position: relative;
