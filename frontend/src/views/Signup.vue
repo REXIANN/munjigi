@@ -36,7 +36,7 @@
         </h3>
       </div>
       <div v-else>
-        <v-btn disabled @click="showWarning"> 작성완료 </v-btn>
+        <v-btn disabled> 작성완료 </v-btn>
         <br>
         <span>중복여부를 확인해 주세요!</span>
       </div>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import "@/assets/css/views/signup.scss";
 import SERVER from "@/api/drf";
 import axios from "axios";
 import { mapActions } from "vuex";
@@ -105,5 +106,4 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/css/views/signup.scss";
 </style>
