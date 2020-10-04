@@ -55,7 +55,7 @@ export default {
           },
           null
         )
-        .then((res) => {
+        .then(() => {
           axios
             .delete(
               SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/"

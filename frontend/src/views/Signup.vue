@@ -4,9 +4,6 @@
       <h1>회원가입</h1>
       <div>
         <h2>닉네임</h2>
-        <button @click="checkNickname(signupData.nickname)">
-          중복확인하기
-        </button>
         <input
           type="text"
           v-model="signupData.nickname"
@@ -14,19 +11,22 @@
           autofocus
           required="닉네임을 입력해 주세요!"
         />
+        <button @click="checkNickname(signupData.nickname)">
+          중복확인하기
+        </button>
       </div>
       <div>
         <h2>이메일</h2>
+        <input type="text" v-model="signupData.email" />
         <button @click="checkEmail(signupData.email)">중복확인하기</button>
-        <input type="text" v-model="signupData.email" placeholder="이메일을 입력해 주세요"/>
       </div>
       <div>
         <h2>비밀번호</h2>
-        <input type="password" v-model="signupData.password" placeholder="비밀번호를 입력해 주세요" />
+        <input type="password" v-model="signupData.password" />
       </div>
       <div>
         <h2>비밀번호 확인하기</h2>
-        <input type="password" v-model="passwordConfirm" placeholder="비밀번호를 한번 더 입력해 주세요"/>
+        <input type="password" v-model="passwordConfirm" />
       </div>
 
       <div v-if="checkMail && checkNick">
@@ -37,15 +37,12 @@
       </div>
       <div v-else>
         <v-btn disabled> 작성완료 </v-btn>
-        <br>
-        <span>중복여부를 확인해 주세요!</span>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import "@/assets/css/views/signup.scss";
 import SERVER from "@/api/drf";
 import axios from "axios";
 import { mapActions } from "vuex";
@@ -55,6 +52,7 @@ export default {
   methods: {
     ...mapActions(["signup"]),
     checkNickname(nickname) {
+      
       axios
         .get(SERVER.URL + SERVER.ROUTES.validity + nickname + "/")
         .then((res) => {
@@ -63,7 +61,6 @@ export default {
             this.checkNick = true;
           } else {
             alert("새로운 닉네임을 입력해주세요.");
-            this.signupData.nickname = "";
           }
         })
         .catch((err) => console.log(err));
@@ -106,4 +103,5 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/assets/css/views/signup.scss";
 </style>
