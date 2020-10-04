@@ -18,9 +18,7 @@ export default {
         sessionStorage.setItem("name", res.data.user.name)
         sessionStorage.setItem("nickname", res.data.user.nickname)
       })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      .catch(() => alert("이메일 또는 비밀번호가 틀렸습니다"));
   },
   signup({ dispatch }, signupData) {
     const info = {
@@ -30,12 +28,11 @@ export default {
     dispatch("postAuthData", info);
   },
   login({ dispatch }, loginData) {
-    !loginData.email || !loginData.password ? alert("이메일 또는 비밀번호를 입력해주세요") : undefined;
     const info = {
       location: SERVER.URL + SERVER.ROUTES.login,
       data: loginData,
     };
-    dispatch("postAuthData", info);
+    !loginData.email || !loginData.password ? alert("이메일 또는 비밀번호를 입력해주세요") : dispatch("postAuthData", info);
   },
   logout({ getters, commit }) {
     axios

@@ -29,9 +29,12 @@ firebase.initializeApp({
   measurementId: "G-ZRNR87EZ41",
 });
 
+let rootRef = firebase.database().ref();
+
 new Vue({
   store,
   vuetify,
   router,
+  rootRef,
   render: (h) => h(App),
 }).$mount("#app");

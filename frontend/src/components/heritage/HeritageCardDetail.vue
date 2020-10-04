@@ -40,7 +40,10 @@
     <br />
     <div class="d-flex flex-column align-center my-4">
       <h2>평점을 매겨보세요!</h2>
-      <star-rating v-model="rating"></star-rating>
+      <div>
+        <star-rating v-model="rating"></star-rating>
+        <v-btn color="yellow" @click="setRating(rating)"> 평점 매기기! </v-btn>
+      </div>
     </div>
 
     <h3>위치 정보</h3>
@@ -70,20 +73,24 @@ export default {
   },
   computed: {
     isUserLike() {
-      return this.heritage.like_users && this.heritage.like_users.includes( Number(this.userDataId) )
+      return (
+        this.heritage.like_users &&
+        this.heritage.like_users.includes(Number(this.userDataId))
+      );
     },
     isUserDib() {
-      return this.heritage.dib_users && this.heritage.dib_users.includes(  Number(this.userDataId) )
+      return (
+        this.heritage.dib_users &&
+        this.heritage.dib_users.includes(Number(this.userDataId))
+      );
     },
   },
-  watch: {
-    setRating() {
-      const rating = this.rating
-      console.log(rating)
-    }
-  },
   methods: {
-    
+    setRating(rating) {
+      console.log(rating);
+
+      // 밑에 axios로 평점 보내야 함
+    },
     findUser(userArray) {
       console.log(userArray);
       const a = userArray;

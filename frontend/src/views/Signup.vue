@@ -8,7 +8,6 @@
           type="text"
           v-model="signupData.nickname"
           placeholder="닉네임을 입력해주세요"
-          autofocus
           required="닉네임을 입력해 주세요!"
         />
         <button @click="checkNickname(signupData.nickname)">
@@ -67,6 +66,8 @@ export default {
     },
 
     checkEmail(email) {
+      // const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      //     return pattern.test(value) || 'Invalid e-mail.'
       if (email.indexOf("@") === -1) {
         alert("이메일 양식을 지켜주세요!")
         this.$refs.signupData.email.focus()
