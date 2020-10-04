@@ -7,7 +7,7 @@ from rest_framework.pagination import PageNumberPagination
 from .serializers import HeritageSerializer, HeritageDetailSerializer, HeritageRatingSerializer
 from .models import Heritage, Heritage_rating
 from backend.pagination import CustomPagination
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Avg
 from accounts.models import User
 
 
@@ -132,10 +132,19 @@ class HeritageRatingAPI(generics.GenericAPIView):
                 serializer = HeritageRatingSerializer(queryset, data=request.data)
                 if serializer.is_valid():
                     serializer.save()
+                    rating_average(pk)
                     return Response(serializer.data)
         else:
             serializer = HeritageRatingSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                rating_average(pk)
                 return Response(serializer.data)
-             
+
+
+def rating_average(heritage_id):
+    avg_rating = Heritage_rating.objects.filter(heritage_id=heritage_id).aggregate(Avg('rating'))
+    heritage = Heritage.objects.get(id=heritage_id)
+    heritage.rating = avg_rating['rating__avg']
+    heritage.save()
+    return
