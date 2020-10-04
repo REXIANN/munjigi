@@ -17,10 +17,10 @@
             autofocus
             v-model="checkPassword"
             placeholder="비밀번호를 입력해주세요. "
+            @keyup.enter="checkPw"
           />
           <v-btn text color="error" @click="checkPw"><h3>확인</h3></v-btn>
         </h3>
-
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="gradeInfo = false"><h3>닫기</h3> </v-btn>
@@ -33,6 +33,7 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
+import cookies from "vue-cookies";
 
 export default {
   name: "MypageDelete",

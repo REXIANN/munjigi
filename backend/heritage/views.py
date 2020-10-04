@@ -4,10 +4,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
-from .serializers import HeritageSerializer, HeritageDetailSerializer
-from .models import Heritage
+from .serializers import HeritageSerializer, HeritageDetailSerializer, HeritageRatingSerializer
+from .models import Heritage, Heritage_rating
 from backend.pagination import CustomPagination
-from django.db.models import Count
+from django.db.models import Count, Q
 from accounts.models import User
 
 
@@ -21,11 +21,11 @@ class HeritageListAPI(GenericAPIView):
         if sort == 'likes':
             queryset = Heritage.objects.annotate(like_count=Count('like_users')).order_by('-like_count')
             if query:
-                queryset = queryset.filter(k_name__icontains=query)
+                queryset = queryset.filter(Q (k_name__icontains=query) | Q (content__icontains=query)).order_by('-hit')
         else:
             queryset = self.filter_queryset(self.get_queryset())
             if query:
-                queryset = queryset.filter(k_name__icontains=query)
+                queryset = queryset.filter(Q (k_name__icontains=query) | Q (content__icontains=query)).order_by('-hit')
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -111,3 +111,31 @@ class HeritageVisitAPI(generics.GenericAPIView):
             heritage.visit_users.add(user)
         serializer = HeritageDetailSerializer(heritage)
         return Response(serializer.data)
+
+
+class HeritageRatingAPI(generics.GenericAPIView):
+    queryset = Heritage_rating.objects.all()
+    serializer_class = HeritageRatingSerializer
+    def get(self, request, pk):
+        queryset = Heritage_rating.objects.filter(Q(heritage_id=pk))
+        serializer = HeritageRatingSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+
+    def post(self, request, pk):
+        queryset = Heritage_rating.objects.filter(heritage_id=pk)
+        serializer = HeritageRatingSerializer(queryset, many=True)
+        
+        for serializerData in serializer.data:
+            if serializerData['user'] == int(request.data['user']):
+                queryset = Heritage_rating.objects.filter(Q(heritage_id=pk) & Q(user_id=request.data['user'])).first()
+                serializer = HeritageRatingSerializer(queryset, data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data)
+        else:
+            serializer = HeritageRatingSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+             
