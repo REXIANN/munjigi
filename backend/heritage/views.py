@@ -7,7 +7,7 @@ from rest_framework.pagination import PageNumberPagination
 from .serializers import HeritageSerializer, HeritageDetailSerializer
 from .models import Heritage
 from backend.pagination import CustomPagination
-from django.db.models import Count
+from django.db.models import Count, Q
 from accounts.models import User
 
 
@@ -21,11 +21,11 @@ class HeritageListAPI(GenericAPIView):
         if sort == 'likes':
             queryset = Heritage.objects.annotate(like_count=Count('like_users')).order_by('-like_count')
             if query:
-                queryset = queryset.filter(k_name__icontains=query)
+                queryset = queryset.filter(Q (k_name__icontains=query) | Q (content__icontains=query)).order_by('-hit')
         else:
             queryset = self.filter_queryset(self.get_queryset())
             if query:
-                queryset = queryset.filter(k_name__icontains=query)
+                queryset = queryset.filter(Q (k_name__icontains=query) | Q (content__icontains=query)).order_by('-hit')
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
