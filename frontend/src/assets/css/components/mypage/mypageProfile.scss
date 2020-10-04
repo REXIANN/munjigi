@@ -8,6 +8,18 @@
     justify-content: center;
   }
   img {
-    width: 20vw;
+    width: 15vw;
+  }
+}
+
+.grade-image {
+  width: 50px;
+}
+
+.grade-text {
+  font-size: 20px;
+  font-family: $main-font;
+  .grade-number {
+    font-size: 10px;
   }
 }

@@ -25,47 +25,38 @@
         </div>
       </v-col>
       <v-col>
-        {{ userGrade }}
-        <h3>현재 신분 {{ userGrade }}</h3>
-        <!-- <v-img
-          class="grade-image"
-          src="https://user-images.githubusercontent.com/60081201/93740775-20f36400-fc26-11ea-96ed-417389ec29eb.png"
-          alt="양반등급 이미지"
-          height="100px"
-          width="100px"
-        />-->
-        <v-dialog v-model="gradeInfo" width="600px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="ma-2"
-              tile
-              outlined
-              color="success"
-              v-bind="attrs"
-              v-on="on"
-              >신분제알아보기</v-btn
-            >
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">문지기의 신분제</span>
-              리뷰수로 신분이 결정됩니다.
-            </v-card-title>
-            <v-card-text>
-              <div v-for="(grade, idx) in gradeList" :key="idx">
-                <img :src="grade.image" />
-                {{ grade.rank }}
-                리뷰 {{ grade.number }}개 이상
-              </div>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="gradeInfo = false"
-                >닫기</v-btn
+        <h3>나의 신분 "{{ userGrade.rank }}"</h3>
+        <img :src="userGrade.image" />
+        <div>
+          <v-dialog v-model="gradeInfo" width="600px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn class="ma-2" tile outlined v-bind="attrs" v-on="on"
+                >신분제알아보기</v-btn
               >
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+            </template>
+            <v-card>
+              <v-card-title>
+                <h1>문지기의 신분제</h1>
+                <h4>작성한 리뷰의 개수로 신분이 결정됩니다.</h4>
+              </v-card-title>
+
+              <div v-for="(grade, idx) in gradeList" :key="idx">
+                <img class="grade-image" :src="grade.image" />
+                <span class="grade-text">
+                  {{ grade.rank }}
+                </span>
+                <span class="grade-number"
+                  >리뷰 {{ grade.number }}개 이상일 경우</span
+                >
+              </div>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn text @click="gradeInfo = false"><h4>닫기</h4></v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -84,7 +75,22 @@ export default {
       .then((res) => {
         this.userData = res.data;
         this.userImage = res.data.profile_image;
-        this.userGrade = res.data.user.user_review.length;
+        let userGradeNum = res.data.user.user_review.length;
+        if (userGradeNum >= 50) {
+          this.userGrade = this.gradeList[0];
+        } else if (userGradeNum >= 40) {
+          this.userGrade = this.gradeList[1];
+        } else if (userGradeNum >= 30) {
+          this.userGrade = this.gradeList[2];
+        } else if (userGradeNum >= 20) {
+          this.userGrade = this.gradeList[3];
+        } else if (userGradeNum >= 10) {
+          this.userGrade = this.gradeList[4];
+        } else if (userGradeNum >= 5) {
+          this.userGrade = this.gradeList[5];
+        } else {
+          this.userGrade = this.gradeList[6];
+        }
       })
       .catch((err) => console.log(err));
   },
