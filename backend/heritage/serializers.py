@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Heritage, Tag, Heritage_rating
+from .models import Heritage, Tag, Heritage_rating, User_tag
 from review.serializers import ReviewListSerializer
 
 
@@ -28,4 +28,10 @@ class HeritageDetailSerializer(serializers.ModelSerializer):
 class HeritageRatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Heritage_rating
+        fields = ('__all__')
+
+
+class UserTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User_tag
         fields = ('__all__')

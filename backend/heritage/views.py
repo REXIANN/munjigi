@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
-from .serializers import HeritageSerializer, HeritageDetailSerializer, HeritageRatingSerializer
-from .models import Heritage, Heritage_rating
+from .serializers import HeritageSerializer, HeritageDetailSerializer, HeritageRatingSerializer, UserTagSerializer
+from .models import Heritage, Heritage_rating, User_tag
 from backend.pagination import CustomPagination
 from django.db.models import Count, Q, Avg
 from accounts.models import User
@@ -77,8 +77,10 @@ class HeritageLikeAPI(generics.GenericAPIView):
         user = User.objects.get(id=request.data['userDataId'])
         if user in heritage.like_users.all():
             heritage.like_users.remove(user)
+            user_remove_weight(request.data['userDataId'], pk)
         else:
             heritage.like_users.add(user)
+            user_add_weight(request.data['userDataId'], pk)
         serializer = HeritageDetailSerializer(heritage)
         return Response(serializer.data)
 
@@ -92,8 +94,10 @@ class HeritageBookmarkAPI(generics.GenericAPIView):
         user = User.objects.get(id=request.data['userDataId'])
         if user in heritage.dib_users.all():
             heritage.dib_users.remove(user)
+            user_remove_weight(request.data['userDataId'], pk)
         else:
             heritage.dib_users.add(user)
+            user_add_weight(request.data['userDataId'], pk)
         serializer = HeritageDetailSerializer(heritage)
         return Response(serializer.data)
 
@@ -129,9 +133,11 @@ class HeritageRatingAPI(generics.GenericAPIView):
         for serializerData in serializer.data:
             if serializerData['user'] == int(request.data['user']):
                 queryset = Heritage_rating.objects.filter(Q(heritage_id=pk) & Q(user_id=request.data['user'])).first()
+                heritage_rate = Heritage_rating.objects.get(heritage_id=pk, user_id = request.data['user']).rating
                 serializer = HeritageRatingSerializer(queryset, data=request.data)
                 if serializer.is_valid():
                     serializer.save()
+                    user_rating_weight(request.data['user'], pk, request.data['rating'], heritage_rate)
                     rating_average(pk)
                     queryset = Heritage_rating.objects.filter(heritage_id=pk)
                     serializer = HeritageRatingSerializer(queryset, many=True)
@@ -140,6 +146,7 @@ class HeritageRatingAPI(generics.GenericAPIView):
             serializer = HeritageRatingSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                user_rating_weight(request.data['user'], pk, request.data['rating'], 0)
                 rating_average(pk)
                 queryset = Heritage_rating.objects.filter(heritage_id=pk)
                 serializer = HeritageRatingSerializer(queryset, many=True)
@@ -155,4 +162,69 @@ def rating_average(heritage_id):
 
 
 # 문화재 좋아요 및 북마크시 가중치 설정
-#def user_add_weight(user_id, heritage_id):
+def user_add_weight(user_id, heritage_id):
+    tag_queryset = Heritage.objects.filter(pk=heritage_id).values('heritage_tags')
+    user_queryset = User_tag.objects.filter(user_id=user_id).values('tag_id')
+    tagging = []
+    u_tagging = []
+    for tag in tag_queryset:
+        tagging.append(tag['heritage_tags'])
+    for u_tag in user_queryset:
+        u_tagging.append(u_tag['tag_id'])
+    
+    for tag in tagging:
+        if tag in u_tagging:
+            user_tag = User_tag.objects.get(user_id = user_id, tag_id = tag)
+            user_tag.weight += 1
+            user_tag.save()
+        else:
+            user_tag = User_tag.objects.create(user_id = user_id, tag_id = tag)
+            user_tag.weight += 1
+            user_tag.save()
+    return
+
+
+# 문화재 좋아요 및 북마크 취소시 가중치 감소
+def user_remove_weight(user_id, heritage_id):
+    tag_queryset = Heritage.objects.filter(pk=heritage_id).values('heritage_tags')
+    user_queryset = User_tag.objects.filter(user_id=user_id).values('tag_id')
+    tagging = []
+    u_tagging = [] 
+    for tag in tag_queryset:
+        tagging.append(tag['heritage_tags'])
+    for u_tag in user_queryset:
+        u_tagging.append(u_tag['tag_id'])
+    for tag in tagging:
+        if tag in u_tagging:
+            user_tag = User_tag.objects.get(user_id = user_id, tag_id = tag)
+            user_tag.weight -= 1
+            user_tag.save()
+        else:
+            user_tag = User_tag.objects.create(user_id = user_id, tag_id = tag)
+            user_tag.weight -= 1
+            user_tag.save()
+    return
+
+
+# 문화재 평점 추가 및 수정 시 가중치 수정
+def user_rating_weight(user_id, heritage_id, current_rating, bef_rating):
+    tag_queryset = Heritage.objects.filter(pk=heritage_id).values('heritage_tags')
+    user_queryset = User_tag.objects.filter(user_id=user_id).values('tag_id')
+    tagging = []
+    u_tagging = []
+    for tag in tag_queryset:
+        tagging.append(tag['heritage_tags'])
+    for u_tag in user_queryset:
+        u_tagging.append(u_tag['tag_id'])
+    for tag in tagging:
+        if tag in u_tagging:
+            user_tag = User_tag.objects.get(user_id = user_id, tag_id = tag)
+            user_tag.weight -= bef_rating
+            user_tag.weight += current_rating
+            user_tag.save()
+        else:
+            user_tag = User_tag.objects.create(user_id = user_id, tag_id = tag)
+            user_tag.weight -= bef_rating
+            user_tag.weight += current_rating
+            user_tag.save()
+    return
