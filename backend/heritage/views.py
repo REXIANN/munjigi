@@ -133,18 +133,26 @@ class HeritageRatingAPI(generics.GenericAPIView):
                 if serializer.is_valid():
                     serializer.save()
                     rating_average(pk)
+                    queryset = Heritage_rating.objects.filter(heritage_id=pk)
+                    serializer = HeritageRatingSerializer(queryset, many=True)
                     return Response(serializer.data)
         else:
             serializer = HeritageRatingSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 rating_average(pk)
+                queryset = Heritage_rating.objects.filter(heritage_id=pk)
+                serializer = HeritageRatingSerializer(queryset, many=True)
                 return Response(serializer.data)
 
-
+# 문화재 평균 평점
 def rating_average(heritage_id):
     avg_rating = Heritage_rating.objects.filter(heritage_id=heritage_id).aggregate(Avg('rating'))
     heritage = Heritage.objects.get(id=heritage_id)
     heritage.rating = avg_rating['rating__avg']
     heritage.save()
     return
+
+
+# 문화재 좋아요 및 북마크시 가중치 설정
+#def user_add_weight(user_id, heritage_id):
