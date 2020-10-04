@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import "@/assets/css/views/signup.scss";
 import SERVER from "@/api/drf";
 import axios from "axios";
 import { mapActions } from "vuex";
@@ -103,6 +104,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import "@/assets/css/views/signup.scss";
+<style>
 </style>
