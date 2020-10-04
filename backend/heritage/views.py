@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
-from .serializers import HeritageSerializer, HeritageDetailSerializer
-from .models import Heritage
+from .serializers import HeritageSerializer, HeritageDetailSerializer, HeritageRatingSerializer
+from .models import Heritage, Heritage_rating
 from backend.pagination import CustomPagination
 from django.db.models import Count, Q
 from accounts.models import User
@@ -111,3 +111,31 @@ class HeritageVisitAPI(generics.GenericAPIView):
             heritage.visit_users.add(user)
         serializer = HeritageDetailSerializer(heritage)
         return Response(serializer.data)
+
+
+class HeritageRatingAPI(generics.GenericAPIView):
+    queryset = Heritage_rating.objects.all()
+    serializer_class = HeritageRatingSerializer
+    def get(self, request, pk):
+        queryset = Heritage_rating.objects.filter(Q(heritage_id=pk))
+        serializer = HeritageRatingSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+
+    def post(self, request, pk):
+        queryset = Heritage_rating.objects.filter(heritage_id=pk)
+        serializer = HeritageRatingSerializer(queryset, many=True)
+        
+        for serializerData in serializer.data:
+            if serializerData['user'] == int(request.data['user']):
+                queryset = Heritage_rating.objects.filter(Q(heritage_id=pk) & Q(user_id=request.data['user'])).first()
+                serializer = HeritageRatingSerializer(queryset, data=request.data)
+                if serializer.is_valid():
+                    serializer.save()
+                    return Response(serializer.data)
+        else:
+            serializer = HeritageRatingSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+             
