@@ -2,90 +2,94 @@
   <div class="signup">
     <form novalidate="true" class="box">
       <h1>회원가입</h1>
+      <!-- 닉네임 -->
       <div>
         <h2>닉네임</h2>
+        <!-- 닉네임 input tag -->
         <input
           type="text"
           v-model="signupData.nickname"
           placeholder="닉네임을 입력해주세요"
-          required="닉네임을 입력해 주세요!"
+          @focusout="verifyNickname"
         />
-        <button @click="checkNickname(signupData.nickname)">
-          중복확인하기
-        </button>
+        <h4 v-show="isNicknameVerified">사용가능</h4>
+        <h4 v-show="!isNicknameVerified">사용불가능</h4>
       </div>
+
+      <!-- 이메일 -->
       <div>
         <h2>이메일</h2>
-        <input type="text" v-model="signupData.email" />
-        <button @click="checkEmail(signupData.email)">중복확인하기</button>
+        <button @click="verifyEmail">중복확인하기</button>
+        <!-- 이메일 input tag -->
+        <input
+          type="text"
+          placeholder="이메일을 입력해주세요"
+          v-model="signupData.email"
+          @focusout="verifyEmail"
+        />
+        <h4 v-show="!isEmailValidate">올바른 이메일 형식이 아닙니다</h4>
+        <h4 v-show="isEmailVerified">사용가능한 이메일</h4>
+        <h4 v-show="!isEmailVerified">사용불가능한 이메일</h4>
       </div>
+
+      <!-- 비밀번호 -->
       <div>
         <h2>비밀번호</h2>
         <input type="password" v-model="signupData.password" />
       </div>
+
+      <!-- 비밀번호 확인 -->
       <div>
         <h2>비밀번호 확인하기</h2>
         <input type="password" v-model="passwordConfirm" />
+        <h4 v-show="isPasswordValidate">비밀번호가 일치합니다</h4>
+        <h4 v-show="!isPasswordValidate">비밀번호가 일치하지 않습니다</h4>
       </div>
 
-      <div v-if="checkMail && checkNick">
-        <!-- 비밀번호 일치 여부 확인해서 active 넣어야 함 -->
-        <h3>
-          <input type="submit" value="작성 완료" @click="signup(signupData)" />
-        </h3>
-      </div>
-      <div v-else>
-        <v-btn disabled> 작성완료 </v-btn>
+      <!-- 비밀번호 일치 여부 확인 -> active 넣어야 함 -->
+      <div>
+        <v-btn
+          :disabled="!(isEmailVerified && isNicknameVerified && isEmailValidate && isPasswordValidate)"
+          @click="signup(signupData)"
+        >
+          작성완료
+        </v-btn>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import "@/assets/css/views/signup.scss";
 import SERVER from "@/api/drf";
 import axios from "axios";
 import { mapActions } from "vuex";
 
 export default {
   name: "Signup",
+  computed: {
+    isEmailValidate() {
+      const email = this.signupData.email;
+      const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return pattern.test(email);
+    },
+    isPasswordValidate() {
+      return this.signupData.password === this.passwordConfirm
+    }
+  },
   methods: {
     ...mapActions(["signup"]),
-    checkNickname(nickname) {
-      
+    verifyNickname() {
+      const nickname = this.signupData.nickname;
       axios
         .get(SERVER.URL + SERVER.ROUTES.validity + nickname + "/")
-        .then((res) => {
-          if (res.data == true) {
-            alert("사용가능한 닉네임입니다.");
-            this.checkNick = true;
-          } else {
-            alert("새로운 닉네임을 입력해주세요.");
-          }
-        })
-        .catch((err) => console.log(err));
+        .then((res) => this.isNicknameVerified = res.data )
     },
-
-    checkEmail(email) {
-      // const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      //     return pattern.test(value) || 'Invalid e-mail.'
-      if (email.indexOf("@") === -1) {
-        alert("이메일 양식을 지켜주세요!")
-        this.$refs.signupData.email.focus()
-        return
-      } else {
-        axios
-          .get(SERVER.URL + SERVER.ROUTES.validity + email + "/")
-          .then((res) => {
-            if (res.data == true) {
-              alert("사용가능한 이메일입니다.")
-              this.checkMail = true
-            } else {
-              alert("존재하는 이메일입니다.")
-              this.signupData.email = ""
-            }
-          })
-          .catch((err) => console.log(err))
-      }
+    verifyEmail() {
+      const email = this.signupData.email;
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.validity + email + "/")
+        .then((res) => this.isEmailVerified = res.data )
     },
   },
   data() {
@@ -96,13 +100,12 @@ export default {
         email: "",
         password: "",
       },
-      checkNick: false,
-      checkMail: false,
+      isNicknameVerified: false,
+      isEmailVerified: false,
     };
   },
 };
 </script>
 
-<style lang="scss">
-@import "@/assets/css/views/signup.scss";
+<style>
 </style>

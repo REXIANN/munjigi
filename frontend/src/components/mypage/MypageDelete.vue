@@ -33,7 +33,6 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-import cookies from "vue-cookies";
 
 export default {
   name: "MypageDelete",
