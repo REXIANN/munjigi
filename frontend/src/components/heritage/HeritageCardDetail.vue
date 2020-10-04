@@ -38,14 +38,21 @@
       </v-row>
     </v-container>
     <br />
+    <!-- 문화재의 평점을 보여주는 블록 -->
+    <div>
+      <h2>이 문화재의 평점은 {{ this.ratingAvg}}점 입니다</h2>
+    </div>
+
+    <!-- 사용자가 평점을 매기는 블록 -->
     <div class="d-flex flex-column align-center my-4">
       <h2>평점을 매겨보세요!</h2>
       <div>
         <star-rating v-model="rating"></star-rating>
-        <v-btn color="yellow" @click="setRating(rating)"> 평점 매기기! </v-btn>
+        <v-btn color="yellow" @click="setRating"> 평점 매기기! </v-btn>
       </div>
     </div>
 
+    <!-- 위치정보  -->
     <h3>위치 정보</h3>
     <p>{{ heritage.address }}</p>
     <HeritageCardDetailReview />
@@ -56,6 +63,7 @@
 import StarRating from "vue-star-rating";
 import SERVER from "@/api/drf";
 import axios from "axios";
+import { mapGetters } from "vuex";
 import HeritageCardDetailReview from "@/components/heritage/HeritageCardDetailReview";
 
 export default {
@@ -65,13 +73,36 @@ export default {
     StarRating,
   },
   created() {
-    this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
+    this.userDataId =
+      sessionStorage.id === undefined ? null : sessionStorage.id;
     let heritageId = this.$route.params.id;
     axios
       .get(SERVER.URL + SERVER.ROUTES.heritage + heritageId)
       .then((res) => (this.heritage = res.data));
   },
+  mounted() {
+    // get rating of the heritage
+    let heritageId = this.$route.params.id;
+    const URL = SERVER.URL + SERVER.ROUTES.heritage + heritageId + "/score/";
+    axios
+      .get(URL)
+      .then((res) => {
+        this.ratingList = res.data;
+      })
+      .catch((err) => console.log(err));
+  },
   computed: {
+    ...mapGetters(["config"]),
+    // heritageScore() {
+    // const arr = this.ratingList
+    // arr.forEach((elem) => console.log(elem) )
+    ratingAvg() {
+      const arr = this.ratingList
+        let sum = 0;
+        arr.forEach((elem) => (sum += elem.rating + 3));
+        return sum / arr.length
+    },
+    // },
     isUserLike() {
       return (
         this.heritage.like_users &&
@@ -86,15 +117,18 @@ export default {
     },
   },
   methods: {
-    setRating(rating) {
-      console.log(rating);
-
-      // 밑에 axios로 평점 보내야 함
-    },
-    findUser(userArray) {
-      console.log(userArray);
-      const a = userArray;
-      return a.find((n) => n === this.userDataId);
+    setRating() {
+      const URL =
+        SERVER.URL + SERVER.ROUTES.heritage + this.heritage.id + "/score/";
+      const data = {
+        heritage: this.heritage.id,
+        rating: this.rating - 3,
+        user: Number(this.userDataId),
+      };
+      axios
+        .post(URL, data, this.config)
+        .then((res) => (this.ratingList = res.data))
+        .catch(() => alert("로그인 후 이용가능한 기능입니다."));
     },
     like(id) {
       axios
@@ -136,8 +170,11 @@ export default {
   data() {
     return {
       rating: 3,
-      userDataId: "",
+      userDataId: null,
       heritage: {},
+      ratingList: {
+        type: Array,
+      },
     };
   },
 };
