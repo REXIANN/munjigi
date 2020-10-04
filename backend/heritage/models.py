@@ -22,9 +22,20 @@ class Heritage(models.Model):
     visit_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='visited_heritages', blank=True)
     dib_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='dibs_heritages', blank=True)
     heritage_tags = models.ManyToManyField(Tag, related_name='tagging', blank=True)
+    rating = models.FloatField(null=True)
+    
 
 class Heritage_picture(models.Model):
     heritage = models.ForeignKey(Heritage, on_delete=models.CASCADE)
-    imageurl = models.URLField()
+    imageurl = models.URLField(null=True)
 
 
+class Heritage_video(models.Model):
+    heritage = models.ForeignKey(Heritage, on_delete=models.CASCADE)
+    videourl = models.URLField(null=True)
+
+
+class Heritage_rating(models.Model):
+    heritage = models.ForeignKey(Heritage, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    rating = models.IntegerField(null=True)
