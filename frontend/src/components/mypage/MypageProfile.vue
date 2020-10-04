@@ -25,7 +25,8 @@
         </div>
       </v-col>
       <v-col>
-        <h3>현재 신분 {{ userData.grade }}</h3>
+        {{ userGrade }}
+        <h3>현재 신분 {{ userGrade }}</h3>
         <!-- <v-img
           class="grade-image"
           src="https://user-images.githubusercontent.com/60081201/93740775-20f36400-fc26-11ea-96ed-417389ec29eb.png"
@@ -51,9 +52,11 @@
               리뷰수로 신분이 결정됩니다.
             </v-card-title>
             <v-card-text>
-              왕 : 리뷰 50개 이상 / 영의정 : 리뷰 30개 이상 / 기미상궁 : 리뷰
-              20개 이상 / 사또 : 리뷰 10개 이상 / 양반 : 리뷰 5개 이상 / 천민 :
-              리뷰 0개 이상
+              <div v-for="(grade, idx) in gradeList" :key="idx">
+                <img :src="grade.image" />
+                {{ grade.rank }}
+                리뷰 {{ grade.number }}개 이상
+              </div>
             </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -81,6 +84,7 @@ export default {
       .then((res) => {
         this.userData = res.data;
         this.userImage = res.data.profile_image;
+        this.userGrade = res.data.user.user_review.length;
       })
       .catch((err) => console.log(err));
   },
@@ -154,6 +158,51 @@ export default {
       uploadValue: 0,
       file: "",
       selectedFile: null,
+      gradeList: [
+        {
+          image:
+            "https://user-images.githubusercontent.com/60081201/95014433-bf99af00-0681-11eb-8b44-e47fecfbd981.jpg",
+          rank: "왕",
+          number: "50",
+        },
+        {
+          image:
+            "https://user-images.githubusercontent.com/60081201/95014434-c0324580-0681-11eb-8079-71b1c9228d0a.jpg",
+          rank: "중전",
+          number: "40",
+        },
+        {
+          image:
+            "https://user-images.githubusercontent.com/60081201/95014436-c0cadc00-0681-11eb-97e7-1c6e5cda9ea6.jpg",
+          rank: "관료",
+          number: "30",
+        },
+        {
+          image:
+            "https://user-images.githubusercontent.com/60081201/95014437-c0cadc00-0681-11eb-95c0-c2d78b5b5868.jpg",
+          rank: "사또",
+          number: "20",
+        },
+        {
+          image:
+            "https://user-images.githubusercontent.com/60081201/95014431-bf011880-0681-11eb-94ef-2fd7491fedc3.jpg",
+          rank: "아씨",
+          number: "10",
+        },
+        {
+          image:
+            "https://user-images.githubusercontent.com/60081201/95014429-bdcfeb80-0681-11eb-9f88-aaf228187bca.png",
+          rank: "상민",
+          number: "5",
+        },
+        {
+          image:
+            "https://user-images.githubusercontent.com/60081201/95014435-c0324580-0681-11eb-9387-9bde492766e9.jpg",
+          rank: "천민",
+          number: "0",
+        },
+      ],
+      userGrade: 0,
     };
   },
 };
