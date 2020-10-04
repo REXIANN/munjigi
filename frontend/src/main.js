@@ -12,6 +12,7 @@ import firebase from "firebase";
 // Add simple-vue-validator
 import SimpleVueValidation from 'simple-vue-validator';
 
+
 Vue.use(SimpleVueValidation);
 Vue.use(VueCookies);
 

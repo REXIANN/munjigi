@@ -68,22 +68,22 @@ export default {
 
     checkEmail(email) {
       if (email.indexOf("@") === -1) {
-        alert("이메일 양식을 지켜주세요!");
-        this.$refs.signupData.email.focus();
-        return;
+        alert("이메일 양식을 지켜주세요!")
+        this.$refs.signupData.email.focus()
+        return
       } else {
         axios
           .get(SERVER.URL + SERVER.ROUTES.validity + email + "/")
           .then((res) => {
             if (res.data == true) {
-              alert("사용가능한 이메일입니다.");
-              this.checkMail = true;
+              alert("사용가능한 이메일입니다.")
+              this.checkMail = true
             } else {
-              alert("존재하는 이메일입니다.");
-              this.signupData.email = "";
+              alert("존재하는 이메일입니다.")
+              this.signupData.email = ""
             }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => console.log(err))
       }
     },
   },
