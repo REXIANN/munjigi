@@ -56,27 +56,25 @@ export default {
           },
           null
         )
-        .then((res) => {
-          if (res.data === true) {
-            axios
-              .delete(
-                SERVER.URL +
-                  SERVER.ROUTES.mypage +
-                  sessionStorage.nickname +
-                  "/"
-              )
-              .then(() => {
-                alert("탈퇴가 완료되었습니다.");
-                // 세션에 있는 정보를 지움
-                cookies.remove("auth-token");
-                sessionStorage.clear();
-                this.$router.push({ name: "Home" });
-              })
-              .catch((err) => console.log(err));
-          } else {
-            alert("비밀번호가 틀렸습니다.");
-            this.checkPassword = "";
-          }
+        .then(() => {
+          axios
+            .delete(
+              SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/"
+            )
+            .then(() => {
+              alert("탈퇴가 완료되었습니다.");
+              this.$store.commit("SET_TOKEN", null);
+              // 세션에 있는 정보를 지움
+              sessionStorage.removeItem("auth-token");
+              sessionStorage.removeItem("birth");
+              sessionStorage.removeItem("dateJoined");
+              sessionStorage.removeItem("email");
+              sessionStorage.removeItem("id");
+              sessionStorage.removeItem("name");
+              sessionStorage.removeItem("nickname");
+              this.$router.push({ name: "Home" });
+            })
+            .catch((err) => console.log(err));
         });
     },
   },

@@ -9,7 +9,11 @@ import store from "./vuex/index";
 import VueCookies from "vue-cookies";
 // Add firebase
 import firebase from "firebase";
+// Add simple-vue-validator
+import SimpleVueValidation from 'simple-vue-validator';
 
+
+Vue.use(SimpleVueValidation);
 Vue.use(VueCookies);
 
 Vue.config.productionTip = false;
@@ -25,9 +29,12 @@ firebase.initializeApp({
   measurementId: "G-ZRNR87EZ41",
 });
 
+let rootRef = firebase.database().ref();
+
 new Vue({
   store,
   vuetify,
   router,
+  rootRef,
   render: (h) => h(App),
 }).$mount("#app");

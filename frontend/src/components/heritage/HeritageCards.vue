@@ -1,5 +1,5 @@
 <template>
-  <div class="heritageCards">
+  <div class="heritage-cards">
     <h1>{{ chooseType }} 문화재</h1>
     <v-col cols="12" sm="3">
       <v-select
@@ -12,62 +12,72 @@
     </v-col>
     <!-- 문화재 인피티니 카드 -->
     <div class="row">
-        <v-card class="d-inline-block my-4 mx-auto" v-for="(heritage, idx) in heritageList" :key="heritage.id">
-          <v-container>
-            <h3 @click="SELECT_HERITAGE(heritage)">{{ heritage.k_name.length > 15 ? heritage.k_name.slice(0, 15) + "..." : heritage.k_name }}</h3>
-            <v-row justify="space-around">
-              <v-col cols="auto">
-                <v-hover v-slot:default="{ hover }">
-                  <v-img height="200" width="200" :src="heritage.imageurl">
-                    <v-expand-transition>
-                      <div
-                        v-if="hover"
-                        class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-1 white--text"
-                        style="height: 100%"
-                        @click="SELECT_HERITAGE(heritage)"
-                      >
-                        {{ heritage.era }}
-                      </div>
-                    </v-expand-transition>
-                  </v-img>
-                </v-hover>
-              </v-col>
-              <v-col cols="auto" class="text-center pl-0">
-                <v-row class="flex-column ma-0 fill-height" justify="center">
-                  <v-col class="px-0">
-                    <v-btn icon @click="like(heritage.id, idx)">
-                      <span
-                        v-if="heritage.like_users.find((n) => n == userDataId)"
-                      >
-                        <v-icon color="red lighten-2">mdi-heart</v-icon>
-                      </span>
-                      <span v-else>
-                        <v-icon>mdi-heart</v-icon>
-                      </span>
-                    </v-btn>
-                  </v-col>
-                  <v-col class="px-0">
-                    <v-btn icon @click="dib(heritage.id, idx)">
-                      <span
-                        v-if="heritage.dib_users.find((m) => m == userDataId)"
-                      >
-                        <v-icon color="green lighten-2">mdi-bookmark</v-icon>
-                      </span>
-                      <span v-else>
-                        <v-icon>mdi-bookmark</v-icon>
-                      </span>
-                    </v-btn>
-                  </v-col>
-                  <v-col class="px-0">
-                    <v-btn icon>
-                      <v-icon>mdi-share-variant</v-icon>
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card>
+      <v-card
+        class="d-inline-block my-4 mx-auto"
+        v-for="(heritage, idx) in heritageList"
+        :key="heritage.id"
+      >
+        <v-container class="v-card-container">
+          <h3 @click="SELECT_HERITAGE(heritage)">
+            {{
+              heritage.k_name.length > 15
+                ? heritage.k_name.slice(0, 15) + "..."
+                : heritage.k_name
+            }}
+          </h3>
+          <v-row justify="space-around">
+            <v-col cols="auto">
+              <v-hover v-slot:default="{ hover }">
+                <v-img height="200" width="200" :src="heritage.imageurl">
+                  <v-expand-transition>
+                    <div
+                      v-if="hover"
+                      class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-1 white--text"
+                      style="height: 100%"
+                      @click="SELECT_HERITAGE(heritage)"
+                    >
+                      {{ heritage.era }}
+                    </div>
+                  </v-expand-transition>
+                </v-img>
+              </v-hover>
+            </v-col>
+            <v-col cols="auto" class="text-center pl-0">
+              <v-row class="flex-column ma-0 fill-height" justify="center">
+                <v-col class="px-0">
+                  <v-btn icon @click="like(heritage.id, idx)">
+                    <span
+                      v-if="heritage.like_users.find((n) => n == userDataId)"
+                    >
+                      <v-icon color="red lighten-2">mdi-heart</v-icon>
+                    </span>
+                    <span v-else>
+                      <v-icon>mdi-heart</v-icon>
+                    </span>
+                  </v-btn>
+                </v-col>
+                <v-col class="px-0">
+                  <v-btn icon @click="dib(heritage.id, idx)">
+                    <span
+                      v-if="heritage.dib_users.find((m) => m == userDataId)"
+                    >
+                      <v-icon color="green lighten-2">mdi-bookmark</v-icon>
+                    </span>
+                    <span v-else>
+                      <v-icon>mdi-bookmark</v-icon>
+                    </span>
+                  </v-btn>
+                </v-col>
+                <v-col class="px-0">
+                  <v-btn icon>
+                    <v-icon>mdi-share-variant</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card>
     </div>
 
     <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
@@ -82,6 +92,7 @@
 </template>
 
 <script>
+import "@/assets/css/components/heritage/heritageCards.scss";
 import InfiniteLoading from "vue-infinite-loading";
 import SERVER from "@/api/drf";
 import axios from "axios";
@@ -167,7 +178,7 @@ export default {
             );
         })
         .catch(() => {
-          alert("로그인 후 이용가능한 기능입니다!")
+          alert("로그인 후 이용가능한 기능입니다!");
         });
     },
     dib(id, idx) {
@@ -187,7 +198,7 @@ export default {
             );
         })
         .catch(() => {
-          alert("로그인 후 이용가능한 기능입니다!")
+          alert("로그인 후 이용가능한 기능입니다!");
         });
     },
   },
@@ -204,5 +215,4 @@ export default {
 </script>
 
 <style type="text/css" lang="scss">
-@import "@/assets/css/components/heritage/heritageCards.scss";
 </style>
