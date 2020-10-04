@@ -39,3 +39,10 @@ class Heritage_rating(models.Model):
     heritage = models.ForeignKey(Heritage, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     rating = models.IntegerField(null=True)
+
+
+class User_tag(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    weight = models.IntegerField(default=0)
+    
