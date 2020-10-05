@@ -44,7 +44,6 @@ export default {
     axios
       .get(SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/")
       .then((res) => {
-        console.log(res);
         this.dibData = res.data.user.dibs_heritages;
         if (this.dibData.length) {
           this.isEmpty = false;
