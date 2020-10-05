@@ -24,12 +24,34 @@
 </template>
 
 <script>
+import SERVER from "@/api/drf";
+import axios from "axios";
+
 export default {
   name: "CommunitySearchBar",
   methods: {
     searchInput() {
       if (this.searchSelectNum === 1) {
-        console.log("제목 검색일 경우");
+        const URL =
+          SERVER.URL +
+          SERVER.ROUTES.review +
+          "search/title/?query=" +
+          this.searchBar;
+        axios.get(URL).then((res) => {
+          console.log(res);
+          // this.searchHeritageList = res.data.results;
+        });
+      } else {
+        console.log("들어옴");
+        const URL =
+          SERVER.URL +
+          SERVER.ROUTES.review +
+          "search/name/?query=" +
+          this.searchBar;
+        axios.get(URL).then((res) => {
+          console.log(res);
+          // this.searchHeritageList = res.data.results;
+        });
       }
     },
   },
