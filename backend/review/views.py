@@ -14,7 +14,6 @@ class ReviewListAPI(GenericAPIView):
     queryset = Review.objects.all()
     pagination_class = CustomPagination
 
-
     def get(self, request):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
@@ -52,7 +51,7 @@ class ReviewListAPI2(GenericAPIView):
         queryset = self.filter_queryset(self.get_queryset())
         queryset = queryset.filter(Q (title__icontains=query))
         page = self.paginate_queryset(queryset)
-        
+            
         if page is not None:
             serializer = ReviewListSerializer(page, many=True)
             result = self.get_paginated_response(serializer.data)
@@ -83,7 +82,7 @@ class ReviewListAPI3(GenericAPIView):
     def get(self, request):
         query = request.GET.get('query', '')
         queryset = self.filter_queryset(self.get_queryset())
-        queryset = queryset.filter(Q (user__icontains=query))
+        queryset = queryset.filter(Q (user=query))
         page = self.paginate_queryset(queryset)
         print(queryset)
         

@@ -42,16 +42,17 @@ export default {
           // this.searchHeritageList = res.data.results;
         });
       } else {
-        console.log("들어옴");
-        const URL =
-          SERVER.URL +
-          SERVER.ROUTES.review +
-          "search/name/?query=" +
-          this.searchBar;
-        axios.get(URL).then((res) => {
-          console.log(res);
-          // this.searchHeritageList = res.data.results;
-        });
+        axios
+          .get(SERVER.URL + SERVER.ROUTES.mypage + this.searchBar + "/")
+          .then((res) => {
+            let userId = res.data.id;
+            const URL =
+              SERVER.URL +
+              SERVER.ROUTES.review +
+              "search/name/?query=" +
+              userId;
+            axios.get(URL).then((res) => console.log(res));
+          });
       }
     },
   },
