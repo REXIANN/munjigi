@@ -1,17 +1,20 @@
 <template>
   <div class="community">
     <CommunityCreateReview />
+    <CommunitySearchBar />
     <CommunityReviewList />
   </div>
 </template>
 
 <script>
-import CommunityReviewList from "@/components/community/CommunityReviewList";
+import CommunitySearchBar from "@/components/community/CommunitySearchBar";
 import CommunityCreateReview from "@/components/community/CommunityCreateReview";
+import CommunityReviewList from "@/components/community/CommunityReviewList";
 
 export default {
   name: "Community",
   components: {
+    CommunitySearchBar,
     CommunityReviewList,
     CommunityCreateReview,
   },

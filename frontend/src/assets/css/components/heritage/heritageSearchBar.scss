@@ -2,7 +2,7 @@
 @import "../../components";
 
 .heritage-search-bar {
-  background-image: url("https://user-images.githubusercontent.com/60081201/94681551-a2ea3800-035e-11eb-90d2-13d689f35665.png");
+  background-image: url("https://user-images.githubusercontent.com/60081201/95034368-894d4580-06fc-11eb-84e3-5befd062526b.png");
   background-attachment: fixed;
   background-origin: border-box;
   background-position: top;
@@ -11,10 +11,15 @@
   min-height: 100vh;
   border: 0;
   padding: $components-margin;
-
   .v-input {
     font-size: 1.6rem;
     margin: 5vh auto 3vh;
     width: 80vw;
+  }
+  .search-input {
+    background: white;
+    padding: 10px 40px;
+    margin-top: 150px;
+    margin-bottom: 150px;
   }
 }

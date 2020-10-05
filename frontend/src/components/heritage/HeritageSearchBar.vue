@@ -1,13 +1,14 @@
 <template>
   <div class="heritage-search-bar">
     <v-text-field
+      class="search-input"
       name="input"
       label="찾고자 하는 문화재를 검색해 보세요!"
       append-icon="mdi-magnify"
       :rules="rules"
       v-model="searchInput"
       hide-details="auto"
-      @keypress="searchHeritage(searchInput)"
+      @keyup="searchHeritage(searchInput)"
     ></v-text-field>
     <div class="row">
       <ul v-for="(heritage, idx) in searchHeritageList" :key="heritage.id">
@@ -59,8 +60,19 @@
                       </v-btn>
                     </v-col>
                     <v-col class="px-0">
-                      <v-btn icon>
-                        <v-icon>mdi-share-variant</v-icon>
+                      <v-btn icon @click="visit(heritage.id, idx)">
+                        <span
+                          v-if="
+                            heritage.visit_users.find((k) => k == userDataId)
+                          "
+                        >
+                          <v-icon color="blue lighten-2"
+                            >mdi-checkbox-marked-circle</v-icon
+                          >
+                        </span>
+                        <span v-else>
+                          <v-icon>mdi-checkbox-marked-circle</v-icon>
+                        </span>
                       </v-btn>
                     </v-col>
                   </v-row>
@@ -130,6 +142,28 @@ export default {
         })
         .catch((err) => {
           console.error(err);
+        });
+    },
+    visit(id, idx) {
+      axios
+        .post(
+          SERVER.URL + SERVER.ROUTES.heritage + id + "/visit/",
+          {
+            userDataId: this.userDataId,
+          },
+          null
+        )
+        .then(() => {
+          axios
+            .get(SERVER.URL + SERVER.ROUTES.heritage + id)
+            .then(
+              (res) =>
+                (this.searchHeritageList[idx].visit_users =
+                  res.data.visit_users)
+            );
+        })
+        .catch(() => {
+          alert("로그인 후 이용가능한 기능입니다!");
         });
     },
     searchHeritage(searchInput) {
