@@ -109,6 +109,40 @@ class ReviewListAPI3(GenericAPIView):
         return Response(serializer.errors)
 
 
+class ReviewListAPI2(GenericAPIView):
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
+    pagination_class = CustomPagination
+
+
+    def get(self, request):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        queryset = queryset.filter(Q (k_name__icontains=query))
+        
+        if page is not None:
+            serializer = ReviewListSerializer(page, many=True)
+            result = self.get_paginated_response(serializer.data)
+            data = result.data # pagination data
+        else:
+            serializer = ReviewListSerializer(queryset, many=True)
+            data = serializer.data
+        payload = {
+            'return_code': '0000',
+            'return_message': 'Success',
+            'data': data
+        }
+        return Response(data)
+
+
+    def post(self, request):
+        serializer = self.get_serializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
+
 class ReviewDetailAPI(generics.GenericAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
