@@ -119,13 +119,11 @@ export default {
       this.dialog2 = false;
     },
     searchHeritage(searchInput) {
-      axios
-        .get(
-          SERVER.URL + SERVER.ROUTES.heritage + "search/?query=" + searchInput
-        )
-        .then((res) => {
-          this.searchHeritageList = res.data.results;
-        });
+      const URL =
+        SERVER.URL + SERVER.ROUTES.heritage + "search/?query=" + searchInput;
+      axios.get(URL).then((res) => {
+        this.searchHeritageList = res.data.results;
+      });
     },
     pickHeritage(heritage) {
       this.searchInput = heritage.k_name;
