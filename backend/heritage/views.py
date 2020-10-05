@@ -15,6 +15,8 @@ class HeritageListAPI(GenericAPIView):
     serializer_class = HeritageSerializer
     queryset = Heritage.objects.all()
     pagination_class = CustomPagination
+
+    
     def get(self, request):
         sort = request.GET.get('sort','')
         query = request.GET.get('query', '')
@@ -78,7 +80,6 @@ class HeritageDetailAPI(generics.GenericAPIView):
     serializer_class = HeritageDetailSerializer
 
     def get(self ,request, pk):
-
         heritage = get_object_or_404(Heritage, pk=pk)
         if request.session.get("h_hit", False) == False:
             request.session["h_hit"] = []
