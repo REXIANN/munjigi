@@ -64,5 +64,5 @@ class ReviewDetailAPI(generics.GenericAPIView):
     def delete(self, request, pk):
         queryset = get_object_or_404(Review, pk=pk)
         queryset.delete()
-        return
+        return Response(True)
         
