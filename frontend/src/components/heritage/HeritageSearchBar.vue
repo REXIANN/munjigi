@@ -8,6 +8,7 @@
       v-model="searchInput"
       hide-details="auto"
       @keyup="searchHeritage(searchInput)"
+      dark
     ></v-text-field>
     <div class="row">
       <ul v-for="(heritage, idx) in searchHeritageList" :key="heritage.id">
