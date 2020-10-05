@@ -70,7 +70,7 @@
                 </v-col>
                 <v-col class="px-0">
                   <v-btn icon>
-                    <v-icon>mdi-share-variant</v-icon>
+                    <v-icon>mdi-checkbox-marked-circle</v-icon>
                   </v-btn>
                 </v-col>
               </v-row>

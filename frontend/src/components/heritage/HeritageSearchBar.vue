@@ -1,6 +1,7 @@
 <template>
   <div class="heritage-search-bar">
     <v-text-field
+      class="search-input"
       name="input"
       label="찾고자 하는 문화재를 검색해 보세요!"
       append-icon="mdi-magnify"
@@ -8,7 +9,6 @@
       v-model="searchInput"
       hide-details="auto"
       @keyup="searchHeritage(searchInput)"
-      dark
     ></v-text-field>
     <div class="row">
       <ul v-for="(heritage, idx) in searchHeritageList" :key="heritage.id">
