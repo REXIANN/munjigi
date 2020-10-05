@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>리뷰 목록</h3>
-    <div v-if="authToken"><CommunityCreateReview /></div>
+    <div v-if="authToken"><HeritageCreateReview /></div>
     <div v-for="review in heritageReviewList" :key="review.id">
       <v-row justify="center" no-gutters>
         <v-col lg="3">작성자 | {{ review.users }}</v-col>
@@ -24,12 +24,12 @@
 import SERVER from "@/api/drf";
 import axios from "axios";
 import { mapState } from "vuex";
-import CommunityCreateReview from "@/components/community/CommunityCreateReview";
+import HeritageCreateReview from "@/components/heritage/HeritageCreateReview";
 
 export default {
   name: "HeritageCardDetailReview",
   components: {
-    CommunityCreateReview,
+    HeritageCreateReview,
   },
   created() {
     let heritageId = this.$route.params.id;

@@ -11,10 +11,9 @@
     </div>
 
     <div v-else>
-      {{ reviewData }}
       <ul v-for="(review, i) in reviewData" :key="i">
         <div @click="SELECT_REVIEW(review)">
-          <h3>{{ review.title }}</h3>
+          <h3 class="review-pick">{{ review.title }}</h3>
           {{ review.created_at }}
         </div>
       </ul>
@@ -54,4 +53,8 @@ export default {
 };
 </script>
 
-<style></style>
+
+<style type="text/css" lang="scss">
+@import "@/assets/css/components/mypage/mypageReview.scss";
+</style>
+
