@@ -44,7 +44,6 @@
                 v-model="content"
                 hint="내용을 입력해주세요."
                 required="내용을 입력해 주세요!"
-                @keypress.enter="createReview"
               ></v-textarea>
             </v-container>
           </v-card-text>
@@ -54,7 +53,7 @@
             <v-btn color="error" text @click="closeCheck">
               <h3>닫기</h3>
             </v-btn>
-            <v-btn color=" darken-1" text @click="createReview">
+            <v-btn color=" darken-1" text @click="setReview">
               <h3>작성완료</h3>
             </v-btn>
           </v-card-actions>
@@ -82,33 +81,24 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "CommunityCreateReview",
-  created() {
-    this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
-  },
-  computed: {
-    ...mapGetters(["config"]),
-  },
   methods: {
-    createReview() {
-      const reviewData = {
-        title: this.title,
-        content: this.content,
-        heritage: this.heritageId,
-        user: this.userDataId,
+    ...mapActions(["createReview"]),
+    setReview() {
+      const data = {
+        URL: SERVER.URL + SERVER.ROUTES.review,
+        review: this.reviewData,
       };
-      axios
-        .post(SERVER.URL + SERVER.ROUTES.review, reviewData, this.config)
-        .then(() => {
-          this.dialog = false;
-          this.title = "";
-          this.content = "";
-          this.heritageId = "";
-          this.$router.push({ name: "Community" });
-        });
+      this.createReview(data)
+      
+      this.dialog = false;
+      this.title = "";
+      this.content = "";
+      this.heritageId = "";
+      this.$router.push({ name: "Community" });
     },
     closeCheck() {
       if (this.title != "" || this.content != "") {
@@ -136,9 +126,12 @@ export default {
   },
   data() {
     return {
-      userDataId: "",
-      title: "",
-      content: "",
+      reviewData: {
+        title: "",
+        content: "",
+        heritage: "",
+        user: sessionStorage.getItem("id"),
+      },
       heritageId: "",
       searchInput: "",
       searchHeritageList: [],
