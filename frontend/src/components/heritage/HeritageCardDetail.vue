@@ -23,6 +23,17 @@
         <v-btn v-else icon>
           <v-icon @click="dib(heritage.id)">mdi-bookmark</v-icon>
         </v-btn>
+
+        <v-btn v-if="isUserVisit" icon color="blue lighten-2">
+          <v-icon @click="visit(heritage.id)"
+            >mdi-checkbox-marked-circle</v-icon
+          >
+        </v-btn>
+        <v-btn v-else icon>
+          <v-icon @click="visit(heritage.id)"
+            >mdi-checkbox-marked-circle</v-icon
+          >
+        </v-btn>
       </div>
       <v-row>
         <v-col cols="4">
@@ -117,7 +128,6 @@ export default {
       arr.forEach((elem) => (sum += elem.rating + 3));
       return sum / arr.length;
     },
-    // },
     isUserLike() {
       return (
         this.heritage.like_users &&
@@ -128,6 +138,12 @@ export default {
       return (
         this.heritage.dib_users &&
         this.heritage.dib_users.includes(Number(this.userDataId))
+      );
+    },
+    isUserVisit() {
+      return (
+        this.heritage.visit_users &&
+        this.heritage.visit_users.includes(Number(this.userDataId))
       );
     },
   },
@@ -172,6 +188,20 @@ export default {
           },
           null
         )
+        .then(() => {
+          axios
+            .get(SERVER.URL + SERVER.ROUTES.heritage + id)
+            .then((res) => (this.heritage = res.data));
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    visit(id) {
+      const URL = SERVER.URL + SERVER.ROUTES.heritage + id + "/visit/";
+      const userDataId = this.userDataId;
+      axios
+        .post(URL, { userDataId })
         .then(() => {
           axios
             .get(SERVER.URL + SERVER.ROUTES.heritage + id)
