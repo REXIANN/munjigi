@@ -60,8 +60,19 @@
                       </v-btn>
                     </v-col>
                     <v-col class="px-0">
-                      <v-btn icon>
-                        <v-icon>mdi-share-variant</v-icon>
+                      <v-btn icon @click="visit(heritage.id, idx)">
+                        <span
+                          v-if="
+                            heritage.visit_users.find((k) => k == userDataId)
+                          "
+                        >
+                          <v-icon color="blue lighten-2"
+                            >mdi-checkbox-marked-circle</v-icon
+                          >
+                        </span>
+                        <span v-else>
+                          <v-icon>mdi-checkbox-marked-circle</v-icon>
+                        </span>
                       </v-btn>
                     </v-col>
                   </v-row>
@@ -131,6 +142,28 @@ export default {
         })
         .catch((err) => {
           console.error(err);
+        });
+    },
+    visit(id, idx) {
+      axios
+        .post(
+          SERVER.URL + SERVER.ROUTES.heritage + id + "/visit/",
+          {
+            userDataId: this.userDataId,
+          },
+          null
+        )
+        .then(() => {
+          axios
+            .get(SERVER.URL + SERVER.ROUTES.heritage + id)
+            .then(
+              (res) =>
+                (this.searchHeritageList[idx].visit_users =
+                  res.data.visit_users)
+            );
+        })
+        .catch(() => {
+          alert("로그인 후 이용가능한 기능입니다!");
         });
     },
     searchHeritage(searchInput) {
