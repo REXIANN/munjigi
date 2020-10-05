@@ -21,11 +21,21 @@
                 autofocus
               ></v-text-field>
               <v-text-field
+                name="input"
                 label="방문한 문화재"
-                v-model="heritageId"
-                hint="방문한 문화재를 입력해주세요."
-                required="방문한 문화재를 입력해주세요!"
+                append-icon="mdi-magnify"
+                :rules="rules"
+                v-model="searchInput"
+                hide-details="auto"
+                hint="방문한 문화재를 검색하여 클릭해주세요."
+                required="방문한 문화재를 검색하여 클릭해주세요!"
+                @keyup="searchHeritage(searchInput)"
               ></v-text-field>
+              <ul v-for="(heritage, idx) in searchHeritageList" :key="idx">
+                <h4 class="heritage-pick" @click="pickHeritage(heritage)">
+                  {{ heritage.k_name }}
+                </h4>
+              </ul>
 
               <v-textarea
                 label="내용"
@@ -36,6 +46,7 @@
               ></v-textarea>
             </v-container>
           </v-card-text>
+
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="error" text @click="closeCheck">
@@ -122,6 +133,19 @@ export default {
       this.dialog = false;
       this.dialog2 = false;
     },
+    searchHeritage(searchInput) {
+      axios
+        .get(SERVER.URL + SERVER.ROUTES.heritage + "?query=" + searchInput)
+        .then((res) => {
+          console.log(res);
+          this.searchHeritageList = res.data.results;
+        });
+    },
+    pickHeritage(heritage) {
+      this.searchInput = heritage.k_name;
+      this.heritageid = heritage.id;
+      this.searchHeritageList = [];
+    },
   },
   data() {
     return {
@@ -129,6 +153,8 @@ export default {
       title: "",
       content: "",
       heritageId: "",
+      searchInput: "",
+      searchHeritageList: [],
       dialog: false,
       dialog2: false,
       location: {
