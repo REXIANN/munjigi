@@ -36,7 +36,6 @@
                   {{ heritage.k_name }}
                 </h4>
               </ul>
-
               <v-textarea
                 label="내용"
                 v-model="content"
@@ -143,7 +142,7 @@ export default {
     },
     pickHeritage(heritage) {
       this.searchInput = heritage.k_name;
-      this.heritageid = heritage.id;
+      this.heritageId = heritage.id;
       this.searchHeritageList = [];
     },
   },
