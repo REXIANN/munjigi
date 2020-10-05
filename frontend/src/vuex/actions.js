@@ -59,5 +59,13 @@ export default {
   setReview({ commit }, review){
     commit("SET_REVIEW", review)
     router.push({ name: "CommunityReviewItem", params: { id: review.id } })
-  }
+  },
+  createReview({ getters }, data) {
+    const config = getters.config
+    const URL = data.URL
+    const review = data.reviewData
+    axios.post(URL, review, config)
+      .then(res => console.log(res))
+      .catch( err => console.error(err))
+  },
 }
