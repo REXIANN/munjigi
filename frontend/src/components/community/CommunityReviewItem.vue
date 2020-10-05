@@ -29,11 +29,7 @@
                   required="제목을 입력해 주세요!"
                   autofocus
                 ></v-text-field>
-                <v-text-field
-                  label="문화재"
-                  v-model="heritage"
-                  required
-                ></v-text-field>
+                <h3>방문한 문화재 : {{ heritageName }}</h3>
                 <v-textarea
                   label="내용"
                   v-model="content"
@@ -58,7 +54,7 @@
     <h1>{{ reviewData.title }}</h1>
     <br />
     <h2>작성자 : {{ reviewData.users }}</h2>
-    <h3>방문 문화재 {{ reviewData.heritage }}</h3>
+    <h3>방문 문화재 {{ heritageName }}</h3>
     <h5>{{ reviewData.created_at }}</h5>
     <br />
     <h3>{{ reviewData.content }}</h3>
@@ -78,7 +74,12 @@ export default {
       sessionStorage.nickname === undefined ? "" : sessionStorage.nickname;
     axios
       .get(SERVER.URL + SERVER.ROUTES.review + this.review.id)
-      .then((res) => (this.reviewData = res.data));
+      .then((res) => {
+        this.reviewData = res.data;
+        axios
+          .get(SERVER.URL + SERVER.ROUTES.heritage + this.reviewData.heritage)
+          .then((res) => (this.heritageName = res.data.k_name));
+      });
   },
   computed: {
     ...mapGetters(["config"]),
@@ -110,7 +111,7 @@ export default {
     },
     deleteReview(id) {
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.review + id)
+        .delete(SERVER.URL + SERVER.ROUTES.review + id + "/")
         .then(() => {
           this.$router.push({ name: "Community" });
         })
@@ -142,6 +143,7 @@ export default {
       content: "",
       heritage: "",
       dialog: false,
+      heritageName: "",
     };
   },
 };

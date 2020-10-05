@@ -3,13 +3,18 @@
     <h2>문화재 리뷰 작성 목록</h2>
     <div v-if="isEmpty">
       아직 등록된 리뷰가 없습니다.
-      <!-- <button @click="goCreateReview">리뷰 작성하러가기</button> -->
+      <div>
+        <v-btn @click="$router.push({ name: 'Community' })">
+          게시판으로 가기
+        </v-btn>
+      </div>
     </div>
+
     <div v-else>
       <ul v-for="(review, i) in reviewData" :key="i">
-        <div @click="selectReview(review.id)">
-          <h3>{{ review.title }}</h3>
-          {{ review.created }}
+        <div @click="SELECT_REVIEW(review)">
+          <h3 class="review-pick">{{ review.title }}</h3>
+          {{ review.created_at }}
         </div>
       </ul>
     </div>
@@ -19,6 +24,7 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
+import { mapMutations } from "vuex";
 
 export default {
   name: "MypageReview",
@@ -36,9 +42,7 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    selectReview(id) {
-      this.$router.push({ name: "CommunityReviewItem", params: { id } });
-    },
+    ...mapMutations(["SELECT_REVIEW"]),
   },
   data() {
     return {
@@ -49,4 +53,8 @@ export default {
 };
 </script>
 
-<style></style>
+
+<style type="text/css" lang="scss">
+@import "@/assets/css/components/mypage/mypageReview.scss";
+</style>
+

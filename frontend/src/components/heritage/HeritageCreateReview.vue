@@ -20,22 +20,7 @@
                 required="제목을 입력해 주세요!"
                 autofocus
               ></v-text-field>
-              <v-text-field
-                name="input"
-                label="방문한 문화재"
-                append-icon="mdi-magnify"
-                :rules="rules"
-                v-model="searchInput"
-                hide-details="auto"
-                hint="방문한 문화재를 검색하여 클릭해주세요."
-                required="방문한 문화재를 검색하여 클릭해주세요!"
-                @keyup="searchHeritage(searchInput)"
-              ></v-text-field>
-              <ul v-for="(heritage, idx) in searchHeritageList" :key="idx">
-                <h4 class="heritage-pick" @click="pickHeritage(heritage)">
-                  {{ heritage.k_name }}
-                </h4>
-              </ul>
+              <h3>방문한 문화재 : {{ heritageName }}</h3>
               <v-textarea
                 label="내용"
                 v-model="content"
@@ -75,16 +60,19 @@
     </v-row>
   </div>
 </template>
-
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "CommunityCreateReview",
+  name: "HeritageCreateReview",
   created() {
+    this.heritageId = this.$route.params.id;
     this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
+    axios
+      .get(SERVER.URL + SERVER.ROUTES.heritage + this.heritageId)
+      .then((res) => (this.heritageName = res.data.k_name));
   },
   computed: {
     ...mapGetters(["config"]),
@@ -104,7 +92,11 @@ export default {
           this.title = "";
           this.content = "";
           this.heritageId = "";
-          this.$router.push({ name: "Community" });
+          this.heritageName = "";
+          this.$router.push({
+            name: "HeritageCardDetail",
+            params: { id: this.heritageId },
+          });
         });
     },
     closeCheck() {
@@ -118,18 +110,6 @@ export default {
       this.dialog = false;
       this.dialog2 = false;
     },
-    searchHeritage(searchInput) {
-      axios
-        .get(SERVER.URL + SERVER.ROUTES.heritage + "?query=" + searchInput)
-        .then((res) => {
-          this.searchHeritageList = res.data.results;
-        });
-    },
-    pickHeritage(heritage) {
-      this.searchInput = heritage.k_name;
-      this.heritageId = heritage.id;
-      this.searchHeritageList = [];
-    },
   },
   data() {
     return {
@@ -137,8 +117,6 @@ export default {
       title: "",
       content: "",
       heritageId: "",
-      searchInput: "",
-      searchHeritageList: [],
       dialog: false,
       dialog2: false,
     };
@@ -146,7 +124,5 @@ export default {
 };
 </script>
 
-<style type="text/css" lang="scss">
-@import "@/assets/css/components/community/communityCreateReview.scss";
+<style>
 </style>
-

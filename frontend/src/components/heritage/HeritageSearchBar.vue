@@ -7,7 +7,7 @@
       :rules="rules"
       v-model="searchInput"
       hide-details="auto"
-      @keypress="searchHeritage(searchInput)"
+      @keyup="searchHeritage(searchInput)"
     ></v-text-field>
     <div class="row">
       <ul v-for="(heritage, idx) in searchHeritageList" :key="heritage.id">
