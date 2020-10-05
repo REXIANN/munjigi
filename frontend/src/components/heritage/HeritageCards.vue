@@ -18,7 +18,7 @@
         :key="heritage.id"
       >
         <v-container class="v-card-container">
-          <h3 @click="SELECT_HERITAGE(heritage)">
+          <h3 @click="setHeritage(heritage)">
             {{
               heritage.k_name.length > 15
                 ? heritage.k_name.slice(0, 15) + "..."
@@ -34,7 +34,7 @@
                       v-if="hover"
                       class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-1 white--text"
                       style="height: 100%"
-                      @click="SELECT_HERITAGE(heritage)"
+                      @click="setHeritage(heritage)"
                     >
                       {{ heritage.era }}
                     </div>
@@ -96,7 +96,7 @@ import "@/assets/css/components/heritage/heritageCards.scss";
 import InfiniteLoading from "vue-infinite-loading";
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapMutations, mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "CommunityCards",
@@ -115,7 +115,7 @@ export default {
     ...mapGetters(["config"]),
   },
   methods: {
-    ...mapMutations(["SELECT_HERITAGE"]),
+    ...mapActions(["setHeritage"]),
     changeHeritage(currentType) {
       this.limit = 2;
       if (currentType === "인기순") {
