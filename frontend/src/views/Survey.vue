@@ -16,7 +16,7 @@
 
           <v-col cols="12" sm="8">
             <v-select
-              v-model="e7"
+              v-model="e5"
               :items="era"
               label="선택"
               multiple
@@ -35,8 +35,8 @@
 
           <v-col cols="12" sm="8">
             <v-select
-              v-model="e7"
-              :items="era"
+              v-model="e6"
+              :items="people"
               label="선택"
               multiple
               chips
@@ -55,7 +55,7 @@
           <v-col cols="12" sm="8">
             <v-select
               v-model="e7"
-              :items="era"
+              :items="heritages"
               label="선택"
               multiple
               chips
@@ -67,7 +67,7 @@
       </v-container>
 
       <br />
-      <v-btn> 제출 </v-btn>
+      <v-btn>제 to the 출</v-btn>
     </div>
   </div>
 </template>
@@ -79,6 +79,8 @@ export default {
   name: "Survey",
   data() {
     return {
+      e5: [],
+      e6: [],
       e7: [],
       era: [
         "청동기시대",
@@ -88,6 +90,21 @@ export default {
         "남북국시대",
         "고려시대",
         "조선시대",
+      ],
+      people: ["세종대왕", "영조", "정조", "태종", "장영실", "주몽"],
+      heritages: [
+        "불상",
+        "백자",
+        "청자",
+        "토기",
+        "석탑",
+        "목탑",
+        "절",
+        "고궁",
+        "절터",
+        "탱화",
+        "벽화",
+        "가구",
       ],
     };
   },
