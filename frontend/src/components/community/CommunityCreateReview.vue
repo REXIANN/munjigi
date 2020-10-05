@@ -16,10 +16,9 @@
               <!-- 제목 입력란 -->
               <v-text-field
                 label="제목"
-                v-model="title"
+                v-model="reviewData.title"
                 hint="제목을 입력해주세요."
                 required="제목을 입력해 주세요!"
-                autofocus
               ></v-text-field>
               <!-- 문화재 입력란 -->
               <v-text-field
@@ -41,7 +40,7 @@
               <!-- 내용 입력란 -->
               <v-textarea
                 label="내용"
-                v-model="content"
+                v-model="reviewData.content"
                 hint="내용을 입력해주세요."
                 required="내용을 입력해 주세요!"
               ></v-textarea>
@@ -92,13 +91,12 @@ export default {
         URL: SERVER.URL + SERVER.ROUTES.review,
         review: this.reviewData,
       };
-      this.createReview(data)
-      
+      this.createReview(data);
+
       this.dialog = false;
       this.title = "";
       this.content = "";
       this.heritageId = "";
-      this.$router.push({ name: "Community" });
     },
     closeCheck() {
       if (this.title != "" || this.content != "") {
@@ -120,7 +118,7 @@ export default {
     },
     pickHeritage(heritage) {
       this.searchInput = heritage.k_name;
-      this.heritageId = heritage.id;
+      this.reviewData.heritage = heritage.id;
       this.searchHeritageList = [];
     },
   },
@@ -132,7 +130,6 @@ export default {
         heritage: "",
         user: sessionStorage.getItem("id"),
       },
-      heritageId: "",
       searchInput: "",
       searchHeritageList: [],
       dialog: false,
