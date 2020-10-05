@@ -23,16 +23,8 @@ class Heritage(models.Model):
     dib_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='dibs_heritages', blank=True)
     heritage_tags = models.ManyToManyField(Tag, related_name='tagging', blank=True)
     rating = models.FloatField(null=True)
-    
-
-class Heritage_picture(models.Model):
-    heritage = models.ForeignKey(Heritage, on_delete=models.CASCADE)
-    imageurl = models.URLField(null=True)
-
-
-class Heritage_video(models.Model):
-    heritage = models.ForeignKey(Heritage, on_delete=models.CASCADE)
-    videourl = models.URLField(null=True)
+    videourl = models.URLField()
+    imageurls = models.TextField()
 
 
 class Heritage_rating(models.Model):
