@@ -120,7 +120,9 @@ export default {
     },
     searchHeritage(searchInput) {
       axios
-        .get(SERVER.URL + SERVER.ROUTES.heritage + "?query=" + searchInput)
+        .get(
+          SERVER.URL + SERVER.ROUTES.heritage + "search/?query=" + searchInput
+        )
         .then((res) => {
           this.searchHeritageList = res.data.results;
         });
