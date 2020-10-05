@@ -4,8 +4,8 @@
     <MypageDib />
     <MypageReview />
     <div class="mypage-buttons">
-      <v-btn dark color="purple">
-        <router-link :to="{ name: 'ProfileUpdate' }">정보 수정</router-link>
+      <v-btn dark color="purple" :to="{ name: 'ProfileUpdate' }">
+        정보 수정
       </v-btn>
       <MypageDelete />
     </div>

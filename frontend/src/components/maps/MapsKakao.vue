@@ -323,7 +323,6 @@ export default {
         // GPS를 지원하면
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            console.log(position.coords);
             this.latitude = position.coords.latitude;
             this.longitude = position.coords.longitude;
           },
