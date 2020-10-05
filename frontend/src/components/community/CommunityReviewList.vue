@@ -44,7 +44,7 @@ export default {
   },
   created() {
     axios
-      .get(SERVER.URL + SERVER.ROUTES.review + "?page=1/", null, null)
+      .get(SERVER.URL + SERVER.ROUTES.review + "?page=1", null, null)
       .then((response) => {
         this.reviewList = response.data.results;
         console.log(response);

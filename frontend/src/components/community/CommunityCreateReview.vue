@@ -94,9 +94,6 @@ export default {
       this.createReview(data);
 
       this.dialog = false;
-      this.title = "";
-      this.content = "";
-      this.heritageId = "";
     },
     closeCheck() {
       if (this.title != "" || this.content != "") {
