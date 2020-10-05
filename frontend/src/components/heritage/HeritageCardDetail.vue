@@ -40,8 +40,12 @@
     <br />
     <!-- 문화재의 평점을 보여주는 블록 -->
     <div>
-      <h2 v-if="isRatingExists">이 문화재의 평점은 {{ this.ratingAvg.toFixed(2) }}점 입니다</h2>
-      <h2 v-if="!isRatingExists">이 문화재를 평가하는 첫 번째 사람이 되어주세요!</h2>
+      <h2 v-if="isRatingExists">
+        이 문화재의 평점은 {{ this.ratingAvg.toFixed(2) }}점 입니다
+      </h2>
+      <h2 v-if="!isRatingExists">
+        이 문화재를 평가하는 첫 번째 사람이 되어주세요!
+      </h2>
     </div>
 
     <!-- 사용자가 평점을 매기는 블록 -->
@@ -56,7 +60,11 @@
     <!-- 위치정보  -->
     <h3>위치 정보</h3>
     <p>{{ heritage.address }}</p>
-    <HeritageCardDetailMap v-if="hasGPS" :latitude="heritage.latitude" :longitude="heritage.longitude"/>
+    <HeritageCardDetailMap
+      v-if="hasGPS"
+      :latitude="heritage.latitude"
+      :longitude="heritage.longitude"
+    />
     <HeritageCardDetailReview />
   </div>
 </template>
@@ -66,7 +74,7 @@ import StarRating from "vue-star-rating";
 import SERVER from "@/api/drf";
 import axios from "axios";
 import { mapGetters } from "vuex";
-import HeritageCardDetailMap from "@/components/heritage/HeritageCardDetailMap"
+import HeritageCardDetailMap from "@/components/heritage/HeritageCardDetailMap";
 import HeritageCardDetailReview from "@/components/heritage/HeritageCardDetailReview";
 
 export default {
@@ -98,16 +106,16 @@ export default {
   computed: {
     ...mapGetters(["config"]),
     hasGPS() {
-      return !!(this.heritage.latitude * this.heritage.longitude)
+      return !!(this.heritage.latitude * this.heritage.longitude);
     },
     isRatingExists() {
-      return !(isNaN(this.ratingAvg))
+      return !isNaN(this.ratingAvg);
     },
     ratingAvg() {
-      const arr = this.ratingList
-        let sum = 0;
-        arr.forEach((elem) => (sum += elem.rating + 3));
-        return sum / arr.length
+      const arr = this.ratingList;
+      let sum = 0;
+      arr.forEach((elem) => (sum += elem.rating + 3));
+      return sum / arr.length;
     },
     // },
     isUserLike() {
