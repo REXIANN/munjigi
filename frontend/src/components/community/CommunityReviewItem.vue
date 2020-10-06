@@ -53,7 +53,9 @@
     </div>
     <h1>{{ reviewData.title }}</h1>
     <br />
-    <h2>작성자 : {{ reviewData.users }}</h2>
+    <h2 @click="goOtherpage(reviewData.users)" class="review-user">
+      작성자 : {{ reviewData.users }}
+    </h2>
     <h3>방문 문화재 {{ heritageName }}</h3>
     <h5>{{ reviewData.created_at }}</h5>
     <br />
@@ -123,6 +125,16 @@ export default {
       this.title = this.reviewData.title;
       this.content = this.reviewData.content;
       this.heritage = this.reviewData.heritage;
+    },
+    goOtherpage(username) {
+      if (this.userData.nickname === username) {
+        this.$router.push({ name: "Mypage" });
+      } else {
+        this.$router.push({
+          name: "Otherpage",
+          params: { nickname: username },
+        });
+      }
     },
   },
   data() {
