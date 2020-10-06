@@ -57,8 +57,8 @@
         <v-img :src="image" width="100vw" />
       </div>
     </v-container>
-    {{ heritage }}
-    <iframe src="hertiage.videourl" frameborder="0"></iframe>
+    <h2 v-if="video">영상 자료</h2>
+    <video v-if="video" :src="video" type="video" autoplay controls></video>
     <br />
     <!-- 문화재의 평점을 보여주는 블록 -->
     <div>
@@ -112,8 +112,13 @@ export default {
     let heritageId = this.$route.params.id;
     axios.get(SERVER.URL + SERVER.ROUTES.heritage + heritageId).then((res) => {
       this.heritage = res.data;
-      console.log(res.data);
       this.heritageImages = res.data.imageurls.split(", ");
+      if (
+        res.data.videourl !==
+        "http://116.67.83.213/webdata/file_data/media_data/videos/"
+      ) {
+        this.video = res.data.videourl;
+      }
     });
   },
   mounted() {
@@ -173,7 +178,6 @@ export default {
         .post(URL, data, this.config)
         .then((res) => {
           this.ratingList = res.data;
-          console.log(res);
         })
         .catch(() => alert("로그인 후 이용가능한 기능입니다."));
     },
@@ -237,6 +241,7 @@ export default {
         type: Array,
       },
       heritageImages: [],
+      video: "",
     };
   },
 };
