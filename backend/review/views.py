@@ -84,7 +84,6 @@ class ReviewListAPI3(GenericAPIView):
         queryset = self.filter_queryset(self.get_queryset())
         queryset = queryset.filter(Q (user=query))
         page = self.paginate_queryset(queryset)
-        print(queryset)
         
         if page is not None:
             serializer = ReviewListSerializer(page, many=True)
@@ -116,9 +115,10 @@ class ReviewListAPI2(GenericAPIView):
 
 
     def get(self, request):
+        query = request.GET.get('query', '')
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
-        queryset = queryset.filter(Q (k_name__icontains=query))
+        queryset = queryset.filter(Q (title__icontains=query))
         
         if page is not None:
             serializer = ReviewListSerializer(page, many=True)

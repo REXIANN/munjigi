@@ -100,7 +100,6 @@ export default {
     axios
       .get(SERVER.URL + SERVER.ROUTES.review + this.review.id)
       .then((res) => {
-        console.log(res);
         this.reviewData = res.data;
         axios
           .get(SERVER.URL + SERVER.ROUTES.heritage + this.reviewData.heritage)
@@ -132,7 +131,7 @@ export default {
             .then((res) => (this.reviewData = res.data));
         })
         .catch((err) => {
-          console.log(err.message);
+          console.err(err.message);
         });
     },
     deleteReview(id) {
@@ -142,7 +141,7 @@ export default {
           this.$router.push({ name: "Community" });
         })
         .catch((err) => {
-          console.log(err.message);
+          console.err(err.message);
         });
     },
     connectReview() {

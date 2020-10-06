@@ -9,6 +9,9 @@
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 85vh;
+  .container {
+    margin-top: 60px;
+  }
 }
 
 .review-user {
@@ -17,8 +20,4 @@
 
 .review-writer {
   text-align: end;
-}
-
-.container {
-  margin-top: 60px;
 }

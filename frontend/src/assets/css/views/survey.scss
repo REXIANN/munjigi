@@ -6,10 +6,10 @@
   padding: 0;
   height: 100%;
   padding: $components-margin;
-  background-image: url("https://user-images.githubusercontent.com/60081201/93165435-010bfe00-f757-11ea-9ace-75dd97feab19.jpg");
+  background-image: url("https://user-images.githubusercontent.com/60081201/95160253-0818b000-07db-11eb-8e1c-cbf98edc324a.PNG");
   background-attachment: fixed;
   background-origin: border-box;
-  background-position: top;
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   color: $color-5;
@@ -21,12 +21,14 @@
     width: 60vw;
     border-radius: 10px;
 
-    h1, h2 {
+    h1,
+    h2 {
       margin: 10px;
       color: $color-4;
     }
-    
-    h3, h4 {
+
+    h3,
+    h4 {
       margin: 3px;
       color: $color-4;
     }
