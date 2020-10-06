@@ -4,12 +4,12 @@
     <div v-for="(review, idx) in reviewList" :key="idx">
       <v-card class="review-list" outlined @click="SELECT_REVIEW(review)">
         <v-list-item class="d-flex justify-space-around review-list-item">
-          <v-img
-            class="review-list-image"
-            src="https://picsum.photos/510/300?random"
-          ></v-img>
+          <v-img class="review-list-image" :src="review.imageurl"></v-img>
           <div class="review-list-text">
             <h3 class="mb-4">{{ review.title }}</h3>
+            <v-list-item-subtitle
+              >문화재명 : {{ review.k_name }}</v-list-item-subtitle
+            >
             <v-list-item-subtitle
               >작성자 : {{ review.users }}</v-list-item-subtitle
             >
@@ -43,12 +43,12 @@ export default {
     InfiniteLoading,
   },
   created() {
-    axios
-      .get(SERVER.URL + SERVER.ROUTES.review + "?page=1", null, null)
-      .then((response) => {
-        this.reviewList = response.data.results;
-      });
+    const REVIEW_LIST_URL = SERVER.URL + SERVER.ROUTES.review + "?page=1";
+    axios.get(REVIEW_LIST_URL).then((response) => {
+      this.reviewList = response.data.results;
+    });
   },
+
   methods: {
     ...mapMutations(["SELECT_REVIEW"]),
     infiniteHandler($state) {
@@ -75,7 +75,7 @@ export default {
         });
       // } else {
       //   $state.complete();
-      // }
+      // },
     },
   },
   data() {
