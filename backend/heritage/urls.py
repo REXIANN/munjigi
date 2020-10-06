@@ -10,6 +10,6 @@ urlpatterns = [
     path('<int:pk>/visit/', HeritageVisitAPI.as_view()),
     path('<int:pk>/score/', HeritageRatingAPI.as_view()),
     path('search/', HeritageListAPI2.as_view()),
-    path('recommend/<int:pk>/', HeritageRecommendationAPI.as_view())
+    path('recommend/<int:pk>/', HeritageRecommendationAPI.as_view()),
     path('dosurvey/', Survey_weightAPI.as_view()),
 ]

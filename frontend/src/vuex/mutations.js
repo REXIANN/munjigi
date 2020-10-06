@@ -10,5 +10,11 @@ export default {
   },
   SET_KEYWORD(state, keyword) {
     state.selectedKeyword = keyword
+  },
+  SET_LATITUDE(state, latitude) {
+    state.latitude = latitude
+  },
+  SET_LONGITUDE(state, longitude) {
+    state.longitude = longitude
   }
 }
