@@ -59,16 +59,43 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+    // 로그인되어있으면 메인페이지로 보내버리기
+    beforeEnter(from, to, next) {
+      if (!!sessionStorage.id === true) {
+        alert("로그인 된 상태에서는 할 수 없습니다")
+        next('/')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: "/signup",
     name: "Signup",
     component: Signup,
+    // 로그인되어있으면 회원가입 못하게 하기
+    beforeEnter(from, to, next) {
+      if (!!sessionStorage.id === true) {
+        alert("로그인 된 상태에서는 할 수 없습니다")
+        next('/')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: "/mypage",
     name: "Mypage",
     component: Mypage,
+    // 로그인 안했으면 못들어가게 하기
+    beforeEnter(from, to, next) {
+      if (!sessionStorage.id) {
+        alert("로그인이 필요합니다")
+        next('/login')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: "/otherpage/:nickname",
@@ -79,12 +106,30 @@ const routes = [
     path: "/profileupdate",
     name: "ProfileUpdate",
     component: ProfileUpdate,
+    // 로그인 앙ㄴ했으면 못들억어감
+    beforeEnter(from, to, next) {
+      if (!sessionStorage.id) {
+        alert("로그인이 필요합니다")
+        next('/login')
+      } else {
+        next()
+      }
+    }
   },
   {
     path: "/survey",
     name: "Survey",
     component: Survey,
-  },
+    beforeEnter(from, to, next) {
+      // from과 to는 컴포넌트, next는 함수다
+      if (!sessionStorage.id) {
+        alert("로그인이 필요합니다")
+        next('/login')
+      } else {
+        next()
+      }
+    }
+  }
 ];
 
 const router = new VueRouter({

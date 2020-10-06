@@ -1,6 +1,6 @@
-import axios from "axios";
-import router from "@/routes";
-import SERVER from "@/api/drf";
+import axios from "axios"
+import router from "@/routes"
+import SERVER from "@/api/drf"
 
 export default {
   postAuthData({ commit }, info) {
@@ -18,27 +18,27 @@ export default {
         sessionStorage.setItem("name", res.data.user.name)
         sessionStorage.setItem("nickname", res.data.user.nickname)
       })
-      .catch(() => alert("이메일 또는 비밀번호가 틀렸습니다"));
+      .catch(() => alert("이메일 또는 비밀번호가 틀렸습니다"))
   },
   signup({ dispatch }, signupData) {
     const info = {
       location: SERVER.URL + SERVER.ROUTES.signup,
       data: signupData,
-    };
-    dispatch("postAuthData", info);
+    }
+    dispatch("postAuthData", info)
   },
   login({ dispatch }, loginData) {
     const info = {
       location: SERVER.URL + SERVER.ROUTES.login,
       data: loginData,
-    };
-    !loginData.email || !loginData.password ? alert("이메일 또는 비밀번호를 입력해주세요") : dispatch("postAuthData", info);
+    }
+    !loginData.email || !loginData.password ? alert("이메일 또는 비밀번호를 입력해주세요") : dispatch("postAuthData", info)
   },
   logout({ getters, commit }) {
     axios
       .post(SERVER.URL + SERVER.ROUTES.logout, null, getters.config)
       .then(() => {
-        commit("SET_TOKEN", null);
+        commit("SET_TOKEN", null)
         // 세션에 있는 정보를 지움
         sessionStorage.removeItem("auth-token")
         sessionStorage.removeItem("birth")
@@ -49,7 +49,23 @@ export default {
         sessionStorage.removeItem("nickname")
       })
       .catch((err) => {
-        console.log(err.message);
-      });
+        console.log(err.message)
+      })
   },
-};
+  setHeritage({ commit }, heritage) {
+    commit("SET_HERITAGE", heritage)
+    router.push({ name: "HeritageCardDetail", params: { id: heritage.id } })
+  },
+  setReview({ commit }, review){
+    commit("SET_REVIEW", review)
+    router.push({ name: "CommunityReviewItem", params: { id: review.id } })
+  },
+  createReview({ getters }, data) {
+    const config = getters.config
+    const URL = data.URL
+    const review = data.reviewData
+    axios.post(URL, review, config)
+      .then(res => console.log(res))
+      .catch( err => console.error(err))
+  },
+}

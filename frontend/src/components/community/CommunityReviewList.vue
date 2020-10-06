@@ -2,7 +2,7 @@
   <div class="community-review-list">
     <h1>문화재 방문 리뷰 게시판</h1>
     <div v-for="(review, idx) in reviewList" :key="idx">
-      <v-card class="review-list" outlined @click="SELECT_REVIEW(review)">
+      <v-card class="review-list" outlined @click="setReview(review)">
         <v-list-item class="d-flex justify-space-around review-list-item">
           <v-img class="review-list-image" :src="review.imageurl"></v-img>
           <div class="review-list-text">
@@ -35,7 +35,7 @@
 import InfiniteLoading from "vue-infinite-loading";
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapMutations } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "CommunityReviewList",
@@ -50,7 +50,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["SELECT_REVIEW"]),
+    ...mapActions(["setReview"]),
     infiniteHandler($state) {
       axios
         .get(SERVER.URL + SERVER.ROUTES.review + "?page=" + this.limit)
