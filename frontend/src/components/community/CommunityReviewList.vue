@@ -7,9 +7,7 @@
           <v-img class="review-list-image" :src="review.imageurl"></v-img>
           <div class="review-list-text">
             <h3 class="mb-4">{{ review.title }}</h3>
-            <v-list-item-subtitle
-              >문화재명 : {{ review.k_name }}</v-list-item-subtitle
-            >
+            <h4>문화재명 : {{ review.k_name }}</h4>
             <v-list-item-subtitle
               >작성자 : {{ review.users }}</v-list-item-subtitle
             >
@@ -17,16 +15,6 @@
           </div>
         </v-list-item>
       </v-card>
-    </div>
-    <div v-if="reviewList.length >= 10">
-      <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
-        <div
-          slot="no-more"
-          style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px"
-        >
-          목록의 끝입니다.
-        </div>
-      </infinite-loading>
     </div>
   </div>
 </template>
@@ -39,16 +27,13 @@ import { mapActions } from "vuex";
 
 export default {
   name: "CommunityReviewList",
-  components: {
-    InfiniteLoading,
-  },
-  created() {
-    const REVIEW_LIST_URL = SERVER.URL + SERVER.ROUTES.review + "?page=1";
-    axios.get(REVIEW_LIST_URL).then((response) => {
-      this.reviewList = response.data.results;
-    });
-  },
 
+  props: {
+    reviewList: {
+      type: Array,
+      required: true,
+    },
+  },
   methods: {
     ...mapActions(["setReview"]),
     infiniteHandler($state) {
@@ -80,7 +65,6 @@ export default {
   },
   data() {
     return {
-      reviewList: [],
       limit: 2,
     };
   },

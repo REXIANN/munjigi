@@ -4,6 +4,14 @@
 .profile-update {
   margin: 0;
   padding: 0;
+  height: 100%;
+  padding: $components-margin;
+  background-image: url("https://user-images.githubusercontent.com/60081201/95159429-fc2bee80-07d8-11eb-919a-3be868b71e61.png");
+  background-attachment: fixed;
+  background-origin: border-box;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   .profile-update-header {
     margin: 2vh auto;
@@ -28,7 +36,7 @@
       cursor: pointer;
     }
 
-    input[type = "text"] {
+    input[type="text"] {
       border: 0;
       background: none;
       display: block;
@@ -38,10 +46,10 @@
       border: 3px solid rgb(70, 39, 17);
       width: 40vw;
       border-radius: 10vw;
-      font-size: 1.0rem;
+      font-size: 1rem;
     }
 
-    input[type = "text"]:focus {
+    input[type="text"]:focus {
       width: 45vw;
       font-size: 1.1rem;
       border-color: brown;
@@ -53,7 +61,7 @@
   .submit-buttons {
     margin: 5vh auto;
     width: 40vw;
-    input[type = "submit"] {
+    input[type="submit"] {
       margin: 1vh 1vw;
       border: 0;
       background: rgb(70, 39, 17);
@@ -64,8 +72,8 @@
       outline: none;
       font-size: 1.2rem;
     }
-    
-    input[type = "submit"]:hover {
+
+    input[type="submit"]:hover {
       background: brown;
       cursor: pointer;
     }
