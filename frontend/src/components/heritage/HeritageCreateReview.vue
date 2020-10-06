@@ -15,7 +15,7 @@
             <v-container>
               <v-text-field
                 label="제목"
-                v-model="title"
+                v-model="reviewData.title"
                 hint="제목을 입력해주세요."
                 required="제목을 입력해 주세요!"
                 autofocus
@@ -23,7 +23,7 @@
               <h3>방문한 문화재 : {{ heritageName }}</h3>
               <v-textarea
                 label="내용"
-                v-model="content"
+                v-model="reviewData.content"
                 hint="내용을 입력해주세요."
                 required="내용을 입력해 주세요!"
                 @keypress.enter="createReview"
@@ -36,7 +36,7 @@
             <v-btn color="error" text @click="closeCheck">
               <h3>닫기</h3>
             </v-btn>
-            <v-btn color=" darken-1" text @click="createReview">
+            <v-btn color=" darken-1" text @click="setReview">
               <h3>작성완료</h3>
             </v-btn>
           </v-card-actions>
@@ -63,41 +63,31 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "HeritageCreateReview",
   created() {
-    this.heritageId = this.$route.params.id;
-    this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
+    this.reviewData.heritage = this.$route.params.id;
+    this.reviewData.user = sessionStorage.id === undefined ? "" : sessionStorage.id;
     axios
-      .get(SERVER.URL + SERVER.ROUTES.heritage + this.heritageId)
+      .get(SERVER.URL + SERVER.ROUTES.heritage + this.reviewData.heritage)
       .then((res) => (this.heritageName = res.data.k_name));
   },
   computed: {
     ...mapGetters(["config"]),
   },
   methods: {
-    createReview() {
-      const reviewData = {
-        title: this.title,
-        content: this.content,
-        heritage: this.heritageId,
-        user: this.userDataId,
-      };
-      axios
-        .post(SERVER.URL + SERVER.ROUTES.review, reviewData, this.config)
-        .then(() => {
-          this.dialog = false;
-          this.title = "";
-          this.content = "";
-          this.heritageId = "";
-          this.heritageName = "";
-          this.$router.push({
-            name: "HeritageCardDetail",
-            params: { id: this.heritageId },
-          });
-        });
+    ...mapActions(["createReview"]),
+    setReview() {
+      const data = {
+        URL : SERVER.URL + SERVER.ROUTES.review,
+        review: this.reviewData
+      }
+      this.createReview(data)
+      
+      this.dialog = false;
+    
     },
     closeCheck() {
       if (this.title != "" || this.content != "") {
@@ -113,10 +103,13 @@ export default {
   },
   data() {
     return {
-      userDataId: "",
-      title: "",
-      content: "",
-      heritageId: "",
+      reviewData: {
+        title: '',
+        content: '',
+        heritage: '',
+        user: ''
+      },
+      heritageName: '',
       dialog: false,
       dialog2: false,
     };

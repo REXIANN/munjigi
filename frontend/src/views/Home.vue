@@ -10,7 +10,7 @@
 import HomeIntroduce from "@/components/home/HomeIntroduce.vue";
 import HomeHeritage from "@/components/home/HomeHeritage.vue";
 import HomeCalendar from "@/components/home/HomeCalendar.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Home",
@@ -19,11 +19,16 @@ export default {
     HomeHeritage,
     HomeCalendar,
   },
+  computed: {
+    ...mapGetters(["config"])
+  },
   methods: {
     ...mapActions(["logout"]),
   },
   data() {
-    return {};
+    return {
+      id: sessionStorage.getItem("id")
+    }
   },
 };
 </script>

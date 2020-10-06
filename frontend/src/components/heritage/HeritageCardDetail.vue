@@ -183,14 +183,10 @@ export default {
         .catch(() => alert("로그인 후 이용가능한 기능입니다."));
     },
     like(id) {
+      const URL = SERVER.URL + SERVER.ROUTES.heritage + id + "/like/";
+      const userDataId = this.userDataId;
       axios
-        .post(
-          SERVER.URL + SERVER.ROUTES.heritage + id + "/like/",
-          {
-            userDataId: this.userDataId,
-          },
-          null
-        )
+        .post(URL,{ userDataId }, null)
         .then(() => {
           axios
             .get(SERVER.URL + SERVER.ROUTES.heritage + id)
@@ -201,14 +197,10 @@ export default {
         });
     },
     dib(id) {
+      const URL = SERVER.URL + SERVER.ROUTES.heritage + id + "/dib/";
+      const userDataId = this.userDataId;
       axios
-        .post(
-          SERVER.URL + SERVER.ROUTES.heritage + id + "/dib/",
-          {
-            userDataId: this.userDataId,
-          },
-          null
-        )
+        .post(URL, { userDataId }, null)
         .then(() => {
           axios
             .get(SERVER.URL + SERVER.ROUTES.heritage + id)
