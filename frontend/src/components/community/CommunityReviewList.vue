@@ -7,9 +7,7 @@
           <v-img class="review-list-image" :src="review.imageurl"></v-img>
           <div class="review-list-text">
             <h3 class="mb-4">{{ review.title }}</h3>
-            <v-list-item-subtitle
-              >문화재명 : {{ review.k_name }}</v-list-item-subtitle
-            >
+            <h4>문화재명 : {{ review.k_name }}</h4>
             <v-list-item-subtitle
               >작성자 : {{ review.users }}</v-list-item-subtitle
             >

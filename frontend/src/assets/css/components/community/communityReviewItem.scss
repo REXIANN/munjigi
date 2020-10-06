@@ -2,16 +2,23 @@
 @import "../../components";
 
 .community-review-item {
-  background-image: url("https://user-images.githubusercontent.com/60081201/93408144-c9c05d00-f8ce-11ea-8c1b-5c737727704f.PNG");
+  background-image: url("https://user-images.githubusercontent.com/60081201/95156088-a0f5fe00-07d0-11eb-9796-a625ee51a356.png");
   background-attachment: fixed;
   background-origin: border-box;
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 100vh;
-  padding: $components-margin;
+  min-height: 85vh;
 }
 
 .review-user {
   cursor: pointer;
+}
+
+.review-writer {
+  text-align: end;
+}
+
+.container {
+  margin-top: 60px;
 }
