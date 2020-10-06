@@ -67,18 +67,37 @@
       </v-container>
 
       <br />
-      <v-btn>제 to the 출</v-btn>
+      <v-btn @click="submitSurvey">제 to the 출</v-btn>
     </div>
   </div>
 </template>
 
 <script>
 import "@/assets/css/views/survey.scss";
+import axios from "axios";
+import SERVER from "@/api/drf";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Survey",
+  computed: {
+    ...mapGetters(["config"]),
+  },
+  methods: {
+    submitSurvey() {
+      const URL = SERVER.URL + SERVER.ROUTES.survey;
+      console.log(URL);
+      let arr = [...this.e5, ...this.e6, ...this.e7];
+      // let resultArray = arr.find();
+      axios.post(URL, arr, this.config).then().catch();
+    },
+  },
   data() {
     return {
+      dataObject: {
+        청동기시대: 1015,
+        철기시대: 9194,
+      },
       e5: [],
       e6: [],
       e7: [],
@@ -91,7 +110,19 @@ export default {
         "고려시대",
         "조선시대",
       ],
-      people: ["세종대왕", "영조", "정조", "태종", "장영실", "주몽"],
+      people: [
+        "영조",
+        "장영실",
+        "태종",
+        "정도전",
+        "이순신",
+        "선조",
+        "이황",
+        "이이",
+        "김홍도",
+        "신윤복",
+        "이성계",
+      ],
       heritages: [
         "불상",
         "백자",
