@@ -1,7 +1,6 @@
 from django.urls import path
 from . import views
-from .views import HeritageListAPI, HeritageDetailAPI, HeritageLikeAPI, HeritageBookmarkAPI, HeritageVisitAPI, HeritageRatingAPI, HeritageListAPI2, HeritageRecommendationAPI
-
+from .views import HeritageListAPI, HeritageDetailAPI, HeritageLikeAPI, HeritageBookmarkAPI, HeritageVisitAPI, HeritageRatingAPI, HeritageListAPI2, HeritageRecommendationAPI, Survey_weightAPI
 
 urlpatterns = [
     path('', HeritageListAPI.as_view()),
@@ -12,4 +11,5 @@ urlpatterns = [
     path('<int:pk>/score/', HeritageRatingAPI.as_view()),
     path('search/', HeritageListAPI2.as_view()),
     path('recommend/<int:pk>/', HeritageRecommendationAPI.as_view())
+    path('dosurvey/', Survey_weightAPI.as_view()),
 ]

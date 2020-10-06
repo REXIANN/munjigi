@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.pagination import PageNumberPagination
 from .serializers import HeritageSerializer, HeritageDetailSerializer, HeritageRatingSerializer, UserTagSerializer
-from .models import Heritage, Heritage_rating, User_tag
+from .models import Heritage, Heritage_rating, User_tag, Tag
 from backend.pagination import CustomPagination
 from django.db.models import Count, Q, Avg
 from accounts.models import User
@@ -118,6 +118,18 @@ class HeritageLikeAPI(generics.GenericAPIView):
         return Response(serializer.data)
 
 
+#서베이용
+class Survey_weightAPI(generics.GenericAPIView):
+    # queryset = Heritage.objects.all()
+    # serializer_class = HeritageDetailSerializer
+    permissions_classes = [permissions.IsAuthenticated]
+    def post(self, request):
+        # print(request.user)
+        # print(request.body)
+        Survey_weight_df(request.user, request.body)
+        return Response()
+
+
 class HeritageBookmarkAPI(generics.GenericAPIView):
     queryset = Heritage.objects.all()
     serializer_class = HeritageDetailSerializer
@@ -224,6 +236,52 @@ def user_add_weight(user_id, heritage_id):
             user_tag.save()
         else:
             user_tag = User_tag.objects.create(user_id = user_id, tag_id = tag)
+            user_tag.weight += 1
+            user_tag.save()
+    return
+
+#서베이용
+def Survey_weight_df(user_id, tag_l):
+    userid = User.objects.get(email = user_id).id
+    tagging = tag_l.decode("utf-8")
+    tn = 0
+    tag_test = []
+    tag_word = ""
+    for tt in tagging:
+        if tt == '"':
+            tn += 1
+            continue
+        tn = tn % 2
+        if tn == 1:
+            tag_word += tt
+        elif tn == 0:
+            if tag_word == "":
+                continue
+            tag_test.append(tag_word)
+            tag_word = ""
+    # print(tag_test)
+    tag_test2 = []
+    for tg in tag_test:
+        tag_test2.append(Tag.objects.get(name = tg))
+        # print(Tag.objects.filter(name = tg).values('id'))
+    print(tag_test2)
+    tagging = []
+    for tag in tag_test2:
+        tagging.append(tag.id)
+
+    user_queryset = User_tag.objects.filter(user_id=user_id).values('tag_id')
+    
+    u_tagging = []
+    for u_tag in user_queryset:
+        u_tagging.append(u_tag['tag_id'])
+    print(u_tagging)
+    for tag in tagging:
+        if tag in u_tagging:
+            user_tag = User_tag.objects.get(user_id = userid, tag_id = tag)
+            user_tag.weight += 1
+            user_tag.save()
+        else:
+            user_tag = User_tag.objects.create(user_id = userid, tag_id = tag)
             user_tag.weight += 1
             user_tag.save()
     return
