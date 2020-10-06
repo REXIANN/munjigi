@@ -41,7 +41,6 @@ export default {
   methods: {
     createReview(review) {
       this.reviewList.push(review);
-      // this.upload();
     },
     infiniteHandler($state) {
       axios
@@ -65,9 +64,6 @@ export default {
         .catch((err) => {
           console.error(err);
         });
-      // } else {
-      //   $state.complete();
-      // },
     },
   },
   data() {

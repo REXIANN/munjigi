@@ -20,14 +20,10 @@
 </template>
 
 <script>
-import InfiniteLoading from "vue-infinite-loading";
-import SERVER from "@/api/drf";
-import axios from "axios";
 import { mapActions } from "vuex";
 
 export default {
   name: "CommunityReviewList",
-
   props: {
     reviewList: {
       type: Array,
@@ -36,32 +32,6 @@ export default {
   },
   methods: {
     ...mapActions(["setReview"]),
-    infiniteHandler($state) {
-      axios
-        .get(SERVER.URL + SERVER.ROUTES.review + "?page=" + this.limit)
-        .then((response) => {
-          setTimeout(() => {
-            if (response.data.results) {
-              this.reviewList = this.reviewList.concat(response.data.results);
-              $state.loaded();
-              this.limit += 1;
-              const EACH_LEN = 10;
-              if (response.data.results.length / EACH_LEN < 1) {
-                $state.complete();
-              }
-            } else {
-              // 끝 지정(No more data)
-              $state.complete();
-            }
-          }, 1000);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-      // } else {
-      //   $state.complete();
-      // },
-    },
   },
   data() {
     return {
