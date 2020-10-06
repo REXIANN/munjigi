@@ -104,6 +104,7 @@ export default {
           this.title = "";
           this.content = "";
           this.heritageId = "";
+          this.searchInput = "";
           this.$router.push({ name: "Community" });
         });
     },
@@ -119,13 +120,11 @@ export default {
       this.dialog2 = false;
     },
     searchHeritage(searchInput) {
-      axios
-        .get(
-          SERVER.URL + SERVER.ROUTES.heritage + "search/?query=" + searchInput
-        )
-        .then((res) => {
-          this.searchHeritageList = res.data.results;
-        });
+      const URL =
+        SERVER.URL + SERVER.ROUTES.heritage + "search/?query=" + searchInput;
+      axios.get(URL).then((res) => {
+        this.searchHeritageList = res.data.results;
+      });
     },
     pickHeritage(heritage) {
       this.searchInput = heritage.k_name;
