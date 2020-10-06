@@ -56,6 +56,7 @@ export default {
   methods: {
     searchInput() {
       if (this.searchSelectNum === 1) {
+        console.log("1");
         const URL =
           SERVER.URL +
           SERVER.ROUTES.review +
@@ -65,6 +66,7 @@ export default {
           this.searchHeritageList = res.data.results;
         });
       } else {
+        console.log("2");
         axios
           .get(SERVER.URL + SERVER.ROUTES.mypage + this.searchBar + "/")
           .then((res) => {

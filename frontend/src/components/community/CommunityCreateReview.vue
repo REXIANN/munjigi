@@ -91,21 +91,34 @@ export default {
   },
   methods: {
     createReview() {
-      const reviewData = {
+      let reviewData = {
         title: this.title,
         content: this.content,
         heritage: this.heritageId,
         user: this.userDataId,
       };
       axios
-        .post(SERVER.URL + SERVER.ROUTES.review, reviewData, this.config)
-        .then(() => {
-          this.dialog = false;
-          this.title = "";
-          this.content = "";
-          this.heritageId = "";
-          this.searchInput = "";
-          this.$router.push({ name: "Community" });
+        .get(SERVER.URL + SERVER.ROUTES.heritage + this.heritageId)
+        .then((res) => {
+          let sendData = {
+            title: this.title,
+            content: this.content,
+            heritage: this.heritageId,
+            users: sessionStorage.nickname,
+            imageurl: res.data.imageurl,
+            k_name: res.data.k_name,
+          };
+          this.$emit("create-review", sendData);
+          axios
+            .post(SERVER.URL + SERVER.ROUTES.review, reviewData, this.config)
+            .then(() => {
+              this.dialog = false;
+              this.title = "";
+              this.content = "";
+              this.heritageId = "";
+              this.searchInput = "";
+              this.$router.push({ name: "Community" });
+            });
         });
     },
     closeCheck() {

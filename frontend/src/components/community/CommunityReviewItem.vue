@@ -136,7 +136,7 @@ export default {
     },
     deleteReview(id) {
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.review + id + "/")
+        .delete(SERVER.URL + SERVER.ROUTES.review + id)
         .then(() => {
           this.$router.push({ name: "Community" });
         })

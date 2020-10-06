@@ -111,6 +111,7 @@ export default {
       sessionStorage.id === undefined ? null : sessionStorage.id;
     let heritageId = this.$route.params.id;
     axios.get(SERVER.URL + SERVER.ROUTES.heritage + heritageId).then((res) => {
+      console.log(res);
       this.heritage = res.data;
       this.heritageImages = res.data.imageurls.split(", ");
       if (
