@@ -65,7 +65,7 @@ export default {
   createReview({ getters }, data) {
     const config = getters.config;
     const URL = data.URL;
-    const review = data.reviewData;
+    const review = data.review;
     axios
       .post(URL, review, config)
       .then((res) => console.log(res))

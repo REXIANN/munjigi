@@ -12,7 +12,7 @@
           <v-icon>mdi-format-list-bulleted-square</v-icon>
         </v-btn>
       </v-row>
-      <div v-if="review.users == userData.nickname">
+      <div v-if="reviewData.users == userData.nickname">
         <v-row justify="end">
           <v-dialog v-model="dialog" persistent max-width="600px">
             <template v-slot:activator="{ on, attrs }">
@@ -27,7 +27,7 @@
                 <v-icon left> mdi-pencil </v-icon>
                 수정
               </v-btn>
-              <v-btn tile dark @click="deleteReview(review.id)">
+              <v-btn tile dark @click="deleteReview(reviewData.id)">
                 <v-icon left> mdi-close </v-icon>
                 삭제
               </v-btn>
@@ -49,7 +49,7 @@
                     label="내용"
                     v-model="content"
                     required="내용을 입력해 주세요!"
-                    @keypress.enter="updateReview(review.id)"
+                    @keypress.enter="updateReview(reviewData.id)"
                   ></v-textarea>
                 </v-container>
               </v-card-text>
@@ -58,7 +58,11 @@
                 <v-btn color="error" text @click="dialog = false">
                   <h3>닫기</h3>
                 </v-btn>
-                <v-btn color=" darken-1" text @click="updateReview(review.id)">
+                <v-btn
+                  color=" darken-1"
+                  text
+                  @click="updateReview(reviewData.id)"
+                >
                   <h3>작성완료</h3>
                 </v-btn>
               </v-card-actions>
@@ -127,7 +131,7 @@ export default {
         .then(() => {
           this.dialog = false;
           axios
-            .get(SERVER.URL + SERVER.ROUTES.review + this.review.id)
+            .get(SERVER.URL + SERVER.ROUTES.review + id)
             .then((res) => (this.reviewData = res.data));
         })
         .catch((err) => {
@@ -136,7 +140,7 @@ export default {
     },
     deleteReview(id) {
       axios
-        .delete(SERVER.URL + SERVER.ROUTES.review + id)
+        .delete(SERVER.URL + SERVER.ROUTES.review + id + "/")
         .then(() => {
           this.$router.push({ name: "Community" });
         })

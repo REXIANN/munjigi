@@ -12,7 +12,7 @@
 
     <div v-else>
       <ul v-for="(review, i) in reviewData" :key="i">
-        <div @click="SELECT_REVIEW(review)">
+        <div @click="setReview(review)">
           <h3 class="review-pick">{{ review.title }}</h3>
           {{ review.created_at }}
         </div>
@@ -24,7 +24,7 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapMutations } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "MypageReview",
@@ -42,7 +42,7 @@ export default {
       .catch((err) => console.log(err));
   },
   methods: {
-    ...mapMutations(["SELECT_REVIEW"]),
+    ...mapActions(["setReview"]),
   },
   data() {
     return {
