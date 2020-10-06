@@ -5,8 +5,9 @@ import Home from "@/views/Home.vue";
 import Login from "@/views/Login";
 import Maps from "@/views/Maps";
 import Mypage from "@/views/Mypage";
+import Otherpage from "@/views/Otherpage";
 import Signup from "@/views/Signup";
-import Survey from "@/views/Survey"
+import Survey from "@/views/Survey";
 import ProfileUpdate from "@/views/ProfileUpdate";
 
 import Community from "@/views/Community";
@@ -15,7 +16,6 @@ import CommunityReviewItem from "@/components/community/CommunityReviewItem";
 import Heritage from "@/views/Heritage";
 import HeritageCardDetail from "@/components/heritage/HeritageCardDetail";
 import HeritageSearchBar from "@/components/heritage/HeritageSearchBar";
-
 
 Vue.use(VueRouter);
 
@@ -96,6 +96,11 @@ const routes = [
         next()
       }
     }
+  },
+  {
+    path: "/otherpage/:nickname",
+    name: "Otherpage",
+    component: Otherpage,
   },
   {
     path: "/profileupdate",

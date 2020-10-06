@@ -15,6 +15,8 @@ class HeritageListAPI(GenericAPIView):
     serializer_class = HeritageSerializer
     queryset = Heritage.objects.all()
     pagination_class = CustomPagination
+
+    
     def get(self, request):
         sort = request.GET.get('sort','')
         query = request.GET.get('query', '')
@@ -42,12 +44,42 @@ class HeritageListAPI(GenericAPIView):
         return Response(data)
 
 
+class HeritageListAPI2(GenericAPIView):
+    serializer_class = HeritageSerializer
+    queryset = Heritage.objects.all()
+    pagination_class = CustomPagination
+    def get(self, request):
+        sort = request.GET.get('sort','')
+        query = request.GET.get('query', '')
+        if sort == 'likes':
+            queryset = Heritage.objects.annotate(like_count=Count('like_users')).order_by('-like_count')
+            if query:
+                queryset = queryset.filter(Q (k_name__icontains=query)).order_by('-hit')
+        else:
+            queryset = self.filter_queryset(self.get_queryset())
+            if query:
+                queryset = queryset.filter(Q (k_name__icontains=query)).order_by('-hit')
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            result = self.get_paginated_response(serializer.data)
+            data = result.data # pagination data
+        else:
+            serializer = self.get_serializer(queryset, many=True)
+            data = serializer.data
+        payload = {
+            'return_code': '0000',
+            'return_message': 'Success',
+            'data': data
+        }
+        return Response(data)
+
+
 class HeritageDetailAPI(generics.GenericAPIView):
     queryset = Heritage.objects.all()
     serializer_class = HeritageDetailSerializer
 
     def get(self ,request, pk):
-
         heritage = get_object_or_404(Heritage, pk=pk)
         if request.session.get("h_hit", False) == False:
             request.session["h_hit"] = []

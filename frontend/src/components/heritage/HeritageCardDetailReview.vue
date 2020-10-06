@@ -1,10 +1,18 @@
 <template>
   <div>
-    <h3>리뷰 목록</h3>
-    <div v-if="!!authToken"><HeritageCreateReview /></div>
+    <h2>리뷰 목록</h2>
+    <div v-if="authToken"><HeritageCreateReview /></div>
+    <v-row justify="center" no-gutters>
+      <v-col lg="3"><h3>작성자</h3></v-col>
+      <v-col lg="3">
+        <h3>리뷰</h3>
+      </v-col>
+    </v-row>
     <div v-for="review in heritageReviewList" :key="review.id">
       <v-row justify="center" no-gutters>
-        <v-col lg="3">작성자 | {{ review.users }}</v-col>
+        <v-col lg="3" @click="goOtherpage(review.users)" class="review-user">
+          {{ review.users }}</v-col
+        >
         <v-col lg="3">
           <div class="pa-2" outlined tile>
             <h4>{{ review.title }}</h4>
@@ -32,6 +40,8 @@ export default {
     HeritageCreateReview,
   },
   created() {
+    this.myNickname =
+      sessionStorage.nickname === undefined ? "" : sessionStorage.nickname;
     let heritageId = this.$route.params.id;
     axios
       .get(SERVER.URL + SERVER.ROUTES.heritage + heritageId)
@@ -40,9 +50,22 @@ export default {
   computed: {
     ...mapState(["authToken"]),
   },
+  methods: {
+    goOtherpage(username) {
+      if (this.myNickname === username) {
+        this.$router.push({ name: "Mypage" });
+      } else {
+        this.$router.push({
+          name: "Otherpage",
+          params: { nickname: username },
+        });
+      }
+    },
+  },
   data() {
     return {
       heritageReviewList: "",
+      myNickname: "",
     };
   },
 };

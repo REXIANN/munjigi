@@ -31,6 +31,8 @@ class Migration(migrations.Migration):
                 ('sido', models.CharField(max_length=50)),
                 ('hit', models.IntegerField(default=0, null=True)),
                 ('rating', models.FloatField(null=True)),
+                ('videourl', models.URLField()),
+                ('imageurls', models.TextField()),
                 ('dib_users', models.ManyToManyField(blank=True, related_name='dibs_heritages', to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -51,28 +53,12 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Heritage_video',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('videourl', models.URLField(null=True)),
-                ('heritage', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='heritage.Heritage')),
-            ],
-        ),
-        migrations.CreateModel(
             name='Heritage_rating',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('rating', models.IntegerField(null=True)),
                 ('heritage', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='heritage.Heritage')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Heritage_picture',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('imageurl', models.URLField(null=True)),
-                ('heritage', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='heritage.Heritage')),
             ],
         ),
         migrations.AddField(
