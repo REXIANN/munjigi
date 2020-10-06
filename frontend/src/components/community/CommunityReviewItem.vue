@@ -98,7 +98,7 @@ export default {
     this.userData.nickname =
       sessionStorage.nickname === undefined ? "" : sessionStorage.nickname;
     axios
-      .get(SERVER.URL + SERVER.ROUTES.review + this.review.id)
+      .get(SERVER.URL + SERVER.ROUTES.review + this.$route.params.id)
       .then((res) => {
         this.reviewData = res.data;
         axios
