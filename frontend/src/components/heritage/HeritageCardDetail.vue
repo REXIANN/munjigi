@@ -36,18 +36,29 @@
         </v-btn>
       </div>
       <v-row>
-        <v-col cols="4">
-          <v-img
-            :src="heritage.imageurl"
-            :alt="heritage.k_name"
-            width="300vw"
-          />
+        <v-col cols="6">
+          <v-carousel hide-delimiters>
+            <v-carousel-item
+              v-for="(image, i) in heritageImages"
+              :key="i"
+              :src="image"
+              max="80vw"
+              hegith="50vh"
+              reverse-transition="fade-transition"
+              transition="fade-transition"
+            ></v-carousel-item>
+          </v-carousel>
         </v-col>
-        <v-col cols="8">
-          <h5>{{ heritage.content }}</h5>
+        <v-col cols="6">
+          <h3>{{ heritage.content }}</h3>
         </v-col>
       </v-row>
+      <div v-for="(image, idx) in heritage.imageurls" :key="idx">
+        <v-img :src="image" width="100vw" />
+      </div>
     </v-container>
+    {{ heritage }}
+    <iframe src="hertiage.videourl" frameborder="0"></iframe>
     <br />
     <!-- 문화재의 평점을 보여주는 블록 -->
     <div>
@@ -99,9 +110,11 @@ export default {
     this.userDataId =
       sessionStorage.id === undefined ? null : sessionStorage.id;
     let heritageId = this.$route.params.id;
-    axios
-      .get(SERVER.URL + SERVER.ROUTES.heritage + heritageId)
-      .then((res) => (this.heritage = res.data));
+    axios.get(SERVER.URL + SERVER.ROUTES.heritage + heritageId).then((res) => {
+      this.heritage = res.data;
+      console.log(res.data);
+      this.heritageImages = res.data.imageurls.split(", ");
+    });
   },
   mounted() {
     // get rating of the heritage
@@ -158,7 +171,10 @@ export default {
       };
       axios
         .post(URL, data, this.config)
-        .then((res) => (this.ratingList = res.data))
+        .then((res) => {
+          this.ratingList = res.data;
+          console.log(res);
+        })
         .catch(() => alert("로그인 후 이용가능한 기능입니다."));
     },
     like(id) {
@@ -220,6 +236,7 @@ export default {
       ratingList: {
         type: Array,
       },
+      heritageImages: [],
     };
   },
 };
