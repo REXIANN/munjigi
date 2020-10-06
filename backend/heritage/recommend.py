@@ -3,7 +3,7 @@ import numpy as np
 from pandas import Series, DataFrame
 import sqlite3
 
-class recommend_system(user_pk):
+def recommend_system(user_pk):
     conn = sqlite3.connect('db.sqlite3')
 
     # 유저 - 태그 데이터프레임 생성
@@ -98,4 +98,4 @@ class recommend_system(user_pk):
             if heritage not in visited_heritage:
                 user_recommend.append(heritage)
 
-    print(user_recommend)
+    return user_recommend

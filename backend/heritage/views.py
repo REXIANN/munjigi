@@ -9,6 +9,7 @@ from .models import Heritage, Heritage_rating, User_tag
 from backend.pagination import CustomPagination
 from django.db.models import Count, Q, Avg
 from accounts.models import User
+from .recommend import recommend_system
 
 
 class HeritageListAPI(GenericAPIView):
@@ -183,6 +184,18 @@ class HeritageRatingAPI(generics.GenericAPIView):
                 queryset = Heritage_rating.objects.filter(heritage_id=pk)
                 serializer = HeritageRatingSerializer(queryset, many=True)
                 return Response(serializer.data)
+
+
+class HeritageRecommendationAPI(generics.GenericAPIView):
+    serializer_class = HeritageSerializer
+    queryset = Heritage.objects.all()
+    def get(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        heritage_recommend = recommend_system(user.pk)
+        queryset = Heritage.objects.filter(pk__in=heritage_recommend)
+        serializer = HeritageSerializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 # 문화재 평균 평점
 def rating_average(heritage_id):
