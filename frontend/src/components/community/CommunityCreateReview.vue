@@ -104,6 +104,7 @@ export default {
           this.title = "";
           this.content = "";
           this.heritageId = "";
+          this.searchInput = "";
           this.$router.push({ name: "Community" });
         });
     },
