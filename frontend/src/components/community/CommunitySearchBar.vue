@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="community-search-bar">
     <v-row class="search-input m-auto">
       <select
         class="search-input-select"
@@ -7,7 +7,7 @@
         label="제목"
       >
         <option selected value="1">제목</option>
-        <option value="2">작성자</option>
+        <option value="0">작성자</option>
       </select>
       <input
         class="search-input-width"
@@ -19,7 +19,7 @@
       />
     </v-row>
     <div v-if="searchHeritageList.length">
-      <v-row justify="center">
+      <v-row justify="center" class="search-result">
         <div>
           <v-expansion-panels popout>
             <v-expansion-panel
@@ -55,18 +55,24 @@ export default {
   },
   methods: {
     searchInput() {
-      if (this.searchSelectNum === 1) {
-        console.log("1");
+      if (this.searchSelectNum === "1") {
         const URL =
           SERVER.URL +
           SERVER.ROUTES.review +
           "search/title/?query=" +
           this.searchBar;
         axios.get(URL).then((res) => {
-          this.searchHeritageList = res.data.results;
+          if (res.data.results) {
+            this.searchHeritageList = res.data.results;
+            if (this.searchHeritageList.length === 0) {
+              alert("검색 결과가 없습니다.");
+            }
+          } else {
+            alert("검색 결과가 없습니다.");
+            this.searchHeritageList = [];
+          }
         });
       } else {
-        console.log("2");
         axios
           .get(SERVER.URL + SERVER.ROUTES.mypage + this.searchBar + "/")
           .then((res) => {
@@ -77,7 +83,15 @@ export default {
               "search/name/?query=" +
               userId;
             axios.get(URL).then((res) => {
-              this.searchHeritageList = res.data.results;
+              if (res.data.results) {
+                this.searchHeritageList = res.data.results;
+                if (this.searchHeritageList.length === 0) {
+                  alert("검색 결과가 없습니다.");
+                }
+              } else {
+                alert("검색 결과가 없습니다.");
+                this.searchHeritageList = [];
+              }
             });
           });
       }
@@ -87,7 +101,7 @@ export default {
   data() {
     return {
       searchBar: "",
-      searchSelectNum: 1,
+      searchSelectNum: "1",
       searchType: ["제목", "작성자"],
       chooseType: "제목",
       searchHeritageList: [],

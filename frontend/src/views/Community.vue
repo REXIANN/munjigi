@@ -1,6 +1,6 @@
 <template>
   <div class="community">
-    <CommunityCreateReview @create-review="createReview" />
+    <CommunityCreateReview @create-review-community="createReviewCommunity" />
     <CommunitySearchBar />
     <CommunityReviewList :reviewList="reviewList" />
     <div v-if="reviewList.length >= 10">
@@ -39,10 +39,10 @@ export default {
     });
   },
   methods: {
-    createReview() {
+    createReviewCommunity() {
       const REVIEW_LIST_URL = SERVER.URL + SERVER.ROUTES.review + "?page=1";
-      axios.get(REVIEW_LIST_URL).then((response) => {
-        this.reviewList = response.data.results;
+      axios.get(REVIEW_LIST_URL).then((res) => {
+        this.reviewList = res.data.results;
       });
     },
     infiniteHandler($state) {

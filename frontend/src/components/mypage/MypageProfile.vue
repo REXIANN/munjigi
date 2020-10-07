@@ -1,5 +1,5 @@
 <template>
-  <div class="mypageProfile">
+  <div class="mypage-profile">
     <h1>{{ userData.user.nickname }}님의 마이페이지</h1>
     <v-row justify="space-between">
       <v-col>
@@ -17,14 +17,6 @@
       </v-col>
       <v-col>
         <h3>이름 : {{ userData.name }}</h3>
-        <h3>성씨 본관 :{{ userData.lastname }}</h3>
-        <div>
-          <v-btn @click="searchAncestor(userData.ancestor)"
-            >조상과 관련된 문화재 보기</v-btn
-          >
-        </div>
-      </v-col>
-      <v-col>
         <h3>나의 신분 "{{ userGrade.rank }}"</h3>
         <img :src="userGrade.image" />
         <div>

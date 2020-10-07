@@ -117,8 +117,8 @@ class ReviewListAPI2(GenericAPIView):
     def get(self, request):
         query = request.GET.get('query', '')
         queryset = self.filter_queryset(self.get_queryset())
+        queryset = queryset.filter(title__icontains=query)
         page = self.paginate_queryset(queryset)
-        queryset = queryset.filter(Q (title__icontains=query))
         
         if page is not None:
             serializer = ReviewListSerializer(page, many=True)
