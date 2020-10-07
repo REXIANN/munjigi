@@ -89,7 +89,12 @@ export default {
       console.log(URL);
       let arr = [...this.e5, ...this.e6, ...this.e7];
       // let resultArray = arr.find();
-      axios.post(URL, arr, this.config).then().catch();
+      axios.post(URL, arr, this.config)
+        .then(() => {
+          alert("설문조사에 응해 주셔서 감사합니다! 결과가 이제 추천시스템에 반영됩니다.")
+          this.$router.push({ name : 'Home'})
+        })
+        .catch();
     },
   },
   data() {
