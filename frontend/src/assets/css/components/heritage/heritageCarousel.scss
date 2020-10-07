@@ -1,11 +1,18 @@
 @charset "utf-8";
 @import "../../components";
 
-.slick-slider {
-  margin: 5vh 5vw;
+.slick-track {
+  margin: 0;
 }
 
-img {
-  width: 32vw;
-  margin: 0px auto;
+.slick-list {
+  img {
+    height: 100px;
+  }
+}
+
+.heritage-carousel {
+  * {
+    justify-content: center;
+  }
 }

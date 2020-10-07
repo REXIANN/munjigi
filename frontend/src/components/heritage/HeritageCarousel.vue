@@ -1,91 +1,263 @@
 <template>
-  <div>
+  <div class="heritage-carousel">
     <h1>추천 문화재!</h1>
-
-    <!-- <VueSlickCarousel v-bind="settings">
-      <div style="height:20vh;">1</div>
-      <div style="height:20vh;">2</div>
-      <div style="height:20vh;">3</div>
-      <div style="height:20vh;">4</div>
-      <div style="height:20vh;">5</div>
-      <div style="height:20vh;">6</div>
-      <div style="height:20vh;">7</div>
-      <div style="height:20vh;">8</div>
-      <div style="height:20vh;">9</div>
-      <div style="height:20vh;">10</div>
-    </VueSlickCarousel> -->
-    <template>
-      <v-carousel
-        cycle
-        height="300"
-        hide-delimiter-background
-        show-arrows-on-hover
+    <VueSlickCarousel v-bind="settings">
+      <v-card
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="374"
+        @click="setHeritage(heritageList[0])"
       >
-        <v-carousel-item v-for="(slide, i) in slides" :key="i">
-          <v-sheet height="100%">
-            <v-row no-gutters class="fill-height">
-              <v-col class="fill-height">
-                <v-card tile width="33%">
-                  <!-- {{ heritageList[i].k_name }} -->
-                  <img :src="heritageList[i].imageurl" />
-                </v-card>
-              </v-col>
-              <v-col class="fill-height">
-                <v-card tile width="34%">
-                  <!-- {{ heritageList[i + 1].k_name }} -->
-                  <img :src="heritageList[i + 1].imageurl" />
-                </v-card>
-              </v-col>
-              <v-col class="fill-height">
-                <v-card tile width="33%">
-                  <!-- {{ heritageList[i + 2].k_name }} -->
-                  <img :src="heritageList[i + 2].imageurl" />
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-sheet>
-        </v-carousel-item>
-      </v-carousel>
-    </template>
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
+        <v-img height="200" :src="heritageList[0].imageurl"></v-img>
+        <v-card-title
+          ><h5>{{ heritageList[0].k_name }}</h5>
+        </v-card-title>
+      </v-card>
+      <v-card
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="374"
+        @click="setHeritage(heritageList[1])"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
+        <v-img height="200" :src="heritageList[1].imageurl"></v-img>
+        <v-card-title
+          ><h5>{{ heritageList[1].k_name }}</h5>
+        </v-card-title>
+      </v-card>
+      <v-card
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="374"
+        @click="setHeritage(heritageList[2])"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
+        <v-img height="200" :src="heritageList[2].imageurl"></v-img>
+        <v-card-title
+          ><h5>{{ heritageList[2].k_name }}</h5>
+        </v-card-title>
+      </v-card>
+      <v-card
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="374"
+        @click="setHeritage(heritageList[3])"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
+        <v-img height="200" :src="heritageList[3].imageurl"></v-img>
+        <v-card-title
+          ><h5>{{ heritageList[3].k_name }}</h5>
+        </v-card-title>
+      </v-card>
+      <v-card
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="374"
+        @click="setHeritage(heritageList[4])"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
+        <v-img height="200" :src="heritageList[4].imageurl"></v-img>
+        <v-card-title
+          ><h5>{{ heritageList[4].k_name }}</h5>
+        </v-card-title>
+      </v-card>
+      <v-card
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="374"
+        @click="setHeritage(heritageList[5])"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
+        <v-img height="200" :src="heritageList[5].imageurl"></v-img>
+        <v-card-title
+          ><h5>{{ heritageList[5].k_name }}</h5>
+        </v-card-title>
+      </v-card>
+      <v-card
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="374"
+        @click="setHeritage(heritageList[6])"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
+        <v-img height="200" :src="heritageList[6].imageurl"></v-img>
+        <v-card-title
+          ><h5>{{ heritageList[6].k_name }}</h5>
+        </v-card-title>
+      </v-card>
+      <v-card
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="374"
+        @click="setHeritage(heritageList[7])"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
+        <v-img height="200" :src="heritageList[7].imageurl"></v-img>
+        <v-card-title
+          ><h5>{{ heritageList[7].k_name }}</h5>
+        </v-card-title>
+      </v-card>
+      <v-card
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="374"
+        @click="setHeritage(heritageList[8])"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
+        <v-img height="200" :src="heritageList[8].imageurl"></v-img>
+        <v-card-title
+          ><h5>{{ heritageList[8].k_name }}</h5>
+        </v-card-title>
+      </v-card>
+      <v-card
+        :loading="loading"
+        class="mx-auto my-12"
+        max-width="374"
+        @click="setHeritage(heritageList[9])"
+      >
+        <template slot="progress">
+          <v-progress-linear
+            color="deep-purple"
+            height="10"
+            indeterminate
+          ></v-progress-linear>
+        </template>
+        <v-img height="200" :src="heritageList[9].imageurl"></v-img>
+        <v-card-title
+          ><h5>{{ heritageList[9].k_name }}</h5>
+        </v-card-title>
+      </v-card>
+    </VueSlickCarousel>
   </div>
 </template>
 
 <script>
-// import "@/assets/css/components/heritage/heritageCarousel.scss";
-// import VueSlickCarousel from "vue-slick-carousel";
-// import "vue-slick-carousel/dist/vue-slick-carousel.css";
-// import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
+import VueSlickCarousel from "vue-slick-carousel";
+import "vue-slick-carousel/dist/vue-slick-carousel.css";
+import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
+import { mapActions } from "vuex";
 import SERVER from "@/api/drf";
 import axios from "axios";
 
 export default {
   name: "CommunityCarousel",
-  // components: {
-  //   VueSlickCarousel,
-  // },
-  mounted() {
+  components: {
+    VueSlickCarousel,
+  },
+  created() {
     axios
       .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1")
       .then((res) => {
         this.heritageList = res.data.results;
       });
   },
+  methods: {
+    ...mapActions(["setHeritage"]),
+  },
   data() {
     return {
       heritageList: [],
-
-      slides: ["0", "1", "2", "3", "4", "5", "6", "7"],
       settings: {
-        arrows: true,
         dots: true,
+        focusOnSelect: true,
         infinite: true,
+        speed: 500,
         slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        pauseOnDotsHover: true,
-        pauseOnFocus: true,
-        pauseOnHover: true,
+        slidesToScroll: 3,
+        touchThreshold: 5,
+
+        // basic: [
+        //   "https://mdbootstrap.com/img/Photos/Others/img (36).jpg",
+        //   "https://mdbootstrap.com/img/Photos/Others/img (34).jpg",
+        //   "https://mdbootstrap.com/img/Photos/Others/img (38).jpg",
+        //   "https://mdbootstrap.com/img/Photos/Others/img (29).jpg",
+        //   "https://mdbootstrap.com/img/Photos/Others/img (30).jpg",
+        //   "https://mdbootstrap.com/img/Photos/Others/img (27).jpg",
+        //   "https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(53).jpg",
+        //   "https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(45).jpg",
+        //   "https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(51).jpg",
+        // ],
+        // responsive: [
+        //   {
+        //     breakpoint: 1024,
+        //     settings: {
+        //       slidesToShow: 3,
+        //       slidesToScroll: 3,
+        //       infinite: true,
+        //       dots: true,
+        //     },
+        //   },
+        //   {
+        //     breakpoint: 600,
+        //     settings: {
+        //       slidesToShow: 2,
+        //       slidesToScroll: 2,
+        //       initialSlide: 2,
+        //     },
+        //   },
+        //   {
+        //     breakpoint: 480,
+        //     settings: {
+        //       slidesToShow: 1,
+        //       slidesToScroll: 1,
+        //     },
+        //   },
+        // ],
       },
     };
   },

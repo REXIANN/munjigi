@@ -1,5 +1,6 @@
 <template>
   <div class="heritage-search-bar">
+    <h1>문화재 검색</h1>
     <v-text-field
       class="search-input"
       name="input"
