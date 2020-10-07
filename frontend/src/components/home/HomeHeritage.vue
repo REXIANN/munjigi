@@ -20,9 +20,13 @@ export default {
     HomeCardItem,
   },
   created() {
-    const URL = SERVER.URL + SERVER.recommend + sessionStorage.id
+    const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id
+    console.log("URL", URL)
     axios.get(URL)
-      .then(res => this.recommendList = res.data)
+      .then(res => {
+        console.log(res)
+        this.recommendList = res.data
+      })
       .catch(err => console.error(err))
   },
   data() {

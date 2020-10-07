@@ -17,6 +17,7 @@ export default {
         sessionStorage.setItem("id", res.data.user.id);
         sessionStorage.setItem("name", res.data.user.name);
         sessionStorage.setItem("nickname", res.data.user.nickname);
+        sessionStorage.setItem("survey", res.data.user.survey)
 
         const validator = /signup/
         let location = validator.test(info.location) ? "Survey" : "Home";
@@ -53,6 +54,7 @@ export default {
         sessionStorage.removeItem("id");
         sessionStorage.removeItem("name");
         sessionStorage.removeItem("nickname");
+        sessionStorage.removeItem("survey")
       })
       .catch((err) => {
         console.log(err.message);
