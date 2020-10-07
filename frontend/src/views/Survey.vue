@@ -11,7 +11,7 @@
         <!-- 시대 -->
         <v-row>
           <v-col cols="12" sm="4">
-            <v-subheader v-text="'시대별 선호도 조사'"></v-subheader>
+            <h3>시대별 선호도 조사</h3>
           </v-col>
 
           <v-col cols="12" sm="8">
@@ -30,7 +30,7 @@
         <!-- 인물 -->
         <v-row>
           <v-col cols="12" sm="4">
-            <v-subheader v-text="'인물별 선호도 조사'"></v-subheader>
+            <h3>인물별 선호도 조사</h3>
           </v-col>
 
           <v-col cols="12" sm="8">
@@ -49,7 +49,7 @@
         <!-- 문화재 종류 -->
         <v-row>
           <v-col cols="12" sm="4">
-            <v-subheader v-text="'문화재 종류 선호도 조사'"></v-subheader>
+            <h3>문화재 종류 선호도 조사</h3>
           </v-col>
 
           <v-col cols="12" sm="8">
@@ -69,7 +69,9 @@
       <br />
       <!-- 제출버튼 -->
       <div>
-        <v-btn class="button" :disabled="!arr.length" @click="submitSurvey">제 출</v-btn>
+        <v-btn class="button" :disabled="!arr.length" @click="submitSurvey"
+          >제 출</v-btn
+        >
       </div>
     </div>
   </div>

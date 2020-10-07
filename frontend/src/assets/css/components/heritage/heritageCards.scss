@@ -3,6 +3,9 @@
 
 .heritage-cards {
   margin: 5vh 5vw;
+  .v-text-field {
+    width: 150px;
+  }
 }
 
 .v-card-container:hover {
@@ -16,4 +19,8 @@
   opacity: 0.5;
   position: absolute;
   width: 100%;
+}
+
+.home-recommend-text {
+  margin-top: 100px;
 }
