@@ -55,26 +55,34 @@ export default {
           },
           null
         )
-        .then(() => {
-          axios
-            .delete(
-              SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/"
-            )
-            .then(() => {
-              alert("탈퇴가 완료되었습니다.");
-              this.$store.commit("SET_TOKEN", null);
-              // 세션에 있는 정보를 지움
-              sessionStorage.removeItem("auth-token");
-              sessionStorage.removeItem("birth");
-              sessionStorage.removeItem("dateJoined");
-              sessionStorage.removeItem("email");
-              sessionStorage.removeItem("id");
-              sessionStorage.removeItem("name");
-              sessionStorage.removeItem("nickname");
-              this.$router.push({ name: "Home" });
-            })
-            .catch((err) => console.log(err));
-        });
+        .then((res) => {
+          if (res.data) {
+            axios
+              .delete(
+                SERVER.URL +
+                  SERVER.ROUTES.mypage +
+                  sessionStorage.nickname +
+                  "/"
+              )
+              .then(() => {
+                alert("탈퇴가 완료되었습니다.");
+                this.gradeInfo = false;
+                // sessionStorage.removeItem("auth-token");
+                // sessionStorage.removeItem("birth");
+                // sessionStorage.removeItem("dateJoined");
+                // sessionStorage.removeItem("email");
+                // sessionStorage.removeItem("id");
+                // sessionStorage.removeItem("name");
+                // sessionStorage.removeItem("nickname");
+                this.$router.push({ name: "Home" });
+              })
+              .catch((err) => console.log(err));
+          } else {
+            alert("비밀번호가 틀렸습니다.");
+            this.checkPassword = "";
+          }
+        })
+        .catch((err) => console.log(err));
     },
   },
   data() {
