@@ -7,7 +7,7 @@
         label="제목"
       >
         <option selected value="1">제목</option>
-        <option value="2">작성자</option>
+        <option value="0">작성자</option>
       </select>
       <input
         class="search-input-width"
@@ -19,7 +19,7 @@
       />
     </v-row>
     <div v-if="searchHeritageList.length">
-      <v-row justify="center">
+      <v-row justify="center" class="search-result">
         <div>
           <v-expansion-panels popout>
             <v-expansion-panel
@@ -55,7 +55,8 @@ export default {
   },
   methods: {
     searchInput() {
-      if (this.searchSelectNum === 1) {
+      if (this.searchSelectNum === "1") {
+        console.log("제목");
         const URL =
           SERVER.URL +
           SERVER.ROUTES.review +
@@ -70,6 +71,7 @@ export default {
           }
         });
       } else {
+        console.log("내용");
         axios
           .get(SERVER.URL + SERVER.ROUTES.mypage + this.searchBar + "/")
           .then((res) => {
@@ -95,7 +97,7 @@ export default {
   data() {
     return {
       searchBar: "",
-      searchSelectNum: 1,
+      searchSelectNum: "1",
       searchType: ["제목", "작성자"],
       chooseType: "제목",
       searchHeritageList: [],
