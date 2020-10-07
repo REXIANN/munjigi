@@ -1,7 +1,9 @@
 <template>
   <div>
     <h2>리뷰 목록</h2>
-    <div v-if="authToken"><HeritageCreateReview /></div>
+    <div v-if="authToken">
+      <HeritageCreateReview @create-review="createReview" />
+    </div>
     <v-row justify="center" no-gutters>
       <v-col lg="3"><h3>작성자</h3></v-col>
       <v-col lg="3">
@@ -42,7 +44,7 @@ export default {
   created() {
     this.myNickname =
       sessionStorage.nickname === undefined ? "" : sessionStorage.nickname;
-    let heritageId = this.$route.params.id;
+    const heritageId = this.$route.params.id;
     axios
       .get(SERVER.URL + SERVER.ROUTES.heritage + heritageId)
       .then((res) => (this.heritageReviewList = res.data.heritage_reviews));
@@ -51,6 +53,13 @@ export default {
     ...mapState(["authToken"]),
   },
   methods: {
+    createReview() {
+      const heritageId = this.$route.params.id;
+      const REVIEW_LIST_URL = SERVER.URL + SERVER.ROUTES.heritage + heritageId;
+      axios.get(REVIEW_LIST_URL).then((res) => {
+        this.heritageReviewList = res.data.heritage_reviews;
+      });
+    },
     goOtherpage(username) {
       if (this.myNickname === username) {
         this.$router.push({ name: "Mypage" });

@@ -39,8 +39,11 @@ export default {
     });
   },
   methods: {
-    createReview(review) {
-      this.reviewList.push(review);
+    createReview() {
+      const REVIEW_LIST_URL = SERVER.URL + SERVER.ROUTES.review + "?page=1";
+      axios.get(REVIEW_LIST_URL).then((response) => {
+        this.reviewList = response.data.results;
+      });
     },
     infiniteHandler($state) {
       axios
