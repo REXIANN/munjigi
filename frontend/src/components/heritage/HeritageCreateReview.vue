@@ -69,7 +69,8 @@ export default {
   name: "HeritageCreateReview",
   created() {
     this.reviewData.heritage = this.$route.params.id;
-    this.reviewData.user = sessionStorage.id === undefined ? "" : sessionStorage.id;
+    this.reviewData.user =
+      sessionStorage.id === undefined ? "" : sessionStorage.id;
     axios
       .get(SERVER.URL + SERVER.ROUTES.heritage + this.reviewData.heritage)
       .then((res) => (this.heritageName = res.data.k_name));
@@ -81,13 +82,12 @@ export default {
     ...mapActions(["createReview"]),
     setReview() {
       const data = {
-        URL : SERVER.URL + SERVER.ROUTES.review,
-        review: this.reviewData
-      }
-      this.createReview(data)
-      
+        URL: SERVER.URL + SERVER.ROUTES.review,
+        review: this.reviewData,
+      };
+      this.createReview(data);
+      this.$emit("create-review");
       this.dialog = false;
-    
     },
     closeCheck() {
       if (this.title != "" || this.content != "") {
@@ -104,12 +104,12 @@ export default {
   data() {
     return {
       reviewData: {
-        title: '',
-        content: '',
-        heritage: '',
-        user: ''
+        title: "",
+        content: "",
+        heritage: "",
+        user: "",
       },
-      heritageName: '',
+      heritageName: "",
       dialog: false,
       dialog2: false,
     };
