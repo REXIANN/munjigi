@@ -56,17 +56,20 @@ export default {
   methods: {
     searchInput() {
       if (this.searchSelectNum === 1) {
-        console.log("1");
         const URL =
           SERVER.URL +
           SERVER.ROUTES.review +
           "search/title/?query=" +
           this.searchBar;
         axios.get(URL).then((res) => {
-          this.searchHeritageList = res.data.results;
+          if (res.data.results) {
+            this.searchHeritageList = res.data.results;
+          } else {
+            alert("검색 결과가 없습니다.");
+            this.searchHeritageList = [];
+          }
         });
       } else {
-        console.log("2");
         axios
           .get(SERVER.URL + SERVER.ROUTES.mypage + this.searchBar + "/")
           .then((res) => {
@@ -77,7 +80,12 @@ export default {
               "search/name/?query=" +
               userId;
             axios.get(URL).then((res) => {
-              this.searchHeritageList = res.data.results;
+              if (res.data.results) {
+                this.searchHeritageList = res.data.results;
+              } else {
+                alert("검색 결과가 없습니다.");
+                this.searchHeritageList = [];
+              }
             });
           });
       }
