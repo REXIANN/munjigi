@@ -1,5 +1,5 @@
 export default {
-  URL: "http://j3a302.p.ssafy.io",
+  URL: "http://localhost:8000",
   ROUTES: {
     signup: "/accounts/auth/register/",
     validity: "/accounts/register/",

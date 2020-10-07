@@ -190,7 +190,7 @@
 import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import SERVER from "@/api/drf";
 import axios from "axios";
 
@@ -200,17 +200,24 @@ export default {
     VueSlickCarousel,
   },
   created() {
+    this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
+    const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id;
     axios
-      .get(SERVER.URL + SERVER.ROUTES.heritage + "?page" + "=1")
+      .get(URL)
       .then((res) => {
-        this.heritageList = res.data.results;
-      });
+        this.heritageList = res.data;
+      })
+      .catch((err) => console.error(err));
+  },
+  computed: {
+    ...mapGetters(["config"]),
   },
   methods: {
     ...mapActions(["setHeritage"]),
   },
   data() {
     return {
+      userDataId: "",
       heritageList: [],
       settings: {
         dots: true,
@@ -220,44 +227,6 @@ export default {
         slidesToShow: 3,
         slidesToScroll: 3,
         touchThreshold: 5,
-
-        // basic: [
-        //   "https://mdbootstrap.com/img/Photos/Others/img (36).jpg",
-        //   "https://mdbootstrap.com/img/Photos/Others/img (34).jpg",
-        //   "https://mdbootstrap.com/img/Photos/Others/img (38).jpg",
-        //   "https://mdbootstrap.com/img/Photos/Others/img (29).jpg",
-        //   "https://mdbootstrap.com/img/Photos/Others/img (30).jpg",
-        //   "https://mdbootstrap.com/img/Photos/Others/img (27).jpg",
-        //   "https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(53).jpg",
-        //   "https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(45).jpg",
-        //   "https://mdbootstrap.com/img/Photos/Horizontal/Food/4-col/img%20(51).jpg",
-        // ],
-        // responsive: [
-        //   {
-        //     breakpoint: 1024,
-        //     settings: {
-        //       slidesToShow: 3,
-        //       slidesToScroll: 3,
-        //       infinite: true,
-        //       dots: true,
-        //     },
-        //   },
-        //   {
-        //     breakpoint: 600,
-        //     settings: {
-        //       slidesToShow: 2,
-        //       slidesToScroll: 2,
-        //       initialSlide: 2,
-        //     },
-        //   },
-        //   {
-        //     breakpoint: 480,
-        //     settings: {
-        //       slidesToShow: 1,
-        //       slidesToScroll: 1,
-        //     },
-        //   },
-        // ],
       },
     };
   },
