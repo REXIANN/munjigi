@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>월별 문화재 관련 행사</h1>
+    <h1 class="home-calendar-title">월별 문화재 관련 행사</h1>
     <span v-for="(dts, i) in this.eventcategory" :key="dts">
       <v-chip class="ma-2" :color="colors[i]" text-color="white">
         {{ dts }} {{ i }}
