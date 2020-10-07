@@ -9,7 +9,6 @@ export default {
       .then((res) => {
         commit("SET_TOKEN", res.data.token);
         // sessionStorage에 유저의 정보를 저장
-        router.push({ name: "Home" });
         sessionStorage.setItem("auth-token", res.data.token);
         sessionStorage.setItem("birth", res.data.user.birth);
         sessionStorage.setItem("dateJoined", res.data.user.date_joined);
@@ -17,6 +16,10 @@ export default {
         sessionStorage.setItem("id", res.data.user.id);
         sessionStorage.setItem("name", res.data.user.name);
         sessionStorage.setItem("nickname", res.data.user.nickname);
+
+        const validator = /signup/
+        let location = validator.test(info.location) ? "Survey" : "Home";
+        router.push({ name: `${location}` });
       })
       .catch(() => alert("이메일 또는 비밀번호가 틀렸습니다"));
   },
