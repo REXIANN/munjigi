@@ -1,10 +1,11 @@
 <template>
   <div>
-    <h1>당신을 위한 맞춤 문화재!</h1>
+    <h1 class="home-recommend-text">당신을 위한 맞춤 문화재!</h1>
     <div class="row">
       <v-card
         class="d-inline-block my-4 mx-auto"
-        v-for="(recommend, idx) in recommendList" :key="idx"
+        v-for="(recommend, idx) in recommendList"
+        :key="idx"
       >
         <v-container class="v-card-container">
           <h3 @click="setHeritage(recommend)">
@@ -81,8 +82,8 @@
 </template>
 
 <script>
-import axios from "axios"
-import SERVER from "@/api/drf"
+import axios from "axios";
+import SERVER from "@/api/drf";
 import { mapActions, mapGetters } from "vuex";
 import "@/assets/css/components/heritage/heritageCards.scss";
 
@@ -91,17 +92,18 @@ export default {
   props: {
     recommend: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   created() {
     this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
-    const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id
-    axios.get(URL)
-      .then(res => {
-        this.recommendList = res.data
+    const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id;
+    axios
+      .get(URL)
+      .then((res) => {
+        this.recommendList = res.data;
       })
-      .catch(err => console.error(err))
+      .catch((err) => console.error(err));
   },
   computed: {
     ...mapGetters(["config"]),
@@ -118,13 +120,14 @@ export default {
           null
         )
         .then(() => {
-          const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id
-          axios.get(URL)
-          .then(res => {
-            this.recommendList = res.data
-          })
-          .catch(err => console.error(err))
+          const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id;
+          axios
+            .get(URL)
+            .then((res) => {
+              this.recommendList = res.data;
             })
+            .catch((err) => console.error(err));
+        })
         .catch(() => {
           alert("로그인 후 이용가능한 기능입니다!");
         });
@@ -139,13 +142,14 @@ export default {
           null
         )
         .then(() => {
-          const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id
-          axios.get(URL)
-          .then(res => {
-            this.recommendList = res.data
-          })
-          .catch(err => console.error(err))
+          const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id;
+          axios
+            .get(URL)
+            .then((res) => {
+              this.recommendList = res.data;
             })
+            .catch((err) => console.error(err));
+        })
         .catch(() => {
           alert("로그인 후 이용가능한 기능입니다!");
         });
@@ -160,13 +164,14 @@ export default {
           null
         )
         .then(() => {
-          const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id
-          axios.get(URL)
-          .then(res => {
-            this.recommendList = res.data
-          })
-          .catch(err => console.error(err))
+          const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id;
+          axios
+            .get(URL)
+            .then((res) => {
+              this.recommendList = res.data;
             })
+            .catch((err) => console.error(err));
+        })
         .catch(() => {
           alert("로그인 후 이용가능한 기능입니다!");
         });
@@ -176,9 +181,8 @@ export default {
     return {
       recommendList: [],
       userDataId: "",
-    }
-  }
-
+    };
+  },
 };
 </script>
 

@@ -1,15 +1,15 @@
 <template>
   <div class="heritage-cards">
     <h1>{{ chooseType }} 문화재</h1>
-    <v-col cols="12" sm="3">
-      <v-select
-        :items="searchType"
-        v-model="chooseType"
-        outlined
-        @change="changeHeritage(chooseType)"
-      >
-      </v-select>
-    </v-col>
+
+    <v-select
+      :items="searchType"
+      v-model="chooseType"
+      @change="changeHeritage(chooseType)"
+      solo
+    >
+    </v-select>
+
     <!-- 문화재 인피티니 카드 -->
     <div class="row">
       <v-card
