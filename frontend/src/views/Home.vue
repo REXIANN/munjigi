@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <HomeIntroduce />
-    <HomeHeritage />
+    <HomeHeritage v-if="hasRecommend" />
     <HomeCalendar />
   </div>
 </template>
@@ -20,7 +20,10 @@ export default {
     HomeCalendar,
   },
   computed: {
-    ...mapGetters(["config"])
+    ...mapGetters(["config"]),
+    hasRecommend(){
+      return !!sessionStorage.id
+    }
   },
   methods: {
     ...mapActions(["logout"]),

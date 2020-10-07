@@ -7,6 +7,7 @@ export default {
     axios
       .post(info.location, info.data)
       .then((res) => {
+        console.log(res.data)
         commit("SET_TOKEN", res.data.token);
         // sessionStorage에 유저의 정보를 저장
         sessionStorage.setItem("auth-token", res.data.token);

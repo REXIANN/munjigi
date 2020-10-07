@@ -9,5 +9,6 @@ export default {
     review: "/review/",
     heritage: "/heritage/",
     survey: "/heritage/dosurvey/",
+    recommend: "/heritage/recommend/"
   },
 };
