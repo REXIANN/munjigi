@@ -6,19 +6,26 @@
     ></div>
     <!-- 검색창 -->
     <div id="menu_wrap" class="bg_white">
-        <div class="option">
-            <div>
-                <div>
-                    키워드 : <input type="text" v-model="keyword" id="keyword" size="15" @keypress.enter="initMap"> 
-                    <button type="submit" @click="initMap">검색하기</button> 
-                </div>
-            </div>
+      <div class="option">
+        <div>
+          <div>
+            키워드 :
+            <input
+              type="text"
+              v-model="keyword"
+              id="keyword"
+              size="15"
+              @keypress.enter="initMap"
+            />
+            <button type="submit" @click="initMap">검색하기</button>
+          </div>
         </div>
-        <hr>
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
+      </div>
+      <hr />
+      <ul id="placesList"></ul>
+      <div id="pagination"></div>
     </div>
-  <!-- 카테고리창 -->
+    <!-- 카테고리창 -->
     <ul id="category">
       <li id="BK9" data-order="0">
         <span class="category_bg bank"></span>
@@ -50,7 +57,7 @@
 
 <script >
 import "@/assets/css/components/maps/mapsKakao.scss";
-import { mapState, mapMutations } from "vuex"
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "MapsKakao",
@@ -58,10 +65,12 @@ export default {
     this.getLocation();
   },
   mounted() {
-    window.kakao && window.kakao.maps ? setTimeout(this.initMap(), 1000) : setTimeout(this.addScript(), 1000);
+    window.kakao && window.kakao.maps
+      ? setTimeout(this.initMap(), 1000)
+      : setTimeout(this.addScript(), 1000);
   },
   computed: {
-    ...mapState(["latitude", "longitude"])
+    ...mapState(["latitude", "longitude"]),
   },
   methods: {
     ...mapMutations(["SET_LATITUDE", "SET_LONGITUDE"]),
@@ -72,7 +81,6 @@ export default {
         markers = [], // 마커를 담을 배열입니다
         currCategory = "", // 현재 선택된 카테고리를 가지고 있을 변수입니다
         searchMarkers = []; // 마커를 담을 배열입니다
-      console.log('location',this.latitude, this.longitude )
       var mapContainer = document.getElementById("map"), // 지도를 표시할 div
         mapOption = {
           center: new kakao.maps.LatLng(this.latitude, this.longitude), // 지도의 중심좌표
@@ -93,9 +101,9 @@ export default {
       var ps = new kakao.maps.services.Places(map);
 
       var psSearch = new kakao.maps.services.Places();
-      
+
       // 키워드로 장소를 검색합니다
-      const key = this.keyword
+      const key = this.keyword;
       if (!!key === true) {
         keywordSearchPlaces(key, psSearch);
       }
@@ -305,7 +313,7 @@ export default {
       // 키워드 검색을 요청하는 함수입니다
       function keywordSearchPlaces(key, psSearch) {
         // var keyword = document.getElementById("keyword").value;
-       var keyword = key
+        var keyword = key;
         // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
         psSearch.keywordSearch(keyword, searchPlacesSearchCB);
       }
@@ -509,8 +517,8 @@ export default {
           (position) => {
             // this.latitude = position.coords.latitude;
             // this.longitude = position.coords.longitude;
-            this.SET_LATITUDE(position.coords.latitude)
-            this.SET_LONGITUDE(position.coords.longitude)
+            this.SET_LATITUDE(position.coords.latitude);
+            this.SET_LONGITUDE(position.coords.longitude);
           },
           (error) => {
             console.error(error);

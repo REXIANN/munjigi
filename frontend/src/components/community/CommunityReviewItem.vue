@@ -1,7 +1,6 @@
 <template>
   <div class="community-review-item">
     <v-container>
-      <h1>{{ reviewData.title }}</h1>
       <v-row>
         <v-btn
           class="ma-2"
@@ -70,22 +69,18 @@
           </v-dialog>
         </v-row>
       </div>
+      <div class="d-flex flex-column align-center">
+        <h1>{{ reviewData.title }}</h1>
+        <v-img :src="reviewData.imageurl" width="30vw" class="rounded-xl" />
 
-      <div class="review-writer">
+        <h2>방문 문화재 {{ heritageName }}</h2>
+        <hr />
         <h2 @click="goOtherpage(reviewData.users)" class="review-user">
           작성자 : {{ reviewData.users }}
         </h2>
         <h3>작성날짜 : {{ reviewData.created_at }}</h3>
+        <h3>{{ reviewData.content }}</h3>
       </div>
-      <v-row>
-        <v-col cols="6">
-          <h2>방문 문화재 {{ heritageName }}</h2>
-          <v-img :src="reviewData.imageurl" width="60vw" />
-        </v-col>
-        <v-col cols="6">
-          <h3>{{ reviewData.content }}</h3>
-        </v-col>
-      </v-row>
     </v-container>
   </div>
 </template>
@@ -135,7 +130,7 @@ export default {
             .then((res) => (this.reviewData = res.data));
         })
         .catch((err) => {
-          console.err(err.message);
+          console.error(err.message);
         });
     },
     deleteReview(id) {
@@ -145,7 +140,7 @@ export default {
           this.$router.push({ name: "Community" });
         })
         .catch((err) => {
-          console.err(err.message);
+          console.error(err.message);
         });
     },
     connectReview() {

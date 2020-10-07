@@ -51,7 +51,7 @@ export default {
           this.isEmpty = true;
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   },
   methods: {
     goHeritage() {

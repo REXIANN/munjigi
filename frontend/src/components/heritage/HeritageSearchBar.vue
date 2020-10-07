@@ -16,7 +16,7 @@
         <v-hover v-slot:default="{ hover }">
           <v-card class="d-inline-block mx-auto">
             <v-container>
-              <h3 @click="SELECT_HERITAGE(heritage)">{{ heritage.k_name }}</h3>
+              <h3 @click="setHeritage(heritage)">{{ heritage.k_name }}</h3>
               <v-row justify="space-between">
                 <v-col cols="auto">
                   <v-img height="200" width="200" :src="heritage.imageurl">
@@ -25,7 +25,7 @@
                         v-if="hover"
                         class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal display-1 white--text"
                         style="height: 100%"
-                        @click="SELECT_HERITAGE(heritage)"
+                        @click="setHeritage(heritage)"
                       >
                         {{ heritage.era }}
                       </div>
@@ -91,7 +91,7 @@
 import "@/assets/css/components/heritage/heritageSearchBar.scss";
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapMutations, mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "CommunitySearchBar",
@@ -102,7 +102,7 @@ export default {
     ...mapGetters(["config"]),
   },
   methods: {
-    ...mapMutations(["SELECT_HERITAGE"]),
+    ...mapActions(["setHeritage"]),
     like(id, idx) {
       axios
         .post(
@@ -171,7 +171,6 @@ export default {
       axios
         .get(SERVER.URL + SERVER.ROUTES.heritage + "?query=" + searchInput)
         .then((res) => {
-          console.log(res);
           this.searchHeritageList = res.data.results;
         });
     },

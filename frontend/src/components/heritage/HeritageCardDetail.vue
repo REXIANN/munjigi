@@ -111,7 +111,6 @@ export default {
       sessionStorage.id === undefined ? null : sessionStorage.id;
     let heritageId = this.$route.params.id;
     axios.get(SERVER.URL + SERVER.ROUTES.heritage + heritageId).then((res) => {
-      console.log(res);
       this.heritage = res.data;
       this.heritageImages = res.data.imageurls.split(", ");
       if (
@@ -131,7 +130,7 @@ export default {
       .then((res) => {
         this.ratingList = res.data;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   },
   computed: {
     ...mapGetters(["config"]),
@@ -186,7 +185,7 @@ export default {
       const URL = SERVER.URL + SERVER.ROUTES.heritage + id + "/like/";
       const userDataId = this.userDataId;
       axios
-        .post(URL,{ userDataId }, null)
+        .post(URL, { userDataId }, null)
         .then(() => {
           axios
             .get(SERVER.URL + SERVER.ROUTES.heritage + id)

@@ -84,7 +84,7 @@ export default {
           this.userGrade = this.gradeList[6];
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   },
   methods: {
     previewImage(event) {
@@ -106,7 +106,7 @@ export default {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         },
         (error) => {
-          console.log(error.message);
+          console.error(error.message);
         },
         () => {
           this.uploadValue = 100;
@@ -141,9 +141,9 @@ export default {
               this.userImage = res.data.profile_image;
               alert("프로필이미지가 변경되었습니다.");
             })
-            .catch((err) => console.log(err));
+            .catch((err) => console.error(err));
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     },
   },
   data() {

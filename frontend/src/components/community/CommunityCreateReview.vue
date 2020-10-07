@@ -91,9 +91,7 @@ export default {
         URL: SERVER.URL + SERVER.ROUTES.review,
         review: this.reviewData,
       };
-      console.log("1");
       this.createReview(data);
-      console.log("2");
 
       this.$emit("create-review-community");
       this.dialog = false;

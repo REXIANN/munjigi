@@ -33,15 +33,18 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
+import { mapMutations } from "vuex";
 
 export default {
   name: "MypageDelete",
+
+  created() {
+    if (sessionStorage.getItem("nickname") !== "undefined") {
+      this.userData.nickname = sessionStorage.getItem("nickname");
+    }
+  },
   methods: {
-    created() {
-      if (sessionStorage.getItem("nickname") !== "undefined") {
-        this.userData.nickname = sessionStorage.getItem("nickname");
-      }
-    },
+    ...mapMutations(["SET_TOKEN"]),
     checkPw() {
       axios
         .post(
@@ -67,22 +70,23 @@ export default {
               .then(() => {
                 alert("탈퇴가 완료되었습니다.");
                 this.gradeInfo = false;
-                // sessionStorage.removeItem("auth-token");
-                // sessionStorage.removeItem("birth");
-                // sessionStorage.removeItem("dateJoined");
-                // sessionStorage.removeItem("email");
-                // sessionStorage.removeItem("id");
-                // sessionStorage.removeItem("name");
-                // sessionStorage.removeItem("nickname");
+                this.SET_TOKEN(null);
+                sessionStorage.removeItem("auth-token");
+                sessionStorage.removeItem("birth");
+                sessionStorage.removeItem("dateJoined");
+                sessionStorage.removeItem("email");
+                sessionStorage.removeItem("id");
+                sessionStorage.removeItem("name");
+                sessionStorage.removeItem("nickname");
                 this.$router.push({ name: "Home" });
               })
-              .catch((err) => console.log(err));
+              .catch((err) => console.error(err));
           } else {
             alert("비밀번호가 틀렸습니다.");
             this.checkPassword = "";
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     },
   },
   data() {

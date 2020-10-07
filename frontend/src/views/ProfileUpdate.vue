@@ -68,7 +68,7 @@ export default {
           sessionStorage["name"] = this.userData.name;
           this.$router.push({ name: "Mypage" });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.error(err));
     },
     goPreviousPage() {
       this.$router.go(-1);

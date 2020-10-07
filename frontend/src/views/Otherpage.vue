@@ -143,7 +143,7 @@ export default {
           this.otherGrade = this.gradeList[6];
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   },
   methods: {
     ...mapMutations(["SELECT_REVIEW"]),
