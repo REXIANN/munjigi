@@ -13,35 +13,46 @@
           </v-card-title>
           <v-card-text>
             <v-container>
+              <!-- 제목 입력란 -->
               <v-text-field
                 label="제목"
-                v-model="title"
+                v-model="reviewData.title"
                 hint="제목을 입력해주세요."
                 required="제목을 입력해 주세요!"
-                autofocus
               ></v-text-field>
+              <!-- 문화재 입력란 -->
               <v-text-field
+                name="input"
                 label="방문한 문화재"
-                v-model="heritageId"
-                hint="방문한 문화재를 입력해주세요."
-                required="방문한 문화재를 입력해주세요!"
+                append-icon="mdi-magnify"
+                v-model="searchInput"
+                hide-details="auto"
+                hint="방문한 문화재를 검색하여 클릭해주세요."
+                required="방문한 문화재를 검색하여 클릭해주세요!"
+                @keyup="searchHeritage(searchInput)"
               ></v-text-field>
-
+              <!-- 입력에 기반한 자동검색에 따른 문화재를 보여줌 -->
+              <ul v-for="(heritage, idx) in searchHeritageList" :key="idx">
+                <h4 class="heritage-pick" @click="pickHeritage(heritage)">
+                  {{ heritage.k_name }}
+                </h4>
+              </ul>
+              <!-- 내용 입력란 -->
               <v-textarea
                 label="내용"
-                v-model="content"
+                v-model="reviewData.content"
                 hint="내용을 입력해주세요."
                 required="내용을 입력해 주세요!"
-                @keypress.enter="createReview"
               ></v-textarea>
             </v-container>
           </v-card-text>
+
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="error" text @click="closeCheck">
               <h3>닫기</h3>
             </v-btn>
-            <v-btn color=" darken-1" text @click="createReview">
+            <v-btn color=" darken-1" text @click="setReview">
               <h3>작성완료</h3>
             </v-btn>
           </v-card-actions>
@@ -69,47 +80,20 @@
 <script>
 import SERVER from "@/api/drf";
 import axios from "axios";
-import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   name: "CommunityCreateReview",
-  created() {
-    this.userDataId = sessionStorage.id === undefined ? "" : sessionStorage.id;
-    let heritageid = this.$route.params.id;
-    if (heritageid) {
-      this.location.heritage = true;
-      this.heritageId = heritageid;
-    } else {
-      this.location.community = true;
-    }
-  },
-  computed: {
-    ...mapGetters(["config"]),
-  },
   methods: {
-    createReview() {
-      const reviewData = {
-        title: this.title,
-        content: this.content,
-        heritage: this.heritageId,
-        user: this.userDataId,
+    ...mapActions(["createReview"]),
+    setReview() {
+      const data = {
+        URL: SERVER.URL + SERVER.ROUTES.review,
+        review: this.reviewData,
       };
-      axios
-        .post(SERVER.URL + SERVER.ROUTES.review, reviewData, this.config)
-        .then(() => {
-          this.dialog = false;
-          this.title = "";
-          this.content = "";
-          this.heritageId = "";
-          if (this.location.community) {
-            this.$router.push({ name: "Community" });
-          } else {
-            this.$router.push({
-              name: "HeritageCardDetail",
-              params: { id: this.heritageId },
-            });
-          }
-        });
+      this.createReview(data);
+      this.$emit("create-review");
+      this.dialog = false;
     },
     closeCheck() {
       if (this.title != "" || this.content != "") {
@@ -122,19 +106,31 @@ export default {
       this.dialog = false;
       this.dialog2 = false;
     },
+    searchHeritage(searchInput) {
+      const URL =
+        SERVER.URL + SERVER.ROUTES.heritage + "search/?query=" + searchInput;
+      axios.get(URL).then((res) => {
+        this.searchHeritageList = res.data.results;
+      });
+    },
+    pickHeritage(heritage) {
+      this.searchInput = heritage.k_name;
+      this.reviewData.heritage = heritage.id;
+      this.searchHeritageList = [];
+    },
   },
   data() {
     return {
-      userDataId: "",
-      title: "",
-      content: "",
-      heritageId: "",
+      reviewData: {
+        title: "",
+        content: "",
+        heritage: "",
+        user: sessionStorage.getItem("id"),
+      },
+      searchInput: "",
+      searchHeritageList: [],
       dialog: false,
       dialog2: false,
-      location: {
-        heritage: false,
-        community: false,
-      },
     };
   },
 };

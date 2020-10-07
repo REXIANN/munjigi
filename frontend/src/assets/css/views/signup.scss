@@ -1,27 +1,36 @@
 @import "../components";
 
 .signup {
+  height: 100%;
   background-image: url("https://user-images.githubusercontent.com/60081201/94753625-bed6f380-03c9-11eb-933b-41e803eb9c24.PNG");
-  background-attachment: fixed;
-  //   background-origin: border-box;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .box {
-  background: #5b1311;
+  margin: 4vh auto;
+  padding: 0;
+  background-color: bisque;
   width: 45vw;
-  height: 90vh;
   text-align: center;
-  color: white;
-  margin: 5vh auto;
-  padding: 2vh 0;
   border-radius: 3vw;
+  position: relative;
 
   h1 {
+    margin: 2vh auto;
+  }
+
+  button {
+    margin: 2vh auto;
+    padding: 0.2vh 0.5vw;
+    background-color: grey;
     color: white;
-    margin: 6vh auto;
+    border-radius: 10px;
+    outline: none;
+  }
+  button:hover {
+    cursor: pointer;
   }
 
   input[type="text"],
@@ -29,21 +38,20 @@
     border: 0;
     background: none;
     display: block;
-    margin: 1vh auto;
+    margin: 0.6vh auto;
+    padding: 1vh 1vw;
     text-align: center;
-    border: 3px solid #9d201d;
-    padding: 2vh 3vw;
+    border: 3px solid sandybrown;
     width: 40vw;
     outline: none;
-    color: white;
     border-radius: 10vw;
     transition: 0.3s;
+    font-size: 1rem;
   }
 
   input[type="text"]:focus,
   input[type="password"]:focus {
     width: 43vw;
-    border-color: #de2d29;
   }
 
   input[type="submit"] {
@@ -55,7 +63,6 @@
     border: 3px solid #9d201d;
     padding: 2vh 3vw;
     width: 30vw;
-    color: white;
     outline: none;
     border-radius: 10vw;
     transition: 0.3s;

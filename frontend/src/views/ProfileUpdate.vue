@@ -42,7 +42,6 @@ export default {
         this.userData.lastname = res.data.lastname;
         this.userData.profile_image = res.data.profile_image;
         this.userData.birth = res.data.birth;
-        console.log(this.userData);
       });
   },
   computed: {
@@ -50,17 +49,24 @@ export default {
   },
   methods: {
     changeUserInfo() {
+      const data = {
+        name: this.userData.name,
+        lastname: this.userData.lastname,
+        profile_image: this.userData.profile_image,
+        birth: this.userData.birth,
+      };
       axios
         .put(
           SERVER.URL + SERVER.ROUTES.mypage + sessionStorage.nickname + "/",
-          {
-            data: this.userData,
-          },
+          data,
           null
         )
-        .then((res) => {
-          console.log(res);
-          // 여기에 sessionStorage 업데이트 해주는 거 들어가야함
+        .then(() => {
+          alert("개인 정보가 수정되었습니다.");
+          sessionStorage["birth"] = this.userData.birth;
+          sessionStorage["lastname"] = this.userData.lastname;
+          sessionStorage["name"] = this.userData.name;
+          this.$router.push({ name: "Mypage" });
         })
         .catch((err) => console.log(err));
     },
@@ -74,7 +80,7 @@ export default {
         name: null,
         id: sessionStorage.getItem("id"),
         lastname: "",
-        profile_image: "",
+        profile_image: null,
         birth: null,
       },
       email: sessionStorage.getItem("email"),
@@ -84,4 +90,3 @@ export default {
 };
 </script>
 
-<style></style>

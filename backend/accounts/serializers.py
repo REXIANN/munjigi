@@ -23,6 +23,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 # 접속중인 유저인지 확인
 class UserSerializer(serializers.ModelSerializer):
+    survey = serializers.BooleanField()
     email = serializers.EmailField()
     nickname = serializers.CharField()
     like_heritages = HeritageDetailSerializer(many=True, read_only=True)
@@ -30,7 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
     user_review = ReviewListSerializer(many=True, read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'email', 'nickname', 'like_heritages', 'dibs_heritages', 'user_review')
+        fields = ('id', 'email', 'nickname', 'like_heritages', 'dibs_heritages', 'user_review', 'survey')
 
 
 # 로그인
@@ -51,7 +52,6 @@ class LoginUserSerializer(serializers.ModelSerializer):
 # 프로필
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    profile_image = serializers.ImageField(use_url=True)
     class Meta:
         model = Profile
         fields = ('__all__')

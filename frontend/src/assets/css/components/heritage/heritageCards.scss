@@ -1,12 +1,12 @@
 @charset "utf-8";
 @import "../../components";
 
-.heritageCards {
-  margin: 10vw;
+.heritage-cards {
+  margin: 5vh 5vw;
 }
 
-.row {
-  justify-content: center;
+.v-card-container:hover {
+  cursor: pointer;
 }
 
 .v-card--reveal {

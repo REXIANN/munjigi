@@ -8,5 +8,7 @@ export default {
     mypage: "/accounts/",
     review: "/review/",
     heritage: "/heritage/",
+    survey: "/heritage/dosurvey/",
+    recommend: "/heritage/recommend/"
   },
 };
