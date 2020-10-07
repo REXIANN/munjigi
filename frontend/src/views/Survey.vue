@@ -67,7 +67,10 @@
       </v-container>
 
       <br />
-      <v-btn @click="submitSurvey">제 to the 출</v-btn>
+      <!-- 제출버튼 -->
+      <div>
+        <v-btn class="button" :disabled="!arr.length" @click="submitSurvey">제 출</v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -82,14 +85,22 @@ export default {
   name: "Survey",
   computed: {
     ...mapGetters(["config"]),
+    arr() {
+      return [...this.e5, ...this.e6, ...this.e7];
+    },
   },
   methods: {
     submitSurvey() {
       const URL = SERVER.URL + SERVER.ROUTES.survey;
-      console.log(URL);
-      let arr = [...this.e5, ...this.e6, ...this.e7];
-      // let resultArray = arr.find();
-      axios.post(URL, arr, this.config).then().catch();
+      axios
+        .post(URL, this.arr, this.config)
+        .then(() => {
+          alert(
+            "설문조사에 응해 주셔서 감사합니다! 결과가 이제 추천시스템에 반영됩니다."
+          );
+          this.$router.push({ name: "Home" });
+        })
+        .catch();
     },
   },
   data() {

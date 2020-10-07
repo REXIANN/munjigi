@@ -92,7 +92,7 @@ export default {
         review: this.reviewData,
       };
       this.createReview(data);
-
+      this.$emit("create-review");
       this.dialog = false;
     },
     closeCheck() {
