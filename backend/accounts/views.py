@@ -9,7 +9,6 @@ from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializ
 from .models import Profile, User
 
 
-
 class RegistrationAPI(generics.GenericAPIView):
     serializer_class = CreateUserSerializer
 

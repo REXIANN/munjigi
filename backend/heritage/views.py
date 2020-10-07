@@ -122,10 +122,18 @@ class HeritageLikeAPI(generics.GenericAPIView):
 class Survey_weightAPI(generics.GenericAPIView):
     # queryset = Heritage.objects.all()
     # serializer_class = HeritageDetailSerializer
+    
+
     permissions_classes = [permissions.IsAuthenticated]
     def post(self, request):
-        # print(request.user)
-        # print(request.body)
+        check_user = User.objects.get(email=request.user)
+        print(check_user)
+        if check_user.survey == True:
+        
+            return Response()
+
+        check_user.survey = True
+        check_user.save()
         Survey_weight_df(request.user, request.body)
         return Response()
 
