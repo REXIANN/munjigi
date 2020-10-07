@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import axios from "axios"
+import SERVER from "@/api/drf"
 import HomeCardItem from "./HomeCardItem";
 
 export default {
@@ -17,6 +19,22 @@ export default {
   components: {
     HomeCardItem,
   },
+  created() {
+    const URL = SERVER.URL + SERVER.ROUTES.recommend + sessionStorage.id
+    console.log("URL", URL)
+    axios.get(URL)
+      .then(res => {
+        console.log(res)
+        this.recommendList = res.data
+      })
+      .catch(err => console.error(err))
+  },
+  data() {
+    return {
+      recommendList: []
+    }
+  }
+
 };
 </script>
 

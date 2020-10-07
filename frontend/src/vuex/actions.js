@@ -7,6 +7,7 @@ export default {
     axios
       .post(info.location, info.data)
       .then((res) => {
+        console.log(res.data)
         commit("SET_TOKEN", res.data.token);
         // sessionStorage에 유저의 정보를 저장
         sessionStorage.setItem("auth-token", res.data.token);
@@ -16,6 +17,7 @@ export default {
         sessionStorage.setItem("id", res.data.user.id);
         sessionStorage.setItem("name", res.data.user.name);
         sessionStorage.setItem("nickname", res.data.user.nickname);
+        sessionStorage.setItem("survey", res.data.user.survey)
 
         const validator = /signup/
         let location = validator.test(info.location) ? "Survey" : "Home";
@@ -52,6 +54,7 @@ export default {
         sessionStorage.removeItem("id");
         sessionStorage.removeItem("name");
         sessionStorage.removeItem("nickname");
+        sessionStorage.removeItem("survey")
       })
       .catch((err) => {
         console.log(err.message);
