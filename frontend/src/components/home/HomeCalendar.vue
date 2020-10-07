@@ -1,6 +1,11 @@
 <template>
   <div>
     <h1>월별 문화재 관련 행사</h1>
+    <span v-for="(dts, i) in this.eventcategory" :key="dts">
+      <v-chip class="ma-2" :color="colors[i]" text-color="white">
+        {{ dts }} {{ i }}
+      </v-chip>
+    </span>
     <v-row class="fill-height">
       <v-col>
         <v-sheet height="64">
@@ -108,6 +113,7 @@ export default {
     selectedOpen: false,
     events: [],
     colors: [
+      "grey darken-1",
       "pink lighten-2",
       "purple lighten-2",
       "deep-purple lighten-2",
@@ -119,6 +125,17 @@ export default {
       "brown darken-1",
       "blue-grey darken-3",
     ],
+    eventcategory: {
+      1: "문화재야행",
+      2: "생생문화재",
+      3: "전통산사문화재",
+      4: "살아숨쉬는 향교·서원",
+      6: "기타행사",
+      7: "국립무형유산원",
+      8: "한국문화재재단",
+      9: "고택·종갓집",
+      10: "세계유산",
+    },
     names: [
       "Meeting",
       "Holiday",
