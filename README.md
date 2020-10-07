@@ -59,7 +59,8 @@ $ pip install -r requirements.txt
 $ python manage.py makemigrations
 $ python manage.py migrate
 # 문화재 데이터를 등록합니다.
-$ python manage.py loaddata heritage_data_made_cut.json
+$ python manage.py loaddata tag.json
+$ python manage.py loaddata heritage_videourl.json
 # 서버를 실행합니다.
 $ python manage.py runserver
 ```
