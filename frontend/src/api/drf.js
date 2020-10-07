@@ -1,5 +1,5 @@
 export default {
-  URL: "http://localhost:8000",
+  URL: "http://j3a302.p.ssafy.io",
   ROUTES: {
     signup: "/accounts/auth/register/",
     validity: "/accounts/register/",
@@ -9,6 +9,6 @@ export default {
     review: "/review/",
     heritage: "/heritage/",
     survey: "/heritage/dosurvey/",
-    recommend: "/heritage/recommend/"
+    recommend: "/heritage/recommend/",
   },
 };
