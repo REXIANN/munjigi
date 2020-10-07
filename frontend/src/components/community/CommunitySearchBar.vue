@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="community-search-bar">
     <v-row class="search-input m-auto">
       <select
         class="search-input-select"
@@ -56,7 +56,6 @@ export default {
   methods: {
     searchInput() {
       if (this.searchSelectNum === "1") {
-        console.log("제목");
         const URL =
           SERVER.URL +
           SERVER.ROUTES.review +
@@ -65,13 +64,15 @@ export default {
         axios.get(URL).then((res) => {
           if (res.data.results) {
             this.searchHeritageList = res.data.results;
+            if (this.searchHeritageList.length === 0) {
+              alert("검색 결과가 없습니다.");
+            }
           } else {
             alert("검색 결과가 없습니다.");
             this.searchHeritageList = [];
           }
         });
       } else {
-        console.log("내용");
         axios
           .get(SERVER.URL + SERVER.ROUTES.mypage + this.searchBar + "/")
           .then((res) => {
@@ -84,6 +85,9 @@ export default {
             axios.get(URL).then((res) => {
               if (res.data.results) {
                 this.searchHeritageList = res.data.results;
+                if (this.searchHeritageList.length === 0) {
+                  alert("검색 결과가 없습니다.");
+                }
               } else {
                 alert("검색 결과가 없습니다.");
                 this.searchHeritageList = [];
