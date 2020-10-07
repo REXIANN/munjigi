@@ -120,12 +120,8 @@ class HeritageLikeAPI(generics.GenericAPIView):
 
 #서베이용
 class Survey_weightAPI(generics.GenericAPIView):
-    # queryset = Heritage.objects.all()
-    # serializer_class = HeritageDetailSerializer
     permissions_classes = [permissions.IsAuthenticated]
     def post(self, request):
-        # print(request.user)
-        # print(request.body)
         Survey_weight_df(request.user, request.body)
         return Response()
 
@@ -259,22 +255,16 @@ def Survey_weight_df(user_id, tag_l):
                 continue
             tag_test.append(tag_word)
             tag_word = ""
-    # print(tag_test)
     tag_test2 = []
     for tg in tag_test:
         tag_test2.append(Tag.objects.get(name = tg))
-        # print(Tag.objects.filter(name = tg).values('id'))
-    print(tag_test2)
     tagging = []
     for tag in tag_test2:
         tagging.append(tag.id)
-
     user_queryset = User_tag.objects.filter(user_id=user_id).values('tag_id')
-    
     u_tagging = []
     for u_tag in user_queryset:
         u_tagging.append(u_tag['tag_id'])
-    print(u_tagging)
     for tag in tagging:
         if tag in u_tagging:
             user_tag = User_tag.objects.get(user_id = userid, tag_id = tag)
