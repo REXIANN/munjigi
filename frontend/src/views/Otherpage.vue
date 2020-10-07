@@ -1,6 +1,6 @@
 <template>
   <div class="otherpage">
-    <div class="mypageProfile">
+    <div class="other-profile">
       <h1>{{ OtherData.user.nickname }}님의 마이페이지</h1>
       <v-row justify="space-between">
         <v-col>
@@ -8,14 +8,7 @@
         </v-col>
         <v-col>
           <h3>이름 : {{ OtherData.name }}</h3>
-          <h3>성씨 본관 :{{ OtherData.lastname }}</h3>
-          <div>
-            <v-btn @click="searchAncestor(OtherData.ancestor)"
-              >조상과 관련된 문화재 보기</v-btn
-            >
-          </div>
-        </v-col>
-        <v-col>
+
           <h3>나의 신분 "{{ otherGrade.rank }}"</h3>
           <img :src="otherGrade.image" />
           <div>
